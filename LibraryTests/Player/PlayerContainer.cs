@@ -23,7 +23,7 @@ namespace MonoGamePlayground.Player
         public Vector2 CurrentPosition => this._currentPosition;
 
         private readonly Dictionary<PlayerControls, Keys> keyMap;
-        private GameLibrary.PlayerThings.KeyboardActionsManager keyboardManager = new KeyboardActionsManager();
+        private KeyboardActionsManager keyboardManager = new KeyboardActionsManager();
         private GamePadState previousPadState;
         private float currentAngle; // Cheaper to compare/calculate this per update than the direction vector
         private Vector2 directionNormal; // Where we are pointing in space. Apply force to this to move.
