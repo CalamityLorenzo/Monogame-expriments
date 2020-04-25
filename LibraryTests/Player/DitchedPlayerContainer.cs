@@ -15,7 +15,7 @@ namespace MonoGamePlayground.Player
 {
     // ALl the logics, and stuffs to make you empower the character to achieve their potential
     // or something.
-    public class PlayerContainer : IGameContainerDrawing
+    public class DitchedPlayerContainer : IGameContainerDrawing
     {
         public SpriteBatch _spriteBatch { get; }
         public Texture2D Atlas { get; }
@@ -31,7 +31,7 @@ namespace MonoGamePlayground.Player
         private float _velocity = 0f;
         internal Rotator Rotatation { get; }
 
-        public PlayerContainer(SpriteBatch spriteBatch, Texture2D atlas, Character gameChar, Rotator rTater, Dictionary<PlayerControls, Keys> keyMap, Point startPosition)
+        public DitchedPlayerContainer(SpriteBatch spriteBatch, Texture2D atlas, Character gameChar, Rotator rTater, Dictionary<PlayerControls, Keys> keyMap, Point startPosition)
         {
             _spriteBatch = spriteBatch;
             Atlas = atlas;

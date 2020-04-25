@@ -22,14 +22,14 @@ namespace GameLibrary.Drawing.Backgrounds
         private List<int> map;
         private Dimensions tileDimensions;
         private Rectangle bounds;
-        private FourWayDirection fourway;
+        private AngulerFourWayDirection fourway;
         private Vector2 _currentPosition;
         private List<DisplayRectInfo> _sourceRects;
         private Vector2 _previousPosition;
         private Viewport viewport;
         private Dimensions mapDimensions;
 
-        public BoundedBackground(SpriteBatch spriteBatch, Texture2D sprite, Rectangle[] atlasRects, List<int> map, Dimensions tileDimensions, Rectangle bounds, FourWayDirection fourway, Vector2 backgroundStartPos, Viewport viewPort)
+        public BoundedBackground(SpriteBatch spriteBatch, Texture2D sprite, Rectangle[] atlasRects, List<int> map, Dimensions tileDimensions, Rectangle bounds, AngulerFourWayDirection fourway, Vector2 backgroundStartPos, Viewport viewPort)
         {
             this.spriteBatch = spriteBatch;
             this.sprite = sprite;

@@ -24,7 +24,7 @@ namespace MonoGameTests
         SpriteFont arial;
         Rotator rTater;
         ConfigurationData configData;
-        PlayerContainer player;
+        DitchedPlayerContainer player;
         Microsoft.Xna.Framework.Graphics.Texture2D baseJeep;
         Dictionary<PlayerControls, Keys> player1Keys;
         public KeyboardState previousKeyState { get; private set; }
@@ -64,7 +64,7 @@ namespace MonoGameTests
             this.rTater = new Rotator(348, 202);
             baseJeep = Texture2d.FromFileName(this.GraphicsDevice, "Content/Jeep.png");
             var jeepFrames = FramesGenerator.GenerateFrames(new FrameInfo(243, 243), new Dimensions(baseJeep.Width, baseJeep.Height));
-            player = new PlayerContainer(this.spriteBatch, this.baseJeep, new Character(jeepFrames), this.rTater, player1Keys, new Point(100, 125));
+            player = new DitchedPlayerContainer(this.spriteBatch, this.baseJeep, new Character(jeepFrames), this.rTater, player1Keys, new Point(100, 125));
         }
 
         protected override void UnloadContent()

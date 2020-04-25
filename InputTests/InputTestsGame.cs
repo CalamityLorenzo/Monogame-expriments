@@ -12,7 +12,7 @@ using Vector2 = Microsoft.Xna.Framework.Vector2;
 
 namespace InputTests
 {
-    public class Game1 : Game
+    public class InputTestsGame : Game
     {
         private SpriteBatch spriteBatch;
         private GraphicsDeviceManager graphics;
@@ -26,7 +26,7 @@ namespace InputTests
 
         public string KeyString { get; private set; }
 
-        public Game1()
+        public InputTestsGame()
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 600;
