@@ -23,13 +23,17 @@ namespace InputTests
 
 
     // Which keys are currently being pressed and how long for.
+    // This also includes a double click method check.
     public class KeysManager
     {
         private float doubleClickLength = 750f; // Time in millisecsond to allow a dobule click
         private Dictionary<Keys, PressedKey> PreviousKeys = new Dictionary<Keys, PressedKey>();
         private Dictionary<Keys, PressedKey> CurrentKeys = new Dictionary<Keys, PressedKey>();
         // When the key was last pressed.
-        // used to work out double taps.
+        // used to work out double taps. but is publically available. 
+        /// <summary>
+        /// float = Time Pressed in millis
+        /// </summary>
         private Dictionary<Keys, float> HistoryKeys = new Dictionary<Keys, float>();
 
         public void Update(GameTime time, KeyboardState kState)
@@ -40,8 +44,6 @@ namespace InputTests
 
             // Check if double clicked
             var doubleClicked = this.DoubleClicked(pressedKeys, totalTime, this.doubleClickLength);
-            //// Add the currently batch of presed keys into the history.
-            //AddToHistory(pressedKeys, totalTime);
 
             // Reset so we only have the most current keys
             CurrentKeys = new Dictionary<Keys, PressedKey>();
@@ -51,6 +53,8 @@ namespace InputTests
                 {
                     var val = PreviousKeys[key];
                     val.DurationPressed += delta;
+                    // you can only have double cliced for like moment.
+                    val.IsDoubleClick = false;
                     CurrentKeys.Add(key, val);
                 }
                 else
@@ -64,6 +68,7 @@ namespace InputTests
 
         private bool DoubleClicked(Keys key, float timePressed, float clickLimit)
         {
+            // check to see if a double click happened within a set time, by seeing when the last time a key was pressed.
             return this.HistoryKeys.TryGetValue(key, out var pressed) ? (timePressed - pressed <= clickLimit) : false;
         }
 

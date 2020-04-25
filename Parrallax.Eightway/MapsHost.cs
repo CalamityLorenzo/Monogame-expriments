@@ -20,7 +20,7 @@ namespace Parrallax.Eightway
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont arial;
-        FourWayDirection fourway;
+        AngulerFourWayDirection fourway;
         private Keyboard4Way _keyboard4Way;
         private ConfigurationData configData;
         private KeyboardState pKState;
@@ -56,13 +56,13 @@ namespace Parrallax.Eightway
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Can rotate
-            this.fourway = new FourWayDirection (FourDirections.Stopped, 0.5f);
+            this.fourway = new AngulerFourWayDirection (FourDirections.Stopped, 0.5f);
             // Allows you to rotate.
             this._keyboard4Way = new Keyboard4Way(this.fourway, player1Keys);
 
-            var slowCloud = this.GraphicsDevice.TextureFromFileName("Content/backBackground.png");// spriteBatch.CreateFilleRectTexture( new Rectangle(0,0, gameWidth + 50, gameHEight + 50), Color.LightCyan);
-            var fastCloud = this.GraphicsDevice.TextureFromFileName("Content/frontBackground.png");  //spriteBatch.CreateFilleRectTexture(new Rectangle(0, 0, gameWidth + 50, gameHEight + 50), Color.Orange);
-            var sprite = this.GraphicsDevice.TextureFromFileName("Content/FatBlock.png");
+            var slowCloud = this.GraphicsDevice.FromFileName("Content/backBackground.png");
+            var fastCloud = this.GraphicsDevice.FromFileName("Content/frontBackground.png");
+            var sprite = this.GraphicsDevice.FromFileName("Content/FatBlock.png");
             // all rects on a particular atlas.
             // It's also the entire map for the backfround.
             var atlasRects = FramesGenerator.GenerateFrames(new FrameInfo[] { new FrameInfo(32, 32) }, new Dimensions(96, 64));

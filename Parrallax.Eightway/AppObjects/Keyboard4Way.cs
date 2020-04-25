@@ -12,18 +12,18 @@ namespace Parrallax.Eightway
 {
     class Keyboard4Way
     {
-        private readonly FourWayDirection _fourwayDirection;
+        private readonly AngulerFourWayDirection _fourwayDirection;
         private KeyboardActionsManager _keyManager = new KeyboardActionsManager();
         private readonly Dictionary<PlayerControls, Keys> _keyMap;
 
-        public Keyboard4Way(FourWayDirection fourwayDirection, Dictionary<PlayerControls, Keys> keyMap)
+        public Keyboard4Way(AngulerFourWayDirection fourwayDirection, Dictionary<PlayerControls, Keys> keyMap)
         {
             this._fourwayDirection = fourwayDirection;
             this._keyMap = keyMap;
             CreateKeyboardMappings(_keyManager, _keyMap, _fourwayDirection);
         }
 
-        private void CreateKeyboardMappings(KeyboardActionsManager keyManager, Dictionary<PlayerControls, Keys> keyMap, FourWayDirection fourwayDirection)
+        private void CreateKeyboardMappings(KeyboardActionsManager keyManager, Dictionary<PlayerControls, Keys> keyMap, AngulerFourWayDirection fourwayDirection)
         {
             keyManager.AddMovingActions(new Dictionary<IEnumerable<Keys>, Action>
             {

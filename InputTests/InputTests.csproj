@@ -15,6 +15,10 @@
   </ItemGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\Game.Library\Game.Library.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
     <None Update="Content\NewArial.spritefont">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

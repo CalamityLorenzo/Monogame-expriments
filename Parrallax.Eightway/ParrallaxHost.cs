@@ -68,8 +68,8 @@ namespace Parrallax.Eightway
             // Allows you to rotate.
             this._keyboardRotator = new KeyboardRotation(this.rotator, player1Keys);
 
-            var slowCloud = this.GraphicsDevice.TextureFromFileName("Content/backBackground.png");// spriteBatch.CreateFilleRectTexture( new Rectangle(0,0, gameWidth + 50, gameHEight + 50), Color.LightCyan);
-            var fastCloud = this.GraphicsDevice.TextureFromFileName("Content/frontBackground.png");  //spriteBatch.CreateFilleRectTexture(new Rectangle(0, 0, gameWidth + 50, gameHEight + 50), Color.Orange);
+            var slowCloud = this.GraphicsDevice.FromFileName("Content/backBackground.png");// spriteBatch.CreateFilleRectTexture( new Rectangle(0,0, gameWidth + 50, gameHEight + 50), Color.LightCyan);
+            var fastCloud = this.GraphicsDevice.FromFileName("Content/frontBackground.png");  //spriteBatch.CreateFilleRectTexture(new Rectangle(0, 0, gameWidth + 50, gameHEight + 50), Color.Orange);
 
             // all rects on a particular atlas.
             // It's also the entire map for the backfround.

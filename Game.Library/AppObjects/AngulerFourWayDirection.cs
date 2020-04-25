@@ -21,8 +21,9 @@ namespace GameLibrary.AppObjects
         Stopped
 
     }
-
-    public class FourWayDirection : IGameObjectUpdate
+    // Sets a direction based on angles (Degrees).
+    // Also includes a velocity too.
+    public class AngulerFourWayDirection : IGameObjectUpdate
     {
         private FourDirections currentDirection;
 
@@ -32,7 +33,7 @@ namespace GameLibrary.AppObjects
         private float velocity;
         private float referenceVelocity;
         public float Velocity() => velocity;
-        public FourWayDirection(FourDirections initialDirection, float initialVelocity)
+        public AngulerFourWayDirection(FourDirections initialDirection, float initialVelocity)
         {
             currentDirection = initialDirection;
             if (currentDirection != FourDirections.Unknown)
