@@ -8,19 +8,19 @@ using Microsoft.Xna.Framework;
 namespace inputTests{
     public class SendKeyboardInput{
         private readonly PlayerControlKeys controls;
-        private readonly KeysManager keysManager;
+        private readonly InputManager inputManager;
 
-        public SendKeyboardInput(PlayerControlKeys controls, KeysManager keysManager)
+        public SendKeyboardInput(PlayerControlKeys controls, InputManager keysManager)
         {
             this.controls = controls;
-            this.keysManager = keysManager;
+            this.inputManager = keysManager;
         }
 
         public void Update(GameTime time, float DeltaTime, IWalkingMan actor)
         {
             // the list of keys to work with.
-            var currentKeys = keysManager.PressedKeys;
-
+            var currentKeys = inputManager.PressedKeys();
+            var buttons = inputManager.PressedMouseButtons();
             if(currentKeys.ContainsKey(controls.Up)) actor.MoveUp();
             if(currentKeys.ContainsKey(controls.Down)) actor.MoveDown();
 

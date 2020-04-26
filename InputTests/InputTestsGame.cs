@@ -18,7 +18,7 @@ namespace InputTests
         private GraphicsDeviceManager graphics;
         private SpriteFont arialFont;
 
-        private KeysManager kManger;
+        private InputManager inputManager;
         private List<string> keysPressedStrings;
         private List<Vector2> keysPressedwidths;
         private string histry;
@@ -32,7 +32,7 @@ namespace InputTests
             graphics.PreferredBackBufferHeight = 600;
             Content.RootDirectory = "Content";
 
-            kManger = new KeysManager();
+            inputManager = new InputManager();
         }
 
         protected override void Initialize()
@@ -51,10 +51,10 @@ namespace InputTests
         {
             var kState = Keyboard.GetState();
             var mState= Mouse.GetState();
-            kManger.Update(gameTime, kState, mState);
-            this.keysPressedStrings = kManger.PressedKeys.Select(p => $"{p.Key} : {p.Value}").ToList();
+            inputManager.Update(gameTime, kState, mState);
+            this.keysPressedStrings = inputManager.PressedKeys().Select(p => $"{p.Key} : {p.Value}").ToList();
             this.keysPressedwidths = keysPressedStrings.Select(k => arialFont.MeasureString(k)).ToList();
-            this.histry = String.Join("\n", kManger.History.Select(o => $"{o.Key} : {o.Value}"));
+            this.histry = String.Join("\n", inputManager.HistoryKeyboard().Select(o => $"{o.Key} : {o.Value}"));
 
             base.Update(gameTime);
         }

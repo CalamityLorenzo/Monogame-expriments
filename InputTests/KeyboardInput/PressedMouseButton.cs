@@ -1,4 +1,5 @@
-#using KeyboardInput;
+using KeyboardInput;
+using System.Globalization;
 
 namespace InputTests.MouseInput
 {
