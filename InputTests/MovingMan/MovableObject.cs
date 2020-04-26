@@ -11,18 +11,26 @@ namespace InputTests.MovingMan
         private readonly SpriteBatch spriteBatch;
         private readonly Texture2D imagetoDo;
         private Vector2 _currentPos;
+
+        private float velocityX;
+        private float velocityY;
         public MovableObject(SpriteBatch spriteBatch, Texture2D imagetoDo, Vector2 startpos)
         {
             this.spriteBatch = spriteBatch;
             this.imagetoDo = imagetoDo;
             this._currentPos = startpos;
+            velocityX = 0f;
+            velocityY = 0f;
         }
 
         public Vector2 CurrentPosition => _currentPos;
 
         public void Update(GameTime gameTime, float deltaTime)
         {
-
+            _currentPos.X += velocityX * deltaTime;
+            _currentPos.Y += velocityY * deltaTime;
+            velocityY = 0f;
+            velocityX = 0f;
         }
 
         public void Draw(GameTime time)
@@ -35,27 +43,33 @@ namespace InputTests.MovingMan
 
         public void MoveLeft()
         {
-            throw new NotImplementedException();
+            this.velocityX = -44f;
         }
 
         public void MoveRight()
         {
-            throw new NotImplementedException();
+            this.velocityX = +44f;
         }
 
         public void MoveUp()
         {
-            throw new NotImplementedException();
+            this.velocityY = -44f;
         }
+
+        public void MoveDown()
+        {
+            this.velocityY = 44f;
+        }
+
 
         public void Fire()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Pew Pew");
         }
 
         public void DoubleClickFire()
         {
-            throw new NotImplementedException();
+            Console.WriteLine("Pew Pew");
         }
     }
 }

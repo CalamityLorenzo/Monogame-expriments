@@ -45,5 +45,10 @@ namespace InputTests.MovingMan
         {
             throw new NotImplementedException();
         }
+
+        public void MoveDown()
+        {
+            throw new NotImplementedException();
+        }
     }
 }
