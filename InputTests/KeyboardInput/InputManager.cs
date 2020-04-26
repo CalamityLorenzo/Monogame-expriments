@@ -1,49 +1,40 @@
-﻿using Microsoft.Xna.Framework;
+﻿using InputTests.KeyboardInput;
+using KeyboardInput;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.WIC;
 using System;
 using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Globalization;
-using System.Text;
 
 namespace InputTests
 {
-    public class PressedKey
-    {
-        public Keys Key { get; set; }
-        public bool IsDoubleClick { get; set; }
-        public float DurationPressed { get; set; }
-        public override string ToString()
-        {
-            return $"{Key} : {IsDoubleClick} \n ({DurationPressed.ToString("0.0000", CultureInfo.InvariantCulture)})";
-        }
-    }
-
-
     // Which keys are currently being pressed and how long for.
     // This also includes a double click method check.
-    public class KeysManager
+    public class InputManager
     {
         private float doubleClickLength = 750f; // Time in millisecsond to allow a dobule click
         private Dictionary<Keys, PressedKey> PreviousKeys = new Dictionary<Keys, PressedKey>();
         private Dictionary<Keys, PressedKey> CurrentKeys = new Dictionary<Keys, PressedKey>();
+        private Dictionary<MouseButton, PressedKey> CurrentButtons= new Dictionary<MouseButton, PressedKey>();
+        private Dictionary<MouseButton, PressedKey> PreviousButtons= new Dictionary<MouseButton, PressedKey>();
+        
+        
         // When the key was last pressed.
         // used to work out double taps. but is publically available. 
         /// <summary>
         /// float = Time Pressed in millis
         /// </summary>
         private Dictionary<Keys, float> HistoryKeys = new Dictionary<Keys, float>();
+        private Dictionary<MouseButton, float> HistoryMouseButtons = new Dictionary<MouseButton, float>();
 
-        public void Update(GameTime time, KeyboardState kState)
+        public void Update(GameTime time, KeyboardState kState, MouseState mState)
         {
             var delta = (float)time.ElapsedGameTime.TotalSeconds;
             var totalTime = (float)time.TotalGameTime.TotalMilliseconds;
             var pressedKeys = kState.GetPressedKeys();
-
+            
+            SetMouseButtons(delta, totalTime, mState);
             // Check if double clicked
-            var doubleClicked = this.DoubleClicked(pressedKeys, totalTime, this.doubleClickLength);
+            var doubleClickedKeys = this.DoubleClicked(pressedKeys, totalTime, this.doubleClickLength);
 
             // Reset so we only have the most current keys
             CurrentKeys = new Dictionary<Keys, PressedKey>();
@@ -59,14 +50,19 @@ namespace InputTests
                 }
                 else
                 {
-                    CurrentKeys.Add(key, new PressedKey { DurationPressed = 0f, IsDoubleClick = DoubleClicked(key, totalTime, this.doubleClickLength), Key = key });
+                    CurrentKeys.Add(key, new PressedKey { DurationPressed = 0f, IsDoubleClick = DoubleClickedKey(key, totalTime, this.doubleClickLength), Key = key });
                     AddToHistory(key, totalTime);
                 }
             }
             PreviousKeys = CurrentKeys;
         }
 
-        private bool DoubleClicked(Keys key, float timePressed, float clickLimit)
+        private void SetMouseButtons(float delta, float totalTime, MouseState mState)
+        {
+            throw new NotImplementedException();
+        }
+
+        private bool DoubleClickedKey(Keys key, float timePressed, float clickLimit)
         {
             // check to see if a double click happened within a set time, by seeing when the last time a key was pressed.
             return this.HistoryKeys.TryGetValue(key, out var pressed) ? (timePressed - pressed <= clickLimit) : false;
@@ -79,9 +75,9 @@ namespace InputTests
 
         public Dictionary<Keys, PressedKey> PressedKeys => this.CurrentKeys;
 
-        public Dictionary<Keys, float> History => this.HistoryKeys;
+        public Dictionary<Keys, float> HistoryKeyboard => this.HistoryKeys;
 
-        public Dictionary<Keys, bool> DoubleClicked(IEnumerable<Keys> keys, float timePressed, float clickTime)
+        public Dictionary<Keys, bool> DoubleClickedKeys(IEnumerable<Keys> keys, float timePressed, float clickTime)
         {
             // Check the history for keys
             var dbClicked = new Dictionary<Keys, bool>();

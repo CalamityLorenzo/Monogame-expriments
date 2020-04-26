@@ -17,7 +17,6 @@ namespace InputTests
         private SpriteBatch spriteBatch;
         private GraphicsDeviceManager graphics;
         private SpriteFont arialFont;
-        private KeyboardState kState;
 
         private KeysManager kManger;
         private List<string> keysPressedStrings;
@@ -50,8 +49,9 @@ namespace InputTests
 
         protected override void Update(GameTime gameTime)
         {
-            kState = Keyboard.GetState();
-            kManger.Update(gameTime, kState);
+            var kState = Keyboard.GetState();
+            var mState= Mouse.GetState();
+            kManger.Update(gameTime, kState, mState);
             this.keysPressedStrings = kManger.PressedKeys.Select(p => $"{p.Key} : {p.Value}").ToList();
             this.keysPressedwidths = keysPressedStrings.Select(k => arialFont.MeasureString(k)).ToList();
             this.histry = String.Join("\n", kManger.History.Select(o => $"{o.Key} : {o.Value}"));
