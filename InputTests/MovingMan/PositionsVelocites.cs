@@ -50,5 +50,10 @@ namespace InputTests.MovingMan
         {
             throw new NotImplementedException();
         }
+
+        public void Standing()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

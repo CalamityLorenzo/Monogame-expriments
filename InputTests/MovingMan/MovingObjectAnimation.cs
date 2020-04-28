@@ -7,29 +7,32 @@ using System.Text;
 
 namespace InputTests.MovingMan
 {
-    internal class MovableObject : IWalkingMan
+    internal class MovingObjectAnimation : IWalkingMan
     {
         private readonly SpriteBatch spriteBatch;
-        private readonly Texture2D imagetoDo;
+        private readonly Texture2D walkLeft;
+        private readonly Texture2D walkRight;
+        private readonly Texture2D standing;
+        private Texture2D currentTexture;
+
+        private readonly WalkingManAnimations animations;
         private Vector2 _currentPos;
 
         private float velocityX;
         private float velocityY;
-        private BlockAnimationObject bla;
 
-        public MovableObject(SpriteBatch spriteBatch, Texture2D imagetoDo, BlockAnimationObject bla, Vector2 startpos): this(spriteBatch, imagetoDo, startpos)
-        {
-            this.bla = bla;
-            this.bla.Start();
-        }
-
-            public MovableObject(SpriteBatch spriteBatch, Texture2D imagetoDo, Vector2 startpos)
+        public MovingObjectAnimation(SpriteBatch spriteBatch, Texture2D walkLeft, Texture2D walkRight, Texture2D standing, WalkingManAnimations animations, Vector2 startpos)
         {
             this.spriteBatch = spriteBatch;
-            this.imagetoDo = imagetoDo;
+            this.walkLeft = walkLeft;
+            this.walkRight = walkRight;
+            this.standing = standing;
+            this.animations = animations;
             this._currentPos = startpos;
             velocityX = 0f;
             velocityY = 0f;
+            this.currentTexture = standing;
+            animations.Standing();
         }
 
         public Vector2 CurrentPosition => _currentPos;
@@ -41,44 +44,48 @@ namespace InputTests.MovingMan
             velocityY = 0f;
             velocityX = 0f;
 
-            if (bla != null)
-                bla.Update(gameTime, deltaTime);
+            this.animations.Update(gameTime, deltaTime);
         }
 
         public void Draw(GameTime time)
         {
             // we assume that we don't need to sop and create a new abtchj
-            if(bla!=null)
-                spriteBatch.Draw(imagetoDo, this.CurrentPosition, bla.CurrentFrame,  Color.White);
-            else
-                spriteBatch.Draw(imagetoDo, this.CurrentPosition, Color.White);
+
+            spriteBatch.Draw(currentTexture, this.CurrentPosition, animations.CurrentFrame(), Color.White);
 
         }
 
         public void MoveLeft()
         {
             this.velocityX = -44f;
+            this.animations.MoveLeft();
+            this.currentTexture = this.walkLeft;
         }
 
         public void MoveRight()
         {
             this.velocityX = +44f;
+            this.animations.MoveRight();
+
+            this.currentTexture = this.walkRight;
+
         }
 
         public void MoveUp()
         {
             this.velocityY = -44f;
+            this.animations.MoveUp();
+
+            this.currentTexture = this.walkLeft;
+
         }
 
         public void MoveDown()
         {
             this.velocityY = 44f;
-        }
+            this.animations.MoveDown();
 
-        public void Standing()
-        {
-            this.velocityY = 0f;
-            this.velocityX = 0f;
+            this.currentTexture = this.walkRight;
 
         }
 
@@ -91,6 +98,11 @@ namespace InputTests.MovingMan
         public void DoubleClickFire()
         {
             Console.WriteLine("Pew Pew");
+        }
+
+        public void Standing()
+        {
+            this.currentTexture = standing;
         }
     }
 }

@@ -20,7 +20,7 @@ namespace Parrallax.Eightway
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont arial;
-        AngulerFourWayDirection fourway;
+        AngularFourWayDirection fourway;
         private Keyboard4Way _keyboard4Way;
         private ConfigurationData configData;
         private KeyboardState pKState;
@@ -56,7 +56,7 @@ namespace Parrallax.Eightway
             spriteBatch = new SpriteBatch(GraphicsDevice);
 
             // Can rotate
-            this.fourway = new AngulerFourWayDirection (FourDirections.Stopped, 0.5f);
+            this.fourway = new AngularFourWayDirection (FourDirections.Stopped, 0.5f);
             // Allows you to rotate.
             this._keyboard4Way = new Keyboard4Way(this.fourway, player1Keys);
 

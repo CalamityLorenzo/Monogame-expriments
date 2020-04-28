@@ -8,5 +8,6 @@
         void MoveDown();
         void Fire();
         void DoubleClickFire();
+        void Standing();
     }
 }
