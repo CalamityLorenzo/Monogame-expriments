@@ -27,6 +27,7 @@ namespace InputTests
         private MovableObject _mo2;
         private MovableObject _mo3;
         private MovingObjectAnimation _mo4;
+        private CrossHairs _mouse;
 
         internal List<MovableObject> MovableObjects { get; private set; }
         public int CurrentSelectedObject { get; private set; }
@@ -49,7 +50,7 @@ namespace InputTests
             var walkingLeft = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingLeft.png");
             var walkingRight = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingRight.png");
             var standing = Texture2D.FromFile(GraphicsDevice, "./Content/Standing.png");
-
+            var crossHairs = Texture2D.FromFile(GraphicsDevice, "./Content/CrossHairs_one.png");
             var wlFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(walkingLeft.Width, walkingLeft.Height));
             var standingFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(standing.Width, standing.Height));
             var wlAnimation = new BlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
@@ -82,6 +83,7 @@ namespace InputTests
             _mo2 = new MovableObject(this.spriteBatch, Blue40x40, new Vector2(150, 30));
             _mo3 = new MovableObject(this.spriteBatch, walkingLeft, wlAnimation,  new Vector2(220, 30));
             _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, new Vector2(290, 30));
+            _mouse = new CrossHairs(spriteBatch, crossHairs, Mouse.GetState().Position.ToVector2(), new Rectangle(0, 0, this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height - 200));
             this.MovableObjects = new List<MovableObject> { _mo, _mo1, _mo2, _mo3 };
             this.CurrentSelectedObject = 3;
         }
@@ -117,8 +119,10 @@ namespace InputTests
         {
             var kState = Keyboard.GetState();
             var mState = Mouse.GetState();
+
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, kState, Keys.Escape);
+            _mouse.SetPosition(mState.Position.ToVector2());
             //timr
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit
@@ -126,8 +130,9 @@ namespace InputTests
             var current = CheckSelected(iManger);
             this.sendKeys.Update(gameTime, delta, current);
             this.MovableObjects.ForEach(i => i.Update(gameTime, delta));
+            
             _mo4.Update(gameTime, delta);
-
+            _mouse.Update(gameTime, delta);
             base.Update(gameTime);
         }
 
@@ -136,7 +141,8 @@ namespace InputTests
             GraphicsDevice.Clear(Color.CornflowerBlue);
             this.spriteBatch.Begin();
             this.MovableObjects.ForEach(i => i.Draw(gameTime));
-            _mo4.Draw(gameTime); 
+            _mo4.Draw(gameTime);
+            _mouse.Draw(gameTime);
             this.spriteBatch.End();
         }
     }
