@@ -1,6 +1,4 @@
-﻿using InputTests.KeyboardInput;
-using InputTests.MouseInput;
-using KeyboardInput;
+﻿using GameLibrary.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -8,7 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace InputTests
+namespace GameLibrary.AppObjects
 {
     // Which keys are currently being pressed and how long for.
     // This also includes a double click method check.

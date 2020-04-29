@@ -2,10 +2,10 @@
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
+using GameLibrary.Models;
 using inputTests;
 using InputTests.KeyboardInput;
 using InputTests.MovingMan;
-using KeyboardInput;
 using Library.Animation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

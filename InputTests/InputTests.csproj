@@ -7,6 +7,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="KeyboardInput\InputManager.cs" />
+    <Compile Remove="KeyboardInput\MouseButtons.cs" />
+    <Compile Remove="KeyboardInput\PressedKey.cs" />
+    <Compile Remove="KeyboardInput\PressedMouseButton.cs" />
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="Monogame.framework.WindowsDx" Version="3.8.0.1260-develop" />
   </ItemGroup>
 
