@@ -27,7 +27,7 @@ namespace InputTests
         private MovableObject _mo2;
         private MovableObject _mo3;
         private MovingObjectAnimation _mo4;
-        private CrossHairs _mouse;
+        private CrossHairs _mouseHairs;
 
         internal List<MovableObject> MovableObjects { get; private set; }
         public int CurrentSelectedObject { get; private set; }
@@ -78,14 +78,10 @@ namespace InputTests
 
             this.sendKeys = new SendKeyboardInput(p1Controls, iManger);
 
-            _mo = new MovableObject(this.spriteBatch, Red40x40, new Vector2(30, 30));
-            _mo1 = new MovableObject(this.spriteBatch, Green40x40, new Vector2(90, 30));
-            _mo2 = new MovableObject(this.spriteBatch, Blue40x40, new Vector2(150, 30));
-            _mo3 = new MovableObject(this.spriteBatch, walkingLeft, wlAnimation,  new Vector2(220, 30));
-            _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, new Vector2(290, 30));
-            _mouse = new CrossHairs(spriteBatch, crossHairs, Mouse.GetState().Position.ToVector2(), new Rectangle(0, 0, this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height - 200));
-            this.MovableObjects = new List<MovableObject> { _mo, _mo1, _mo2, _mo3 };
-            this.CurrentSelectedObject = 3;
+            _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, new Vector2(30, 500));
+            _mouseHairs = new CrossHairs(spriteBatch, crossHairs, Mouse.GetState().Position.ToVector2(), new Rectangle(0, 0, this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height - 200));
+            this.MovableObjects = new List<MovableObject> {  };
+            this.CurrentSelectedObject = 0;
         }
 
         private IWalkingMan CheckSelected(InputManager manager)
@@ -122,7 +118,7 @@ namespace InputTests
 
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, kState, Keys.Escape);
-            _mouse.SetPosition(mState.Position.ToVector2());
+            _mouseHairs.SetPosition(mState.Position.ToVector2());
             //timr
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit
@@ -132,7 +128,7 @@ namespace InputTests
             this.MovableObjects.ForEach(i => i.Update(gameTime, delta));
             
             _mo4.Update(gameTime, delta);
-            _mouse.Update(gameTime, delta);
+            _mouseHairs.Update(gameTime, delta);
             base.Update(gameTime);
         }
 
@@ -142,7 +138,7 @@ namespace InputTests
             this.spriteBatch.Begin();
             this.MovableObjects.ForEach(i => i.Draw(gameTime));
             _mo4.Draw(gameTime);
-            _mouse.Draw(gameTime);
+            _mouseHairs.Draw(gameTime);
             this.spriteBatch.End();
         }
     }

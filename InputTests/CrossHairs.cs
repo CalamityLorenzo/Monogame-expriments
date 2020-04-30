@@ -33,16 +33,16 @@ namespace InputTests
             }
             else
             {
-                if ((range.Y + range.Height <= mousePos.Y) && range.X + range.Width >= mousePos.X)
-                {
-                    SetCurrentPosition(new Vector2(this.currentPosition.Y, mousePos.X));
-                    return;
-                }
-                else if (range.X + range.Width <= mousePos.X && range.Y + range.Height >= mousePos.Y)
-                {
-                    SetCurrentPosition(new Vector2(mousePos.Y, currentPosition.X));
-                    return;
-                }
+                //if ((range.Y + range.Height <= mousePos.Y) && range.X + range.Width >= mousePos.X)
+                //{
+                //    SetCurrentPosition(new Vector2(this.currentPosition.Y, mousePos.X));
+                //    return;
+                //}
+                //else if (range.X + range.Width <= mousePos.X && range.Y + range.Height >= mousePos.Y)
+                //{
+                //    SetCurrentPosition(new Vector2(mousePos.Y, currentPosition.X));
+                //    return;
+                //}
             }
         }
 
@@ -55,7 +55,7 @@ namespace InputTests
 
         public void Update(GameTime gameTime, float delta)
         {
-
+            // Nothing to see here, or indeed hear here.
         }
 
         public void Draw(GameTime gameTime)

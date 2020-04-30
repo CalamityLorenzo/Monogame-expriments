@@ -43,14 +43,12 @@ namespace InputTests.MovingMan
             _currentPos.Y += velocityY * deltaTime;
             if (velocityX == 0f && velocityY == 0f)
                 Standing();
-            else
-            {
-                velocityY = 0f;
-                velocityX = 0f;
-            }
+            //else
+            //{
+            //    velocityY = 0f;
+            //    velocityX = 0f;
+            //}
             this.animations.Update(gameTime, deltaTime);
-
-            
         }
 
         public void Draw(GameTime time)
@@ -109,6 +107,8 @@ namespace InputTests.MovingMan
         public void Standing()
         {
             this.currentTexture = standing;
+            this.velocityX = 0f;
+            this.velocityY = 0f;
             this.animations.Standing();
         }
     }

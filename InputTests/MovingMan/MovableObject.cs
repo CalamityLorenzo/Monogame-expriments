@@ -38,8 +38,8 @@ namespace InputTests.MovingMan
         {
             _currentPos.X += velocityX * deltaTime;
             _currentPos.Y += velocityY * deltaTime;
-            velocityY = 0f;
-            velocityX = 0f;
+            //velocityY = 0f;
+            //velocityX = 0f;
 
             if (bla != null)
                 bla.Update(gameTime, deltaTime);
