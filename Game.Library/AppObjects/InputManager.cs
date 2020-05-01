@@ -13,13 +13,14 @@ namespace GameLibrary.AppObjects
     public class InputManager
     {
         private float doubleClickLength = 750f; // Time in millisecsond to allow a dobule click
-        private Dictionary<Keys, PressedKey> PreviousKeys = new Dictionary<Keys, PressedKey>();
-        private Dictionary<Keys, PressedKey> CurrentKeys = new Dictionary<Keys, PressedKey>();
-        private Dictionary<MouseButton, PressedMouseButton> CurrentButtons = new Dictionary<MouseButton, PressedMouseButton>();
-        private Dictionary<MouseButton, PressedMouseButton> PreviousButtons = new Dictionary<MouseButton, PressedMouseButton>();
+        private Dictionary<Keys, PressedKey> _PreviousKeys = new Dictionary<Keys, PressedKey>();
+        private HashSet<Keys> _PreviousDown;
+        private Dictionary<Keys, PressedKey> _CurrentPressedKeys = new Dictionary<Keys, PressedKey>();
+        private Dictionary<MouseButton, PressedMouseButton> _CurrentButtons = new Dictionary<MouseButton, PressedMouseButton>();
+        private Dictionary<MouseButton, PressedMouseButton> _PreviousButtons = new Dictionary<MouseButton, PressedMouseButton>();
 
-        private HashSet<Keys> _ReleasedKeys = new HashSet<Keys>();
-
+        private HashSet<Keys> _IsUp = new HashSet<Keys>();
+        private HashSet<Keys> _IsDown = new HashSet<Keys>();
 
 
         // When the key was last pressed.
@@ -38,39 +39,46 @@ namespace GameLibrary.AppObjects
             var totalTime = (float)time.TotalGameTime.TotalMilliseconds;
             var pressedKeys = kState.GetPressedKeys();
 
-            SetMouseButtons(delta, totalTime, mState);
+            SetMouseState(delta, totalTime, mState);
 
-            // Check if double clicked
+            // Compare last with now for upsies.
+
 
             // Reset so we only have the most current keys
-            CurrentKeys = new Dictionary<Keys, PressedKey>();
+            _CurrentPressedKeys = new Dictionary<Keys, PressedKey>();
+            _IsDown = new HashSet<Keys>();
             var doubleClickedKeys = this.DoubleClickedKeys(pressedKeys, totalTime, this.doubleClickLength);
-            foreach (var key in pressedKeys)
-            {
+            foreach (var key in pressedKeys){
                 // Key already pressed
-                if (PreviousKeys.ContainsKey(key))
+                if (_PreviousKeys.ContainsKey(key))
                 {
-                    var val = PreviousKeys[key];
+                    var val = _PreviousKeys[key];
                     val.DurationPressed += delta;
                     // you can only have double cliced for like moment.
                     val.IsDoubleClick = false;
-                    CurrentKeys.Add(key, val);
+                    _CurrentPressedKeys.Add(key, val);
                 }
                 else
                 {
                     // freshly pressed.
-                    CurrentKeys.Add(key, new PressedKey { DurationPressed = 0f, IsDoubleClick = DoubleClicked(key, totalTime, this.doubleClickLength), Key = key });
+                    _IsDown.Add(key);
+                    _CurrentPressedKeys.Add(key, new PressedKey { DurationPressed = 0f, IsDoubleClick = DoubleClicked(key, totalTime, this.doubleClickLength), Key = key });
                     AddToHistory(key, totalTime);
                 }
             }
 
-            // Was pressed but now is not (Released Keys)
-            this._ReleasedKeys = new HashSet<Keys>(this.PreviousKeys.Where(p => pressedKeys.Any(pk => pk == p.Key)).Select(p=>p.Key));
+            // is when it has been released.
+            // So this should be the same keys as added to the history.
+            // find kets that were in the previous run, that are not in the current
 
-            PreviousKeys = CurrentKeys;
+            this._IsUp = new HashSet<Keys>(this._PreviousKeys.Where(pk=>!_CurrentPressedKeys.Any(cp=>cp.Key == pk.Key)).Select(p=>p.Key));
+
+            // Was pressed but now is not (Released Keys)
+            _PreviousKeys = _CurrentPressedKeys;
+            
         }
 
-        private void SetMouseButtons(float delta, float totalTime, MouseState mState)
+        private void SetMouseState(float delta, float totalTime, MouseState mState)
         {
             SetReleasedButtons(delta, totalTime, mState);
             SetPressedButtons(delta, totalTime, mState);
@@ -78,13 +86,13 @@ namespace GameLibrary.AppObjects
 
         private void SetPressedButtons(float delta, float totalTime, MouseState mState)
         {
-            CurrentButtons = new Dictionary<MouseButton, PressedMouseButton>();
-            ButtonPressed(MouseButton.Left, mState.LeftButton, this.PreviousButtons, CurrentButtons, delta, totalTime);
-            ButtonPressed(MouseButton.Right, mState.RightButton, this.PreviousButtons, CurrentButtons, delta, totalTime);
-            ButtonPressed(MouseButton.Middle, mState.MiddleButton, this.PreviousButtons, CurrentButtons, delta, totalTime);
-            ButtonPressed(MouseButton.Four, mState.XButton1, this.PreviousButtons, CurrentButtons, delta, totalTime);
-            ButtonPressed(MouseButton.Five, mState.XButton2, this.PreviousButtons, CurrentButtons, delta, totalTime);
-            PreviousButtons = CurrentButtons;
+            _CurrentButtons = new Dictionary<MouseButton, PressedMouseButton>();
+            ButtonPressed(MouseButton.Left, mState.LeftButton, this._PreviousButtons, _CurrentButtons, delta, totalTime);
+            ButtonPressed(MouseButton.Right, mState.RightButton, this._PreviousButtons, _CurrentButtons, delta, totalTime);
+            ButtonPressed(MouseButton.Middle, mState.MiddleButton, this._PreviousButtons, _CurrentButtons, delta, totalTime);
+            ButtonPressed(MouseButton.Four, mState.XButton1, this._PreviousButtons, _CurrentButtons, delta, totalTime);
+            ButtonPressed(MouseButton.Five, mState.XButton2, this._PreviousButtons, _CurrentButtons, delta, totalTime);
+            _PreviousButtons = _CurrentButtons;
         }
 
         private void SetReleasedButtons(float delta, float totalTime, MouseState mState)
@@ -103,7 +111,7 @@ namespace GameLibrary.AppObjects
 
         private void ButtonReleased(MouseButton btn, ButtonState mouseButton)
         {
-            if (this.PreviousButtons.ContainsKey(btn) && mouseButton == ButtonState.Released)
+            if (this._PreviousButtons.ContainsKey(btn) && mouseButton == ButtonState.Released)
                 this.ReleasedButtons.Add(btn);
         }
 
@@ -136,7 +144,6 @@ namespace GameLibrary.AppObjects
             return this.HistoryMouseButtons.TryGetValue(btn, out var pressed) ? (timePressed - pressed <= clickLimit) : false;
         }
 
-
         private bool DoubleClicked(Keys key, float timePressed, float clickLimit)
         {
             // check to see if a double click happened within a set time, by seeing when the last time a key was pressed.
@@ -153,13 +160,14 @@ namespace GameLibrary.AppObjects
             this.HistoryMouseButtons[button] = timePressed;
         }
 
+        public Dictionary<Keys, PressedKey> PressedKeys() => this._CurrentPressedKeys;
         public Dictionary<Keys, bool> DoubleClickedKeys(IEnumerable<Keys> keys, float timePressed, float clickTime)
         {
             // Check the history for keys
             var dbClicked = new Dictionary<Keys, bool>();
             foreach (var key in keys)
             { // if we are presnt in current keys it;s a false
-                if (!this.PreviousKeys.ContainsKey(key))
+                if (!this._PreviousKeys.ContainsKey(key))
                     dbClicked[key] = this.HistoryKeys.TryGetValue(key, out var pressed) ? (timePressed - pressed <= clickTime) : false;
                 else
                     dbClicked[key] = false;
@@ -167,13 +175,15 @@ namespace GameLibrary.AppObjects
             return dbClicked;
         }
 
-        public Dictionary<Keys, PressedKey> PressedKeys() => this.CurrentKeys;
-        public HashSet<Keys> ReleasedKeys() => this._ReleasedKeys;
-        public Dictionary<MouseButton, PressedMouseButton> PressedMouseButtons() => this.CurrentButtons;
+        public Dictionary<MouseButton, PressedMouseButton> PressedMouseButtons() => this._CurrentButtons;
         public HashSet<MouseButton> ReleasedMouseButtons() => this.ReleasedButtons;
 
         public Dictionary<Keys, float> HistoryKeyboard() => this.HistoryKeys;
         public Dictionary<Keys, float> HistoryMouse() => this.HistoryKeys;
+        
+        // Theses are only true once, then they are discarded.
+        public HashSet<Keys> KeysUp() => this._IsUp;
+        public HashSet<Keys> KeysDown() => this._IsDown;
 
     }
 }
