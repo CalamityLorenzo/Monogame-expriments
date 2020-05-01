@@ -18,12 +18,32 @@ namespace InputTests.MovingMan
 
         public void DoubleClickFire()
         {
-            throw new NotImplementedException();
+            
+        }
+
+        public void EndMoveDown()
+        {
+            
+        }
+
+        public void EndMoveLeft()
+        {
+            
+        }
+
+        public void EndMoveRight()
+        {
+            
+        }
+
+        public void EndMoveUp()
+        {
+            
         }
 
         public void Fire()
         {
-            throw new NotImplementedException();
+            
         }
 
         public void MoveDown()

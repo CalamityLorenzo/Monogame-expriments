@@ -93,7 +93,6 @@ namespace InputTests.MovingMan
 
         }
 
-
         public void Fire()
         {
             Console.WriteLine("Pew Pew");
@@ -110,6 +109,30 @@ namespace InputTests.MovingMan
             this.velocityX = 0f;
             this.velocityY = 0f;
             this.animations.Standing();
+        }
+
+        public void EndMoveLeft()
+        {
+            if(velocityX<0)
+            this.velocityX = 0f;
+        }
+
+        public void EndMoveRight()
+        {
+            if(velocityX>0)
+                this.velocityX = 0f;
+        }
+
+        public void EndMoveDown()
+        {
+            if(velocityY>0)
+            this.velocityY = 0f;
+        }
+
+        public void EndMoveUp()
+        {
+            if(velocityY<0)
+            this.velocityY = 0f;
         }
     }
 }

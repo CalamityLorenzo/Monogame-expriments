@@ -21,15 +21,10 @@ namespace InputTests
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
         private SpriteFont arialFont;
         private InputManager iManger;
-        private SendKeyboardInput sendKeys;
-        private MovableObject _mo;
-        private MovableObject _mo1;
-        private MovableObject _mo2;
-        private MovableObject _mo3;
+        private IsDownIsUp sendKeys;
         private MovingObjectAnimation _mo4;
         private CrossHairs _mouseHairs;
 
-        internal List<MovableObject> MovableObjects { get; private set; }
         public int CurrentSelectedObject { get; private set; }
 
         public MovingObjectGame()
@@ -76,40 +71,13 @@ namespace InputTests
                 SecondFire = Keys.Space
             };
 
-            this.sendKeys = new SendKeyboardInput(p1Controls, iManger);
+            this.sendKeys = new IsDownIsUp(p1Controls, iManger);
 
             _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, new Vector2(30, 500));
             _mouseHairs = new CrossHairs(spriteBatch, crossHairs, Mouse.GetState().Position.ToVector2(), new Rectangle(0, 0, this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height - 200));
-            this.MovableObjects = new List<MovableObject> {  };
             this.CurrentSelectedObject = 0;
         }
 
-        private IWalkingMan CheckSelected(InputManager manager)
-        {
-            if(manager.ReleasedMouseButtons().Contains(MouseButton.Left)){
-                var next = this.CurrentSelectedObject += 1;
-                if (next >= this.MovableObjects.Count+1)
-                    next = 0;
-                this.CurrentSelectedObject = next;
-                if (CurrentSelectedObject == MovableObjects.Count)
-                    return _mo4;
-
-                return MovableObjects[next];
-            }
-            if (manager.ReleasedMouseButtons().Contains(MouseButton.Right))
-            {
-                var next = this.CurrentSelectedObject -= 1;
-                if (next < 0)
-                    next = this.MovableObjects.Count;
-                this.CurrentSelectedObject = next;
-                if (CurrentSelectedObject == MovableObjects.Count)
-                    return _mo4;
-                return MovableObjects[next];
-            }
-            if (CurrentSelectedObject == MovableObjects.Count)
-                return _mo4;
-            return MovableObjects[CurrentSelectedObject];
-        }
 
         protected override void Update(GameTime gameTime)
         {
@@ -123,9 +91,7 @@ namespace InputTests
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit
             this.iManger.Update(gameTime, kState, mState );
-            var current = CheckSelected(iManger);
-            this.sendKeys.Update(gameTime, delta, current);
-            this.MovableObjects.ForEach(i => i.Update(gameTime, delta));
+            this.sendKeys.Update(gameTime, delta, _mo4);
             
             _mo4.Update(gameTime, delta);
             _mouseHairs.Update(gameTime, delta);
@@ -136,7 +102,6 @@ namespace InputTests
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
             this.spriteBatch.Begin();
-            this.MovableObjects.ForEach(i => i.Draw(gameTime));
             _mo4.Draw(gameTime);
             _mouseHairs.Draw(gameTime);
             this.spriteBatch.End();
