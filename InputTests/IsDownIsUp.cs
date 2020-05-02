@@ -31,8 +31,8 @@ namespace inputTests
             if (isDownKeys.Contains(controls.Up) && !currentKeys.ContainsKey(controls.Down)) actor.MoveUp();
             else if (isDownKeys.Contains(controls.Down) && !currentKeys.ContainsKey(controls.Up)) actor.MoveDown();
 
-            if (isDownKeys.Contains(controls.Left) && !currentKeys.ContainsKey(controls.Right)) actor.MoveLeft();
-            else if (isDownKeys.Contains(controls.Right) && !currentKeys.ContainsKey(controls.Left)) actor.MoveRight();
+            if (isDownKeys.Contains(controls.Left)) actor.MoveLeft();
+            else if (isDownKeys.Contains(controls.Right)) actor.MoveRight();
 
             if (isUpKeys.Contains(controls.Up)) actor.EndMoveUp();
             else if (isUpKeys.Contains(controls.Down)) actor.EndMoveDown();
