@@ -13,6 +13,8 @@ namespace InputTests.MovingMan
         private Vector2 topLeft;
         private readonly Dimensions widthHeight;
 
+        public double ViewingAngle { get; private set; }
+
         public MovingHead(Vector2 topLeft, Dimensions widthHeight)
         {
             this.topLeft = topLeft;
@@ -27,7 +29,12 @@ namespace InputTests.MovingMan
 
         public void SetViewDestination(Vector2 terminus)
         {
-           // 
+            //
+            var currentHomr = new Vector2(this.topLeft.X + (this.widthHeight.Width / 2), this.topLeft.Y);
+            var actual = Vector2.Subtract(terminus, currentHomr);
+            var unit = Vector2.Normalize(actual);
+            var radi = Math.Atan2(-unit.Y, unit.X);
+            this.ViewingAngle = radi * 180/3.14159;
         }
 
         public void Update(GameTime gametime, float deltaTime)

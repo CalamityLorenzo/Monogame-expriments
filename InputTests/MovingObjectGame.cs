@@ -21,6 +21,7 @@ namespace InputTests
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
         private SpriteFont arialFont;
         private InputManager iManger;
+        private MovingHead headsIWin;
         private IsDownIsUp sendKeys;
         private MovingObjectAnimation _mo4;
         private CrossHairs _mouseHairs;
@@ -71,9 +72,11 @@ namespace InputTests
                 SecondFire = Keys.Space
             };
 
+            this.headsIWin  = new MovingHead(new Vector2(200,300), new Dimensions(80, 100));
+
             this.sendKeys = new IsDownIsUp(p1Controls, iManger);
 
-            _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, new Vector2(30, 500));
+            _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, new Vector2(200, 300));
             _mouseHairs = new CrossHairs(spriteBatch, crossHairs, Mouse.GetState().Position.ToVector2(), new Rectangle(0, 0, this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height - 200));
             this.CurrentSelectedObject = 0;
         }
@@ -95,6 +98,8 @@ namespace InputTests
             
             _mo4.Update(gameTime, delta);
             _mouseHairs.Update(gameTime, delta);
+            this.headsIWin.SetViewDestination(mState.Position.ToVector2());
+            this.headsIWin.Update(gameTime, delta);
             base.Update(gameTime);
         }
 
@@ -104,6 +109,8 @@ namespace InputTests
             this.spriteBatch.Begin();
             _mo4.Draw(gameTime);
             _mouseHairs.Draw(gameTime);
+            var mString  = this.arialFont.MeasureString($"Angle : {this.headsIWin.ViewingAngle}");
+            this.spriteBatch.DrawString(this.arialFont, $"Angle : {this.headsIWin.ViewingAngle}", new Vector2(10, 10), Color.White);
             this.spriteBatch.End();
         }
     }
