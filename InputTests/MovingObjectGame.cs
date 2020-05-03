@@ -58,9 +58,9 @@ namespace InputTests
                 {"Standing",  standingAnimation }
             });
 
-            var Red40x40 = this.spriteBatch.CreateFilleRectTexture(new Rectangle(0, 0, 40, 40), Color.Red);
-            var Green40x40 = this.spriteBatch.CreateFilleRectTexture(new Rectangle(0, 0, 40, 40), Color.Green);
-            var Blue40x40 = this.spriteBatch.CreateFilleRectTexture(new Rectangle(0, 0, 40, 40), Color.Black);
+            var Red40x40 = this.spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 40, 40), Color.Red);
+            var Green40x40 = this.spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 40, 40), Color.Green);
+            var Blue40x40 = this.spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 40, 40), Color.Black);
 
             var p1Controls = new PlayerControlKeys
             {
@@ -76,7 +76,7 @@ namespace InputTests
 
             this.sendKeys = new IsDownIsUp(p1Controls, iManger);
 
-            _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, new Vector2(200, 300));
+            _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, headsIWin, new Vector2(200, 300));
             _mouseHairs = new CrossHairs(spriteBatch, crossHairs, Mouse.GetState().Position.ToVector2(), new Rectangle(0, 0, this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height - 200));
             this.CurrentSelectedObject = 0;
         }
@@ -96,10 +96,10 @@ namespace InputTests
             this.iManger.Update(gameTime, kState, mState );
             this.sendKeys.Update(gameTime, delta, _mo4);
             
+            this.headsIWin.SetViewDestination(mState.Position.ToVector2());
             _mo4.Update(gameTime, delta);
             _mouseHairs.Update(gameTime, delta);
-            this.headsIWin.SetViewDestination(mState.Position.ToVector2());
-            this.headsIWin.Update(gameTime, delta);
+            //this.headsIWin.Update(gameTime, delta);
             base.Update(gameTime);
         }
 

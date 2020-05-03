@@ -184,7 +184,6 @@ namespace GameLibrary.Drawing
                 var Temp = new Point(StartPos.X, StartPos.Y); ;
                 StartPos = new Point(EndPos.X, EndPos.Y);
                 EndPos = new Point(Temp.X, Temp.Y);
-
             }
 
             // THe difference between the two Vector2s

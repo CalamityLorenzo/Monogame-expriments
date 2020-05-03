@@ -32,7 +32,7 @@ namespace GameLibrary.Extensions
 
         }
 
-        public static Texture2D CreateFilleRectTexture(this SpriteBatch @this, Rectangle dimensions, Color colour)
+        public static Texture2D CreateFilledRectTexture(this SpriteBatch @this, Rectangle dimensions, Color colour)
         {
             var filledColour = Enumerable.Range(0, dimensions.Width * dimensions.Height).Select(o=>colour);
             var texture = new Texture2D(@this.GraphicsDevice, dimensions.Width, dimensions.Height);

@@ -1,8 +1,10 @@
-﻿using Library.Animation;
+﻿using GameLibrary.Extensions;
+using Library.Animation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
+using System.Drawing.Drawing2D;
 using System.Text;
 
 namespace InputTests.MovingMan
@@ -14,14 +16,15 @@ namespace InputTests.MovingMan
         private readonly Texture2D walkRight;
         private readonly Texture2D standing;
         private Texture2D currentTexture;
-
+        private MovingHead head;
         private readonly WalkingManAnimations animations;
         private Vector2 _currentPos;
 
         private float velocityX;
         private float velocityY;
+        private Texture2D _magiDot;
 
-        public MovingObjectAnimation(SpriteBatch spriteBatch, Texture2D walkLeft, Texture2D walkRight, Texture2D standing, WalkingManAnimations animations, Vector2 startpos)
+        public MovingObjectAnimation(SpriteBatch spriteBatch, Texture2D walkLeft, Texture2D walkRight, Texture2D standing, WalkingManAnimations animations, MovingHead head, Vector2 startpos)
         {
             this.spriteBatch = spriteBatch;
             this.walkLeft = walkLeft;
@@ -32,6 +35,8 @@ namespace InputTests.MovingMan
             velocityX = 0f;
             velocityY = 0f;
             this.currentTexture = standing;
+            this.head = head;
+            head.SetViewDestination(_currentPos);
             animations.Standing();
         }
 
@@ -48,6 +53,10 @@ namespace InputTests.MovingMan
             //    velocityY = 0f;
             //    velocityX = 0f;
             //}
+            this.head.SetOrigin(new Vector2(_currentPos.X + 30, _currentPos.Y));
+            this.head.Update(gameTime, deltaTime);
+            if (this._magiDot == null)
+                _magiDot = spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 2, 2), Color.Black);
             this.animations.Update(gameTime, deltaTime);
         }
 
@@ -56,7 +65,7 @@ namespace InputTests.MovingMan
             // we assume that we don't need to sop and create a new abtchj
 
             spriteBatch.Draw(currentTexture, this.CurrentPosition, animations.CurrentFrame(), Color.White);
-
+            spriteBatch.Draw(_magiDot, this.head.TopLeft, Color.White);
         }
 
         public void MoveLeft()
