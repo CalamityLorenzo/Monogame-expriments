@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameLibrary.Extensions;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
@@ -26,7 +27,7 @@ namespace PlayerCharacter
         protected override void LoadContent()
         {
             this.Content.RootDirectory = "./Content";
-
+            var this._spriteBatch.CreateFilledRectTexture()
             this.arial = this.Content.Load<SpriteFont>("NewArial");
         }
 
