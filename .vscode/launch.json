@@ -16,6 +16,17 @@
             "stopAtEntry": false
         },
         {
+            "name": ".NET Core Launch (Player)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/PlayerCharacter/bin/Debug/netcoreapp3.1/PlayerCharacter.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/PlayerCharacter",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",

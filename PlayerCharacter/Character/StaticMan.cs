@@ -14,7 +14,7 @@ namespace PlayerCharacter.Character
         private readonly IAnimations _headAnimation;
         private readonly IAnimations _bodyAnimation;
         private readonly Vector2 _currentPosition;
-        private readonly Vector2 _currentVelocity;
+        private Vector2 _currentVelocity;
 
         public StaticMan(SpriteBatch spriteBatch, Texture2D head, Texture2D body, IAnimations headAnimation, IAnimations bodyAnimation, Vector2 topLeft, Vector2 startVelocity)
         {
@@ -41,5 +41,19 @@ namespace PlayerCharacter.Character
             sb.Draw(this._body, this._currentPosition.AddY(headDimensions.Height), bodyDimensions, Color.White);
         }
 
+        public void SetXVelocity(float X)
+        {            
+            SetVelocity(new Vector2(X, this._currentVelocity.Y));
+        }
+
+        public void SetYVelocity(float Y)
+        {
+            SetVelocity(new Vector2(this._currentVelocity.X, Y));
+        }
+
+        public void SetVelocity(Vector2 settings)
+        {
+            this._currentVelocity = settings;
+        }
     }
 }
