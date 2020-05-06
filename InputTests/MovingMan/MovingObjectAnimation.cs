@@ -48,11 +48,7 @@ namespace InputTests.MovingMan
             _currentPos.Y += velocityY * deltaTime;
             if (velocityX == 0f && velocityY == 0f)
                 Standing();
-            //else
-            //{
-            //    velocityY = 0f;
-            //    velocityX = 0f;
-            //}
+            
             this.head.SetOrigin(new Vector2(_currentPos.X + 30, _currentPos.Y));
             this.head.Update(gameTime, deltaTime);
             if (this._magiDot == null)

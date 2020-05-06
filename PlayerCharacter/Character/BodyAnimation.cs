@@ -18,5 +18,10 @@ namespace PlayerCharacter.Character
         {
             return body;
         }
+
+        public void Update(GameTime gameTime, float delta)
+        {
+
+        }
     }
 }

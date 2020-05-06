@@ -18,5 +18,10 @@ namespace PlayerCharacter.Character
         {
             return head;
         }
+
+        public void Update(GameTime gameTime, float delta)
+        {
+            // Pick a frame
+        }
     }
 }
