@@ -74,7 +74,7 @@ namespace PlayerCharacter
 
             });
 
-            var headAnims = new HeadAnimations(headRect);
+            //var headAnims = new HeadAnimations(headRect);
 
             this.mousePWidth = this._spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 50, 3), Color.Red);
             this.mouseHWidth = this._spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 3, 50), Color.Red);
@@ -82,7 +82,7 @@ namespace PlayerCharacter
             this.MPointer = new MouseRelativePoint(new Point(200, 180));
             var statHeader  = new StaticHead(new Vector2(200, 180), StaticHead.StaticHeadState.Left, MPointer);
 
-            this.statMan = new StaticMan(_spriteBatch, walkingLeft, walkingRight, standing, head, statHeader, headAnims, bodyAnims, new Vector2(200, 150), new Vector2(0f, 0f));
+            //this.statMan = new StaticMan(_spriteBatch, walkingLeft, walkingRight, standing, head, statHeader, headAnims, bodyAnims, new Vector2(200, 150), new Vector2(0f, 0f));
 
 
             this.arial = this.Content.Load<SpriteFont>("NewArial");
