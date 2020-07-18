@@ -4,6 +4,15 @@
     // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
     "version": "0.2.0",
     "configurations": [
+    {
+        "name": "Attach",
+        "port": 9229,
+        "request": "attach",
+        "skipFiles": [
+            "<node_internals>/**"
+        ],
+        "type": "pwa-node"
+    },
         {
             "name": ".NET Core Launch (console)",
             "type": "coreclr",
@@ -23,6 +32,17 @@
             "program": "${workspaceFolder}/PlayerCharacter/bin/Debug/netcoreapp3.1/PlayerCharacter.dll",
             "args": [],
             "cwd": "${workspaceFolder}/PlayerCharacter",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
+            "name": ".NET Core Launch (INputs)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/InputTests/bin/Debug/netcoreapp3.1/InputTEsts.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/InputTests",
             "console": "internalConsole",
             "stopAtEntry": false
         },
