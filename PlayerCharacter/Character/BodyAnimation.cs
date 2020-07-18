@@ -1,27 +1,79 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Library.Animation;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace PlayerCharacter.Character
 {
-    class BodyAnimations : IAnimations
+    class BodyAnimations : AnimationHost, IWalkingAnimationState
     {
-        private readonly Rectangle body;
+        private Dictionary<string, BlockAnimationObject> animations;
+        private string currentAnim;
 
-        public BodyAnimations(Rectangle body)
+        public BodyAnimations(Dictionary<string, BlockAnimationObject> animations)
         {
-            this.body = body;
+            this.animations = animations;
         }
 
-        public Rectangle CurrentFrame()
+        public void ClimbDown()
         {
-            return body;
+            throw new NotImplementedException();
         }
 
-        public void Update(GameTime gameTime, float delta)
+        public void ClimbUp()
         {
+            throw new NotImplementedException();
+        }
 
+        public void WalkDown()
+        {
+            if (currentAnim != "WalkDown")
+            {
+                this.SetCurrent(animations["WalkDown"]);
+                this.StartCurrent();
+                currentAnim = "WalkDown";
+            }
+        }
+
+        public void WalkLeft()
+        {
+            if (currentAnim != "WalkLeft")
+            {
+                this.SetCurrent(animations["WalkLeft"]);
+                this.StartCurrent();
+                currentAnim = "WalkLeft";
+            }
+        }
+
+        public void WalkRight()
+        {
+            if (currentAnim != "WalkRight")
+            {
+                this.SetCurrent(animations["WalkRight"]);
+                this.StartCurrent();
+                currentAnim = "WalkRight";
+            }
+        }
+
+        public void WalkUp()
+        {
+            if (currentAnim != "WalkUp")
+            {
+                this.SetCurrent(animations["WalkUp"]);
+                this.StartCurrent();
+                currentAnim = "WalkUp";
+            }
+        }
+
+        public void Standing()
+        {
+            if (currentAnim != "Standing")
+            {
+                this.SetCurrent(animations["Standing"]);
+                this.StartCurrent();
+                currentAnim = "Standing";
+            }
         }
     }
 }

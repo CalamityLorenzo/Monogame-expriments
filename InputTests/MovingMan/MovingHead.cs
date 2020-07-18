@@ -37,6 +37,7 @@ namespace InputTests.MovingMan
                 this.centralPoint = new Vector2(this.topLeft.X + (this.widthHeight.Width / 2), this.topLeft.Y);
             }
         }
+
         public void SetViewDestination(Vector2 terminus)
         {
             this._viewTerminus = terminus;

@@ -15,7 +15,7 @@ namespace PlayerCharacter.Character
     {
         internal enum StaticManState
         {
-            Unknown=0,
+            Unknown = 0,
             WalkingLeft,
             WalkingRight,
             WalkingUp,
@@ -32,11 +32,14 @@ namespace PlayerCharacter.Character
         private HashSet<StaticManState> _Supplomento = new HashSet<StaticManState>();
 
         private readonly SpriteBatch sb;
+        private readonly Texture2D _walkLeft;
+        private readonly Texture2D _walkRight;
         private readonly Texture2D _head;
         private readonly Texture2D _body;
+        private readonly StaticHead _staticHead;
         private readonly IAnimations _headAnimation;
-        private readonly IAnimations _bodyAnimation;
-        
+        private readonly BodyAnimations _bodyAnimation;
+
         private Vector2 _currentPosition;
         private Vector2 _previousPosition;
 
@@ -47,31 +50,43 @@ namespace PlayerCharacter.Character
         private Vector2 _mousePosition;
 
 
-        public StaticMan(SpriteBatch spriteBatch, Texture2D head, Texture2D body, IAnimations headAnimation, IAnimations bodyAnimation, Vector2 topLeft, Vector2 startVelocity)
+        public StaticMan(SpriteBatch spriteBatch, Texture2D walkLeft, Texture2D walkRight, Texture2D head, Texture2D body, StaticHead staticHead, IAnimations headAnimation, BodyAnimations bodyAnimation, Vector2 topLeft, Vector2 startVelocity)
         {
             this.sb = spriteBatch;
+            this._walkLeft = walkLeft;
+            this._walkRight = walkRight;
             this._head = head;
             this._body = body;
+            this._staticHead = staticHead;
             this._headAnimation = headAnimation;
             this._bodyAnimation = bodyAnimation;
             this._currentPosition = topLeft;
             this._currentVelocity = startVelocity;
+
+            staticHead.SetPosition(this._currentPosition.AddX(headAnimation.CurrentFrame().Width / 2));
         }
 
         public void Update(GameTime gameTime, float deltaTime)
         {
-    // Position
+            // Position
             _currentPosition.X += this._currentVelocity.X * deltaTime;
             _currentPosition.Y += this._currentVelocity.Y * deltaTime;
-   // Update character state
+            // Update character state
             UpdateCharacterStates();
             UpdateCharacter();
-   // update the animation
+          
+            // update the animation
             _headAnimation.Update(gameTime, deltaTime);
             _bodyAnimation.Update(gameTime, deltaTime);
+
+
             var bodyFrame = _bodyAnimation.CurrentFrame();
             var headFrame = _headAnimation.CurrentFrame();
-    // Current size of our personage.
+
+            _staticHead.SetPosition(this._currentPosition.AddX(headFrame.Width / 2));
+            _staticHead.Update(gameTime, deltaTime);
+
+            // Current size of our personage.
             _dimensions = new Dimensions(bodyFrame.Width >= headFrame.Width ? bodyFrame.X : headFrame.Y, bodyFrame.Y + headFrame.Y);
 
             // begin the circle of liiiiiiife
@@ -81,12 +96,31 @@ namespace PlayerCharacter.Character
 
         private void UpdateCharacter()
         {
-            if (this._currentStates.Contains(StaticManState.WalkingLeft)) {
+            if (this._currentStates.Contains(StaticManState.WalkingLeft))
+            {
+                // We can maybe finangle rates here too.
                 this._bodyAnimation.WalkLeft();
-                
-                    }
-        }
+                this._staticHead.SetDirection(StaticHead.StaticHeadState.Left);
+            }
+            else if (this._currentStates.Contains(StaticManState.WalkingRight))
+            {
+                this._bodyAnimation.WalkRight();
+                this._staticHead.SetDirection(StaticHead.StaticHeadState.Right);
+            }
 
+            if (this._currentStates.Contains(StaticManState.WalkingUp))
+            {
+                // We can maybe finangle rates here too.
+                this._bodyAnimation.WalkUp();
+                this._staticHead.SetDirection(StaticHead.StaticHeadState.Up);
+            }
+            else if (this._currentStates.Contains(StaticManState.WalkingDown))
+            {
+                this._bodyAnimation.WalkDown();
+                this._staticHead.SetDirection(StaticHead.StaticHeadState.Left);
+            }
+
+        }
 
         // depending on the current actions being applied
         // to position to t
@@ -96,7 +130,7 @@ namespace PlayerCharacter.Character
             // FIrst off work out what state(s) we are in before we action them
             if (this._currentVelocity.X > 0f) this._currentStates.Add(StaticManState.WalkingLeft);
             if (this._currentVelocity.X < 0f) this._currentStates.Add(StaticManState.WalkingRight);
-            
+
             if (this._currentVelocity.Y < 0f) this._currentStates.Add(StaticManState.WalkingUp);
             if (this._currentVelocity.Y > 0f) this._currentStates.Add(StaticManState.WalkingDown);
 
@@ -142,6 +176,7 @@ namespace PlayerCharacter.Character
         public void SetMouseLook(Vector2 MousePosition)
         {
             this._mousePosition = MousePosition;
+            this._staticHead.MouseLook(_mousePosition);
         }
 
         public void FireWeapon()
@@ -159,7 +194,6 @@ namespace PlayerCharacter.Character
         public Dimensions Dimensions => _dimensions;
 
         public Rectangle CurrentPosition() => new Rectangle(_currentPosition.ToPoint(), _dimensions.ToPoint());
-
 
     }
 }

@@ -8,6 +8,10 @@ using Microsoft.Xna.Framework;
 
 namespace inputTests
 {
+
+    /// <summary>
+    ///  Is key Down, or is Key Up.
+    /// </summary>
     public class IsDownIsUp
     {
         private readonly PlayerControlKeys controls;

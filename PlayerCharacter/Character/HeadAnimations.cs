@@ -1,27 +1,81 @@
-﻿using Microsoft.Xna.Framework;
+﻿using Library.Animation;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
 namespace PlayerCharacter.Character
 {
-    class HeadAnimations : IAnimations
+    class HeadAnimations : AnimationHost
     {
-        private readonly Rectangle head;
+        
+        private readonly Dictionary<string, BlockAnimationObject> animations;
+        private string currentAnim;
 
-        public HeadAnimations(Rectangle head)
+        public HeadAnimations(Dictionary<string, BlockAnimationObject> animations)
         {
-            this.head = head;
+            this.animations = animations;
         }
 
-        public Rectangle CurrentFrame()
+       public void LookLeft()
         {
-            return head;
+            if (currentAnim != "LookLeft")
+            {
+                this.SetCurrent(animations["LookLeft"]);
+                this.StartCurrent();
+                currentAnim = "LookLeft";
+            }
         }
 
-        public void Update(GameTime gameTime, float delta)
+        public void LookRight()
         {
-            // Pick a frame
+            if (currentAnim != "LookRight")
+            {
+                this.SetCurrent(animations["LookRight"]);
+                this.StartCurrent();
+                currentAnim = "LookRight";
+            }
         }
+
+        public void LookUp()
+        {
+            if (currentAnim != "LookUp")
+            {
+                this.SetCurrent(animations["LookUp"]);
+                this.StartCurrent();
+                currentAnim = "LookUp";
+            }
+        }
+
+        public void LookDown()
+        {
+            if (currentAnim != "LookDown")
+            {
+                this.SetCurrent(animations["LookDown"]);
+                this.StartCurrent();
+                currentAnim = "LookDown";
+            }
+        }
+
+        public void LookUpRight()
+        {
+            if (currentAnim != "LookUpRight")
+            {
+                this.SetCurrent(animations["LookUpRight"]);
+                this.StartCurrent();
+                currentAnim = "LookUpRight";
+            }
+        }
+        public void LookUpLeft()
+        {
+            if (currentAnim != "LookUpLeft")
+            {
+                this.SetCurrent(animations["LookUpLeft"]);
+                this.StartCurrent();
+                currentAnim = "LookUpLeft";
+            }
+        }
+
+
     }
 }
