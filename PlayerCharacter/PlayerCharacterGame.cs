@@ -74,7 +74,7 @@ namespace PlayerCharacter
 
             });
 
-            var headAnims = new HeadAnimations(headRect);
+            // var headAnims = new HeadAnimations(headRect);
 
             this.mousePWidth = this._spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 50, 3), Color.Red);
             this.mouseHWidth = this._spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 3, 50), Color.Red);
