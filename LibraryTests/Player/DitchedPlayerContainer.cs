@@ -23,7 +23,7 @@ namespace MonoGamePlayground.Player
         public Vector2 CurrentPosition => this._currentPosition;
 
         private readonly Dictionary<PlayerControls, Keys> keyMap;
-        private KeyboardActionsManager keyboardManager = new KeyboardActionsManager();
+        //private KeyboardActionsManager keyboardManager = new KeyboardActionsManager();
         private GamePadState previousPadState;
         private float currentAngle; // Cheaper to compare/calculate this per update than the direction vector
         private Vector2 directionNormal; // Where we are pointing in space. Apply force to this to move.
@@ -47,17 +47,17 @@ namespace MonoGamePlayground.Player
 
         private void ConfigureKeyManager(Dictionary<PlayerControls, Keys> keyMap)
         {
-            keyboardManager.AddMovingActions(new Dictionary<IEnumerable<Keys>, Action>
-            {
-                { new[] { this.keyMap[PlayerControls.Up], this.keyMap[PlayerControls.Right] },()=> {this.Rotatation.SetDestinationAngle(45f); this.EnableVelocity(); } },
-                { new[] { this.keyMap[PlayerControls.Up], this.keyMap[PlayerControls.Left] },()=> {this.Rotatation.SetDestinationAngle(315f); this.EnableVelocity(); }},
-                { new[] { this.keyMap[PlayerControls.Down], this.keyMap[PlayerControls.Right] },()=> {this.Rotatation.SetDestinationAngle(135f); this.EnableVelocity(); }},
-                { new[] { this.keyMap[PlayerControls.Down], this.keyMap[PlayerControls.Left] },()=> {this.Rotatation.SetDestinationAngle(225f); this.EnableVelocity(); }},
-                { new[] { this.keyMap[PlayerControls.Left] },()=> {this.Rotatation.SetDestinationAngle(270f); this.EnableVelocity(); }},
-                { new[] { this.keyMap[PlayerControls.Right] },()=> {this.Rotatation.SetDestinationAngle(90f); this.EnableVelocity(); }},
-                { new[] { this.keyMap[PlayerControls.Up] },()=> {this.Rotatation.SetDestinationAngle(0f); this.EnableVelocity(); }},
-                { new[] { this.keyMap[PlayerControls.Down] },()=> {this.Rotatation.SetDestinationAngle(180f); this.EnableVelocity(); }},
-            }, () => { this.Rotatation.StopRotation(); this.DisableVelocity(); });
+            //keyboardManager.AddMovingActions(new Dictionary<IEnumerable<Keys>, Action>
+            //{
+            //    { new[] { this.keyMap[PlayerControls.Up], this.keyMap[PlayerControls.Right] },()=> {this.Rotatation.SetDestinationAngle(45f); this.EnableVelocity(); } },
+            //    { new[] { this.keyMap[PlayerControls.Up], this.keyMap[PlayerControls.Left] },()=> {this.Rotatation.SetDestinationAngle(315f); this.EnableVelocity(); }},
+            //    { new[] { this.keyMap[PlayerControls.Down], this.keyMap[PlayerControls.Right] },()=> {this.Rotatation.SetDestinationAngle(135f); this.EnableVelocity(); }},
+            //    { new[] { this.keyMap[PlayerControls.Down], this.keyMap[PlayerControls.Left] },()=> {this.Rotatation.SetDestinationAngle(225f); this.EnableVelocity(); }},
+            //    { new[] { this.keyMap[PlayerControls.Left] },()=> {this.Rotatation.SetDestinationAngle(270f); this.EnableVelocity(); }},
+            //    { new[] { this.keyMap[PlayerControls.Right] },()=> {this.Rotatation.SetDestinationAngle(90f); this.EnableVelocity(); }},
+            //    { new[] { this.keyMap[PlayerControls.Up] },()=> {this.Rotatation.SetDestinationAngle(0f); this.EnableVelocity(); }},
+            //    { new[] { this.keyMap[PlayerControls.Down] },()=> {this.Rotatation.SetDestinationAngle(180f); this.EnableVelocity(); }},
+            //}, () => { this.Rotatation.StopRotation(); this.DisableVelocity(); });
 
         }
 
@@ -67,7 +67,7 @@ namespace MonoGamePlayground.Player
             var currentPadState = padState;
             // manage the angle
             this.Rotatation.Update(delta);
-            keyboardManager.Update(delta, keystate);
+            //keyboardManager.Update(delta, keystate);
 
             // Make sure the movement diretion is correct
             if (Rotatation.State != RotatorState.Stopped && this.currentAngle != this.Rotatation.DestinationAngle)

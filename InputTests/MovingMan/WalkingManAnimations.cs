@@ -16,7 +16,7 @@ namespace InputTests.MovingMan
             this.animations = animations;
         }
 
-        public void DoubleClickFire()
+        public void FireSpecial()
         {
             
         }

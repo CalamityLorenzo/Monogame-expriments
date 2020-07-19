@@ -19,7 +19,7 @@ namespace InputTests
         private GraphicsDeviceManager graphics;
         private SpriteFont arialFont;
 
-        private InputManager inputManager;
+        private InputsManager inputManager;
         private List<string> keysPressedStrings;
         private List<Vector2> keysPressedwidths;
         private string histry;
@@ -33,7 +33,7 @@ namespace InputTests
             graphics.PreferredBackBufferHeight = 600;
             Content.RootDirectory = "Content";
 
-            inputManager = new InputManager();
+            inputManager = new InputsManager();
         }
 
         protected override void Initialize()

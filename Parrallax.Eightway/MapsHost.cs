@@ -81,7 +81,7 @@ namespace Parrallax.Eightway
                 Exit();
 
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            var keys = KeyboardFunctions.CurrentPressedKeys(kState.GetPressedKeys(), kState, pKState);
+            //var keys = KeyboardFunctions.CurrentPressedKeys(kState.GetPressedKeys(), kState, pKState);
             this._keyboard4Way.Update(gameTime, kState, new GamePadState());
             this.fourway.Update(delta);
             backgroundMap.Update(gameTime);

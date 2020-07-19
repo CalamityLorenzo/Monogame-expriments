@@ -1,45 +1,41 @@
 ﻿using GameLibrary;
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
-using GameLibrary.Extensions;
-using GameLibrary.Models;
-using inputTests;
 using InputTests.Inputs;
 using InputTests.KeyboardInput;
 using InputTests.MovingMan;
 using Library.Animation;
 using Microsoft.Xna.Framework;
+
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.Direct2D1;
+using System;
 using System.Collections.Generic;
+using System.Text;
 
 namespace InputTests
 {
-    public class MovingObjectGame : Game
+    public class CommandPatternGame :   Game
     {
         private GraphicsDeviceManager graphics;
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
         private SpriteFont arialFont;
-        private InputsManager iManger;
-
+        private InputsManager inputsManager;
+        private InputHandler inputHandler;
         private MovingHead headsIWin;
-        private IsDownIsUp sendKeys;
+
         private MovingObjectAnimation _mo4;
         private CrossHairs _mouseHairs;
 
-        public int CurrentSelectedObject { get; private set; }
-
-        public MovingObjectGame()
+        public CommandPatternGame()
         {
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 800;
             graphics.PreferredBackBufferHeight = 800;
             Content.RootDirectory = "Content";
 
-            iManger = new InputsManager();
+            inputsManager = new InputsManager();
         }
-
 
         protected override void LoadContent()
         {
@@ -48,7 +44,6 @@ namespace InputTests
             var walkingLeft = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingLeft.png");
             var walkingRight = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingRight.png");
             var standing = Texture2D.FromFile(GraphicsDevice, "./Content/Standing.png");
-            var crossHairs = Texture2D.FromFile(GraphicsDevice, "./Content/CrossHairs_one.png");
             var wlFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(walkingLeft.Width, walkingLeft.Height));
             var standingFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(standing.Width, standing.Height));
             var wlAnimation = new BlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
@@ -60,10 +55,7 @@ namespace InputTests
                 {"Standing",  standingAnimation }
             });
 
-            var Red40x40 = this.spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 40, 40), Color.Red);
-            var Green40x40 = this.spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 40, 40), Color.Green);
-            var Blue40x40 = this.spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 40, 40), Color.Black);
-
+            var crossHairs = Texture2D.FromFile(GraphicsDevice, "./Content/CrossHairs_one.png");
             var p1Controls = new PlayerControlKeys
             {
                 Up = Keys.W,
@@ -73,16 +65,12 @@ namespace InputTests
                 Fire = Keys.LeftControl,
                 SecondFire = Keys.Space
             };
+            this.inputHandler = new InputHandler(p1Controls, inputsManager, new ActorCommandsList());
 
-            this.headsIWin  = new MovingHead(new Vector2(200,300), new Dimensions(80, 100));
-
-            this.sendKeys = new IsDownIsUp(p1Controls, iManger);
-
+            this.headsIWin = new MovingHead(new Vector2(200, 300), new Dimensions(80, 100));
             _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, headsIWin, new Vector2(200, 300));
             _mouseHairs = new CrossHairs(spriteBatch, crossHairs, Mouse.GetState().Position.ToVector2(), new Rectangle(0, 0, this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height - 200));
-            this.CurrentSelectedObject = 0;
         }
-
 
         protected override void Update(GameTime gameTime)
         {
@@ -92,17 +80,18 @@ namespace InputTests
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, kState, Keys.Escape);
             _mouseHairs.SetPosition(mState.Position.ToVector2());
-            
-            //timr
+            //time
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit
-            this.iManger.Update(gameTime, kState, mState );
-            this.sendKeys.Update(gameTime, delta, _mo4);
-            
+            this.inputsManager.Update(gameTime, kState, mState);
+            var command = this.inputHandler.Update(gameTime);
+
+            command.Execute(_mo4);
+
             this.headsIWin.SetViewDestination(mState.Position.ToVector2());
             _mo4.Update(gameTime, delta);
             _mouseHairs.Update(gameTime, delta);
-            
+            //this.headsIWin.Update(gameTime, delta);
             base.Update(gameTime);
         }
 
@@ -112,7 +101,7 @@ namespace InputTests
             this.spriteBatch.Begin();
             _mo4.Draw(gameTime);
             _mouseHairs.Draw(gameTime);
-            var mString  = this.arialFont.MeasureString($"Angle : {this.headsIWin.ViewingAngle}");
+            var mString = this.arialFont.MeasureString($"Angle : {this.headsIWin.ViewingAngle}");
             this.spriteBatch.DrawString(this.arialFont, $"Angle : {this.headsIWin.ViewingAngle}", new Vector2(10, 10), Color.White);
             this.spriteBatch.End();
         }

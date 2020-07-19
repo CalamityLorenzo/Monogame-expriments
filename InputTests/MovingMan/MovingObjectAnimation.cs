@@ -59,7 +59,6 @@ namespace InputTests.MovingMan
         public void Draw(GameTime time)
         {
             // we assume that we don't need to sop and create a new abtchj
-
             spriteBatch.Draw(currentTexture, this.CurrentPosition, animations.CurrentFrame(), Color.White);
             spriteBatch.Draw(_magiDot, this.head.TopLeft, Color.White);
         }
@@ -75,9 +74,7 @@ namespace InputTests.MovingMan
         {
             this.velocityX = +44f;
             this.animations.MoveRight();
-
             this.currentTexture = this.walkRight;
-
         }
 
         public void MoveUp()
@@ -103,7 +100,7 @@ namespace InputTests.MovingMan
             Console.WriteLine("Pew Pew");
         }
 
-        public void DoubleClickFire()
+        public void FireSpecial()
         {
             Console.WriteLine("Pew Pew");
         }

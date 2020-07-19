@@ -10,7 +10,7 @@ namespace GameLibrary.AppObjects
 {
     // Which keys are currently being pressed and how long for.
     // This also includes a double click method check.
-    public class InputManager
+    public class InputsManager
     {
         private float doubleClickLength = 750f; // Time in millisecsond to allow a dobule click
         

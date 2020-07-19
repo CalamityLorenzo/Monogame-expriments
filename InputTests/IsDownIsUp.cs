@@ -15,9 +15,9 @@ namespace inputTests
     public class IsDownIsUp
     {
         private readonly PlayerControlKeys controls;
-        private readonly InputManager inputManager;
+        private readonly InputsManager inputManager;
 
-        public IsDownIsUp(PlayerControlKeys controls, InputManager keysManager)
+        public IsDownIsUp(PlayerControlKeys controls, InputsManager keysManager)
         {
             this.controls = controls;
             this.inputManager = keysManager;

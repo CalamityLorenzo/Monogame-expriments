@@ -1,6 +1,6 @@
 ﻿namespace InputTests.MovingMan
 {
-    public  interface IWalkingMan
+    public interface IWalkingMan
     {
         void MoveLeft();
         void MoveRight();
@@ -11,7 +11,7 @@
         void EndMoveDown();
         void EndMoveUp();
         void Fire();
-        void DoubleClickFire();
+        void FireSpecial();
         void Standing();
     }
 }

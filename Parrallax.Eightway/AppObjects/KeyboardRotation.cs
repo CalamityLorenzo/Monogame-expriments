@@ -15,39 +15,39 @@ namespace Parrallax.Eightway
     internal class KeyboardRotation
     {
         private readonly Rotator _rotator;
-        private KeyboardActionsManager _keyManager = new KeyboardActionsManager();
+        //private KeyboardActionsManager _keyManager = new KeyboardActionsManager();
         private readonly Dictionary<PlayerControls, Keys> _keyMap;
 
         public KeyboardRotation(Rotator rotator, Dictionary<PlayerControls, Keys> keyMap)
         {
             this._rotator = rotator;
             this._keyMap = keyMap;
-            EightWayKeyboard.CreateKeyboardMappings(_keyManager, _keyMap, rotator);
+            //EightWayKeyboard.CreateKeyboardMappings(_keyManager, _keyMap, rotator);
         }
 
         public void Update(GameTime time, KeyboardState keystate, GamePadState padState)
         {
             var delta = (float)time.ElapsedGameTime.TotalSeconds;
-            _keyManager.Update(delta, keystate);
+            //_keyManager.Update(delta, keystate);
         }
 
     }
 
     class EightWayKeyboard
     {
-        public static void CreateKeyboardMappings(KeyboardActionsManager manager, Dictionary<PlayerControls, Keys> keyMap, Rotator rotator)
+        public static void CreateKeyboardMappings(object manager, Dictionary<PlayerControls, Keys> keyMap, Rotator rotator)
         {
-            manager.AddMovingActions(new Dictionary<IEnumerable<Keys>, Action>
-            {
-                { new[] {  keyMap[PlayerControls.Up],  keyMap[PlayerControls.Right] },()=> { rotator.SetDestinationAngle(45f);  } },
-                { new[] {  keyMap[PlayerControls.Up],  keyMap[PlayerControls.Left] },()=> { rotator.SetDestinationAngle(315f);  }},
-                { new[] {  keyMap[PlayerControls.Down],  keyMap[PlayerControls.Right] },()=> { rotator.SetDestinationAngle(135f);  }},
-                { new[] {  keyMap[PlayerControls.Down],  keyMap[PlayerControls.Left] }, ()=> { rotator.SetDestinationAngle(225f);  }},
-                { new[] {  keyMap[PlayerControls.Left] },()=> { rotator.SetDestinationAngle(270f);  }},
-                { new[] {  keyMap[PlayerControls.Right] },()=> {rotator.SetDestinationAngle(90f);  }},
-                { new[] {  keyMap[PlayerControls.Up] },()=> {rotator.SetDestinationAngle(0f);  }},
-                { new[] {  keyMap[PlayerControls.Down] },()=> { rotator.SetDestinationAngle(180f);  }},
-            }, () => rotator.StopRotation());
+        //    manager.AddMovingActions(new Dictionary<IEnumerable<Keys>, Action>
+        //    {
+        //        { new[] {  keyMap[PlayerControls.Up],  keyMap[PlayerControls.Right] },()=> { rotator.SetDestinationAngle(45f);  } },
+        //        { new[] {  keyMap[PlayerControls.Up],  keyMap[PlayerControls.Left] },()=> { rotator.SetDestinationAngle(315f);  }},
+        //        { new[] {  keyMap[PlayerControls.Down],  keyMap[PlayerControls.Right] },()=> { rotator.SetDestinationAngle(135f);  }},
+        //        { new[] {  keyMap[PlayerControls.Down],  keyMap[PlayerControls.Left] }, ()=> { rotator.SetDestinationAngle(225f);  }},
+        //        { new[] {  keyMap[PlayerControls.Left] },()=> { rotator.SetDestinationAngle(270f);  }},
+        //        { new[] {  keyMap[PlayerControls.Right] },()=> {rotator.SetDestinationAngle(90f);  }},
+        //        { new[] {  keyMap[PlayerControls.Up] },()=> {rotator.SetDestinationAngle(0f);  }},
+        //        { new[] {  keyMap[PlayerControls.Down] },()=> { rotator.SetDestinationAngle(180f);  }},
+        //    }, () => rotator.StopRotation());
         }
 
     }

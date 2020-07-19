@@ -90,7 +90,7 @@ namespace Parrallax.Eightway
                 Exit();
 
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            var keys = KeyboardFunctions.CurrentPressedKeys(kState.GetPressedKeys(), kState, pKState);
+            //var keys = KeyboardFunctions.CurrentPressedKeys(kState.GetPressedKeys(), kState, pKState);
 
             rotator.Update(delta);
             _keyboardRotator.Update(gameTime, kState, GamePadState.Default);
