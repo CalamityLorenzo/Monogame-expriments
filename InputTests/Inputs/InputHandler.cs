@@ -46,6 +46,19 @@ namespace InputTests.Inputs
             else if (keysDown.Contains(_keys.Right)) return _commands.Right;
             else if (keysDown.Contains(_keys.Fire) || mse.ContainsKey(GameLibrary.Models.MouseButton.Left))  return _commands.Fire;
             else if (pressedKeys.ContainsKey(_keys.SecondFire) && pressedKeys[_keys.SecondFire].IsDoubleClick) return _commands.SpecialFire;
+            else if (keysUp.Contains(_keys.Up)){
+                if(keysUp.Contains(_keys.Left)) return _commands.UpLeftRelease;
+                if(keysUp.Contains(_keys.Right)) return _commands.UpRightRelease;
+                else return _commands.UpRelease;
+            }
+            else if(keysUp.Contains(_keys.Down))
+            {
+                if (keysUp.Contains(_keys.Left)) return _commands.DownLeftRelease;
+                else if (keysUp.Contains(_keys.Right)) return _commands.DownRightRelease;
+                return _commands.DownRelease;
+            }
+            else if (keysUp.Contains(_keys.Left)) return _commands.LeftRelease;
+            else if (keysUp.Contains(_keys.Right)) return _commands.RightRelease;
 
             else return NULLCommand.GetCommand;
 
