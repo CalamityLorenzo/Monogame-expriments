@@ -27,22 +27,10 @@ namespace InputTests
             var intX = Convert.ToInt32(mousePos.X);
             var intY = Convert.ToInt32(mousePos.Y);
 
+            // Don/t attempt to draw if the mouse pointer is outide the screen bounds.
             if (range.Contains(mousePos))
             {
                 SetCurrentPosition(mousePos);
-            }
-            else
-            {
-                //if ((range.Y + range.Height <= mousePos.Y) && range.X + range.Width >= mousePos.X)
-                //{
-                //    SetCurrentPosition(new Vector2(this.currentPosition.Y, mousePos.X));
-                //    return;
-                //}
-                //else if (range.X + range.Width <= mousePos.X && range.Y + range.Height >= mousePos.Y)
-                //{
-                //    SetCurrentPosition(new Vector2(mousePos.Y, currentPosition.X));
-                //    return;
-                //}
             }
         }
 

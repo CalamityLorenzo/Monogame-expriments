@@ -1,6 +1,9 @@
 ﻿using GameLibrary.AppObjects;
+using GameLibrary.Inputs;
 using GameLibrary.PlayerThings;
+using InputTests.Commands;
 using InputTests.KeyboardInput;
+using InputTests.MovingMan;
 using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
@@ -22,7 +25,7 @@ namespace InputTests.Inputs
             this._commands = commands;
         }
 
-        public IActorCommand Update(GameTime time)
+        public IActorCommand<IWalkingMan> Update(GameTime time)
         {
             var keysDown = _inputs.KeysDown();
             var keysUp = _inputs.KeysUp();
@@ -60,7 +63,7 @@ namespace InputTests.Inputs
             else if (keysUp.Contains(_keys.Left)) return _commands.LeftRelease;
             else if (keysUp.Contains(_keys.Right)) return _commands.RightRelease;
 
-            else return NULLCommand.GetCommand;
+            else return NULLWalkingManCommand.GetCommand;
 
         }
     }

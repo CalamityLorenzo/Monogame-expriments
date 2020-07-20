@@ -1,4 +1,5 @@
-﻿using GameLibrary.Models;
+﻿using GameLibrary.InputManagement;
+using GameLibrary.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
@@ -173,7 +174,6 @@ namespace GameLibrary.AppObjects
             return dbClicked;
         }
         
-        public Dictionary<Keys, PressedKey> PressedKeys() => this._CurrentPressedKeys;
 
         public Dictionary<MouseButton, PressedMouseButton> PressedMouseButtons() => this._CurrentButtons;
         public HashSet<MouseButton> ReleasedMouseButtons() => this.ReleasedButtons;
@@ -184,6 +184,9 @@ namespace GameLibrary.AppObjects
         // Theses are only true once, then they are discarded.
         public HashSet<Keys> KeysUp() => this._KeysUp;
         public HashSet<Keys> KeysDown() => this._KeysDown;
+        public Dictionary<Keys, PressedKey> PressedKeys() => this._CurrentPressedKeys;
+
+        public InputState GetInputState() => new InputState(_KeysUp, _KeysDown, _CurrentButtons,  _CurrentPressedKeys, HistoryKeys, HistoryMouseButtons);
 
     }
 }

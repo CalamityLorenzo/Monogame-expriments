@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace InputTests.Inputs
+namespace InputTests.Commands
 {
-    class FireSpecialCommand : IActorCommand
+    class FireSpecialCommand : WalkingManCommandEvent
     {
-        public void Execute(IWalkingMan actor)
+        public override void Execute(IWalkingMan actor)
         {
             actor.FireSpecial();
         }

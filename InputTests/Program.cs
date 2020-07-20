@@ -14,7 +14,7 @@ namespace InputTests
         [STAThread]
         static void Main()
         {
-            using (var game = new CommandPatternGame())
+            using (var game = new MovingRockGame())
                 game.Run();
         }
     }

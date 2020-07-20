@@ -21,7 +21,7 @@ namespace InputTests
         private GraphicsDeviceManager graphics;
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
         private SpriteFont arialFont;
-        private InputsManager iManger;
+        private InputsManager iManger = new InputsManager();
 
         private MovingHead headsIWin;
         private IsDownIsUp sendKeys;
@@ -89,8 +89,9 @@ namespace InputTests
             var kState = Keyboard.GetState();
             var mState = Mouse.GetState();
 
+            iManger.Update(gameTime, kState, mState);
             // Escape hatch
-            KeyboardFunctions.QuitOnKeys(this, kState, Keys.Escape);
+            KeyboardFunctions.QuitOnKeys(this, iManger.PressedKeys(), Keys.Escape);
             _mouseHairs.SetPosition(mState.Position.ToVector2());
             
             //timr

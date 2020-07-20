@@ -87,7 +87,7 @@ namespace MonoGameTests
             //  UpdateTheLine(kState);
             // TODO: Add your update logic here
             player.Update(gameTime, kState, GamePad.GetState(0));
-            //this.rTater.Update(deltaTime);
+            this.rTater.Update(deltaTime);
             base.Update(gameTime);
         }
 

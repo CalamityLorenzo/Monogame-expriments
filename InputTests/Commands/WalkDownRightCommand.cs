@@ -3,11 +3,11 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace InputTests.Inputs
+namespace InputTests.Commands
 {
-    class WalkDownRightCommand : IActorCommand
+    class WalkDownRightCommand : WalkingManCommandEvent
     {
-        public void Execute(IWalkingMan actor)
+        public override void Execute(IWalkingMan actor)
         {
             actor.MoveDown();
             actor.MoveRight();

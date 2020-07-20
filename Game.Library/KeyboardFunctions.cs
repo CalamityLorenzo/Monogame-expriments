@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameLibrary.Models;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
@@ -44,11 +45,11 @@ namespace GameLibrary
             return pressedKeysState;
         }
 
-        public static void QuitOnKeys(Game hostObject, KeyboardState keyboardState, params Keys[] quitKeys)
+        public static void QuitOnKeys(Game hostObject, Dictionary<Keys, PressedKey> pressedKeys, params Keys[] quitKeys)
         {
             foreach(var item in quitKeys)
             {
-                if(keyboardState.IsKeyDown(item))
+                if(pressedKeys.ContainsKey(item))
                     hostObject.Exit();
             }
         }

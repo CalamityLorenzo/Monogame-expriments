@@ -1,6 +1,7 @@
 ﻿using GameLibrary;
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
+using InputTests.Commands;
 using InputTests.Inputs;
 using InputTests.KeyboardInput;
 using InputTests.MovingMan;
@@ -15,7 +16,7 @@ using System.Text;
 
 namespace InputTests
 {
-    public class CommandPatternGame :   Game
+    public class CommandPatternGame : Game
     {
         private GraphicsDeviceManager graphics;
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
@@ -65,6 +66,7 @@ namespace InputTests
                 Fire = Keys.LeftControl,
                 SecondFire = Keys.Space
             };
+
             this.inputHandler = new InputHandler(p1Controls, inputsManager, new ActorCommandsList());
 
             this.headsIWin = new MovingHead(new Vector2(200, 300), new Dimensions(80, 100));
@@ -76,14 +78,15 @@ namespace InputTests
         {
             var kState = Keyboard.GetState();
             var mState = Mouse.GetState();
+            this.inputsManager.Update(gameTime, kState, mState);
+            
 
             // Escape hatch
-            KeyboardFunctions.QuitOnKeys(this, kState, Keys.Escape);
+            KeyboardFunctions.QuitOnKeys(this, inputsManager.PressedKeys(), Keys.Escape);
             _mouseHairs.SetPosition(mState.Position.ToVector2());
             //time
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit
-            this.inputsManager.Update(gameTime, kState, mState);
             var command = this.inputHandler.Update(gameTime);
 
             command.Execute(_mo4);
