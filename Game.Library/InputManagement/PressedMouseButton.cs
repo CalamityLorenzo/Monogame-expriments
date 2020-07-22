@@ -1,7 +1,7 @@
 
 using System.Globalization;
 
-namespace GameLibrary.Models
+namespace GameLibrary.InputManagement
 {
     public class PressedMouseButton
     {

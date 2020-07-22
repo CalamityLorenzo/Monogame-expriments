@@ -2,8 +2,7 @@
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using InputTests.WalkingManCommands;
-using InputTests.Handler;
-using InputTests.Inputs;
+
 using InputTests.KeyboardInput;
 using InputTests.MovingMan;
 using Library.Animation;
@@ -17,6 +16,7 @@ using System.Text;
 using System.Windows.Forms;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using GameLibrary.Extensions;
+using GameLibrary.InputManagement;
 
 namespace InputTests
 {
@@ -25,8 +25,8 @@ namespace InputTests
         private GraphicsDeviceManager graphics;
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
         private SpriteFont arialFont;
-        private InputsManager inputsManager;
-        private InputsProcessor inputsProcessor;
+        private InputsStateManager inputsManager;
+        private MouseKeyboardInputsProcessor inputsProcessor;
 
         private List<KeyCommand<IWalkingMan>> player1Inputs;
         private List<KeyCommand<Rotator>> rTaterInputs;
@@ -42,7 +42,7 @@ namespace InputTests
             graphics.PreferredBackBufferHeight = 800;
             Content.RootDirectory = "Content";
 
-            inputsManager = new InputsManager();
+            inputsManager = new InputsStateManager();
         }
 
         protected override void LoadContent()
@@ -66,7 +66,7 @@ namespace InputTests
             // create the integral to convert to float/
             _centrePoint = new Point(centreHoriz, centreVert).ToVector2();
 
-            this.inputsProcessor = new InputsProcessor(inputsManager);
+            this.inputsProcessor = new MouseKeyboardInputsProcessor(inputsManager);
             this.player1Inputs = PlayerCommands.SetCommands(p1Controls);
             this.rTaterInputs = PlayerCommands.SetRotatorCommands(p1Controls);
             this.rTater = new Rotator(47, 80.4f);

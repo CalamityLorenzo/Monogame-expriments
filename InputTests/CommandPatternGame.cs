@@ -2,7 +2,6 @@
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using InputTests.WalkingManCommands;
-using InputTests.Inputs;
 using InputTests.KeyboardInput;
 using InputTests.MovingMan;
 using Library.Animation;
@@ -13,6 +12,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Text;
+using GameLibrary.InputManagement;
 
 namespace InputTests
 {
@@ -21,8 +21,9 @@ namespace InputTests
         private GraphicsDeviceManager graphics;
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
         private SpriteFont arialFont;
-        private InputsManager inputsManager;
-        private InputHandler inputHandler;
+        private List<KeyCommand<IWalkingMan>> p1Commands;
+        private InputsStateManager keymouseState;
+        private MouseKeyboardInputsProcessor inputProcessor;
         private MovingHead headsIWin;
 
         private MovingObjectAnimation _mo4;
@@ -35,7 +36,7 @@ namespace InputTests
             graphics.PreferredBackBufferHeight = 800;
             Content.RootDirectory = "Content";
 
-            inputsManager = new InputsManager();
+            keymouseState = new InputsStateManager();
         }
 
         protected override void LoadContent()
@@ -67,7 +68,10 @@ namespace InputTests
                 SecondFire = Keys.Space
             };
 
-            this.inputHandler = new InputHandler(p1Controls, inputsManager, new ActorCommandsList());
+            this.p1Commands = PlayerCommands.SetCommands(p1Controls);
+
+            this.keymouseState = new InputsStateManager();
+            this.inputProcessor = new MouseKeyboardInputsProcessor(keymouseState);
 
             this.headsIWin = new MovingHead(new Vector2(200, 300), new Dimensions(80, 100));
             _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, headsIWin, new Vector2(200, 300));
@@ -78,18 +82,18 @@ namespace InputTests
         {
             var kState = Keyboard.GetState();
             var mState = Mouse.GetState();
-            this.inputsManager.Update(gameTime, kState, mState);
+            this.keymouseState.Update(gameTime, kState, mState);
             
 
             // Escape hatch
-            KeyboardFunctions.QuitOnKeys(this, inputsManager.PressedKeys(), Keys.Escape);
+            KeyboardFunctions.QuitOnKeys(this, keymouseState.PressedKeys(), Keys.Escape);
             _mouseHairs.SetPosition(mState.Position.ToVector2());
             //time
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit
-            var command = this.inputHandler.Update(gameTime);
-
-            command.Execute(_mo4);
+            var command = this.inputProcessor.Process(this.p1Commands);
+            if(command!=null)
+                command.Execute(_mo4);
 
             this.headsIWin.SetViewDestination(mState.Position.ToVector2());
             _mo4.Update(gameTime, delta);

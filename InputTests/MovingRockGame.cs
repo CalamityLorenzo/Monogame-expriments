@@ -1,7 +1,7 @@
 ﻿using GameLibrary;
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
-using InputTests.Inputs;
+using GameLibrary.InputManagement;
 using InputTests.KeyboardInput;
 using InputTests.MovingMan;
 using InputTests.WalkingManCommands;
@@ -21,10 +21,11 @@ namespace InputTests
         private GraphicsDeviceManager graphics;
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
         private SpriteFont arialFont;
-        private InputsManager inputsManager;
-        private InputHandler inputHandler;
+        private InputsStateManager inputsManager;
 
         private MovingObject movingObject;
+        private List<KeyCommand<IWalkingMan>> p1Commands;
+        private MouseKeyboardInputsProcessor inputProcessor;
 
         public MovingRockGame()
         {
@@ -33,7 +34,7 @@ namespace InputTests
             graphics.PreferredBackBufferHeight = 800;
             Content.RootDirectory = "Content";
 
-            inputsManager = new InputsManager();
+            inputsManager = new InputsStateManager();
         }
 
         protected override void LoadContent()
@@ -51,7 +52,9 @@ namespace InputTests
                 SecondFire = Keys.Space
             };
 
-            this.inputHandler = new InputHandler(p1Controls, inputsManager, new ActorCommandsList());
+            
+            this.p1Commands = PlayerCommands.SetCommands(p1Controls);
+            this.inputProcessor = new MouseKeyboardInputsProcessor(this.inputsManager);
             this.movingObject = new MovingObject(this.spriteBatch, new Dimensions(50, 50), new Vector2(80, 180));
 
         }
@@ -66,11 +69,11 @@ namespace InputTests
             KeyboardFunctions.QuitOnKeys(this, this.inputsManager.GetInputState().PressedKeys, Keys.Escape);
             //time
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            
-            //! Check all the keys and shit
-            var command = this.inputHandler.Update(gameTime);
 
-            command.Execute(movingObject);
+            //! Check all the keys and shit
+            var command = this.inputProcessor.Process(this.p1Commands);
+            if(command!=null)
+                command.Execute(movingObject);
 
             movingObject.Update(gameTime, delta);
             base.Update(gameTime);

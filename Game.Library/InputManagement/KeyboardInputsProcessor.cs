@@ -3,20 +3,18 @@ using System.Collections.Generic;
 using System.Text;
 using GameLibrary.AppObjects;
 using GameLibrary.Inputs;
-using InputTests.KeyboardInput;
 using Microsoft.Xna.Framework.Input;
 
-namespace InputTests.Handler
+namespace GameLibrary.InputManagement
 {
-    class InputsProcessor
+   public class MouseKeyboardInputsProcessor
     {
-        private InputsManager _inputs;
+        private InputsStateManager _inputs;
 
-        public InputsProcessor(InputsManager inputs)
+        public MouseKeyboardInputsProcessor(InputsStateManager inputs)
         {
             _inputs = inputs;
         }
-
 
         private bool TestKeyState(Keys key, KeyCommandPress pressType)
         {

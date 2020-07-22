@@ -1,7 +1,7 @@
 using System.Globalization;
 using Microsoft.Xna.Framework.Input;
 
-namespace GameLibrary.Models
+namespace GameLibrary.InputManagement
 {
     public class PressedKey
     {

@@ -1,4 +1,5 @@
 ﻿using GameLibrary.AppObjects;
+using GameLibrary.InputManagement;
 using InputTests.MovingMan;
 using InputTests.RotatorCommands;
 using InputTests.WalkingManCommands;

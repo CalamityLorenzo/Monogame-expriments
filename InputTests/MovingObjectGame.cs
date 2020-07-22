@@ -2,9 +2,9 @@
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
+using GameLibrary.InputManagement;
 using GameLibrary.Models;
 using inputTests;
-using InputTests.Inputs;
 using InputTests.KeyboardInput;
 using InputTests.MovingMan;
 using Library.Animation;
@@ -21,10 +21,11 @@ namespace InputTests
         private GraphicsDeviceManager graphics;
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
         private SpriteFont arialFont;
-        private InputsManager iManger = new InputsManager();
+        private InputsStateManager iManger = new InputsStateManager();
 
         private MovingHead headsIWin;
-        private IsDownIsUp sendKeys;
+        private List<KeyCommand<IWalkingMan>> p1Commands;
+        private MouseKeyboardInputsProcessor inputProcessor;
         private MovingObjectAnimation _mo4;
         private CrossHairs _mouseHairs;
 
@@ -37,7 +38,7 @@ namespace InputTests
             graphics.PreferredBackBufferHeight = 800;
             Content.RootDirectory = "Content";
 
-            iManger = new InputsManager();
+            iManger = new InputsStateManager();
         }
 
 
@@ -75,8 +76,8 @@ namespace InputTests
             };
 
             this.headsIWin  = new MovingHead(new Vector2(200,300), new Dimensions(80, 100));
-
-            this.sendKeys = new IsDownIsUp(p1Controls, iManger);
+            this.p1Commands = PlayerCommands.SetCommands(p1Controls);
+            this.inputProcessor = new MouseKeyboardInputsProcessor(this.iManger);
 
             _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, headsIWin, new Vector2(200, 300));
             _mouseHairs = new CrossHairs(spriteBatch, crossHairs, Mouse.GetState().Position.ToVector2(), new Rectangle(0, 0, this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height - 200));
@@ -89,17 +90,16 @@ namespace InputTests
             var kState = Keyboard.GetState();
             var mState = Mouse.GetState();
 
+            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             iManger.Update(gameTime, kState, mState);
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, iManger.PressedKeys(), Keys.Escape);
             _mouseHairs.SetPosition(mState.Position.ToVector2());
             
-            //timr
-            var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //! Check all the keys and shit
-            this.iManger.Update(gameTime, kState, mState );
-            this.sendKeys.Update(gameTime, delta, _mo4);
-            
+            var cmds = this.inputProcessor.Process(this.p1Commands);
+
+            if (cmds != null)
+                cmds.Execute(this._mo4);
             this.headsIWin.SetViewDestination(mState.Position.ToVector2());
             _mo4.Update(gameTime, delta);
             _mouseHairs.Update(gameTime, delta);

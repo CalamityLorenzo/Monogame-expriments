@@ -1,5 +1,6 @@
 
 using GameLibrary.AppObjects;
+using GameLibrary.InputManagement;
 using GameLibrary.PlayerThings;
 using InputTests;
 using InputTests.KeyboardInput;
@@ -15,9 +16,9 @@ namespace inputTests
     public class IsDownIsUp
     {
         private readonly PlayerControlKeys controls;
-        private readonly InputsManager inputManager;
+        private readonly InputsStateManager inputManager;
 
-        public IsDownIsUp(PlayerControlKeys controls, InputsManager keysManager)
+        public IsDownIsUp(PlayerControlKeys controls, InputsStateManager keysManager)
         {
             this.controls = controls;
             this.inputManager = keysManager;

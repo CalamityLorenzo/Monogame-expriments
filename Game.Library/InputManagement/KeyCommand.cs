@@ -7,7 +7,7 @@ using System.Runtime.InteropServices;
 using System.Security.Permissions;
 using System.Text;
 
-namespace InputTests.KeyboardInput
+namespace GameLibrary.InputManagement
 {
     /// <summary>
     /// Basic unit for a keyboard command

@@ -1,4 +1,5 @@
-﻿using GameLibrary.Models;
+﻿using GameLibrary.InputManagement;
+using GameLibrary.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System;

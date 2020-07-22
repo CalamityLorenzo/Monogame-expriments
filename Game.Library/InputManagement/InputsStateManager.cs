@@ -7,11 +7,11 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Runtime.InteropServices;
 
-namespace GameLibrary.AppObjects
+namespace GameLibrary.InputManagement
 {
     // Which keys are currently being pressed and how long for.
     // This also includes a double click method check.
-    public class InputsManager
+    public class InputsStateManager
     {
         private float doubleClickLength = 750f; // Time in millisecsond to allow a dobule click
         

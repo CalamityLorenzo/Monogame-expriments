@@ -1,4 +1,5 @@
 ﻿using GameLibrary.AppObjects;
+using GameLibrary.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -19,7 +20,7 @@ namespace InputTests
         private GraphicsDeviceManager graphics;
         private SpriteFont arialFont;
 
-        private InputsManager inputManager;
+        private InputsStateManager inputManager;
         private List<string> keysPressedStrings;
         private List<Vector2> keysPressedwidths;
         private string histry;
@@ -33,7 +34,7 @@ namespace InputTests
             graphics.PreferredBackBufferHeight = 600;
             Content.RootDirectory = "Content";
 
-            inputManager = new InputsManager();
+            inputManager = new InputsStateManager();
         }
 
         protected override void Initialize()
