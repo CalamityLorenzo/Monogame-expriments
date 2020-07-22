@@ -11,7 +11,7 @@ namespace GameLibrary.AppObjects
     public enum RotatorState
     {
         Unknown = 0,
-        Clockwise,
+        Diesal,
         Widdershins,
         Stopped
     }
@@ -53,13 +53,13 @@ namespace GameLibrary.AppObjects
                 }
                 else
                 {
-                    this.State = RotatorState.Clockwise;
+                    this.State = RotatorState.Diesal;
                 }
             }
             else
             {
                 if (CurrentAngle - DestinationAngle > 179f)
-                    this.State = RotatorState.Clockwise;
+                    this.State = RotatorState.Diesal;
                 else
                 {
                     this.State = RotatorState.Widdershins;
@@ -105,16 +105,16 @@ namespace GameLibrary.AppObjects
             // COs we are dealing with velocities
             // we can miss our angle, so we need to check a range.
             // Howver it's not a simple number line, but a clock. so caution is required,
-            if (state != RotatorState.Clockwise && state != RotatorState.Widdershins)
+            if (state != RotatorState.Diesal && state != RotatorState.Widdershins)
                 throw new Exception("Rotator all out of whack");
             // 1. Get the difference between current and previous update (the direction informs this...Though it's not the end of t
-            var angleDistance = (state == RotatorState.Clockwise) ? currentAngle - previousAngle : previousAngle - currentAngle;
+            var angleDistance = (state == RotatorState.Diesal) ? currentAngle - previousAngle : previousAngle - currentAngle;
 
             // 3. Is Our angle in the range from Current to Current-DistanceSinceLastUpdate.
             var lowerbound = 0f;
             var upperbound = 0f;
 
-            if (state == RotatorState.Clockwise)
+            if (state == RotatorState.Diesal)
             {
                 lowerbound = currentAngle - angleDistance;
                 upperbound = (int)Math.Floor(currentAngle) %360f; // Current angle can read as 360. This may be a bug...Not confident enough to pull it apart.
@@ -142,7 +142,7 @@ namespace GameLibrary.AppObjects
         {
             switch (this.State)
             {
-                case RotatorState.Clockwise:
+                case RotatorState.Diesal:
                     this.CurrentAngle = (CurrentAngle + (RatePerSecond * delta)) % 360f;
                     break;
                 case RotatorState.Widdershins:

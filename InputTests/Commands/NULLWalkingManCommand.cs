@@ -12,7 +12,7 @@ namespace InputTests.Commands
 
         private static readonly Lazy<NULLWalkingManCommand> _privateNull = new Lazy<NULLWalkingManCommand>(()=>new NULLWalkingManCommand());
         public static WalkingManCommandEvent GetCommand => _privateNull.Value;
-
+        
         public override void Execute(IWalkingMan actor)
         {
             //;
