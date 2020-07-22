@@ -4,11 +4,14 @@ using GameLibrary.AppObjects;
 using GameLibrary.Config.App;
 using GameLibrary.Drawing.Backgrounds;
 using GameLibrary.Extensions;
+using GameLibrary.InputManagement;
 using GameLibrary.Models;
 using GameLibrary.PlayerThings;
+using InputTests.KeyboardInput;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using SharpDX.MediaFoundation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,8 +23,11 @@ namespace Parrallax.Eightway
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont arial;
+        private MouseKeyboardInputsProcessor _inputProcessor;
+        private List<KeyCommand<Rotator>> _p1Commands;
         Rotator rotator;
         private KeyboardRotation _keyboardRotator;
+        private InputsStateManager iStateManager;
         private ConfigurationData configData;
         private BackgroundTilesLayer _backgroundTiles;
         private BackgroundRectanglesLayer _foregroundLayter;
@@ -63,6 +69,19 @@ namespace Parrallax.Eightway
             // create the integral to convert to float/
             _centrePoint = new Point(centreHoriz, centreVert).ToVector2();
 
+            iStateManager = new InputsStateManager();
+
+            var p1Controls = new PlayerControlKeys
+            {
+                Up = Keys.W,
+                Down = Keys.S,
+                Left = Keys.A,
+                Right = Keys.D,
+                Fire = Keys.LeftControl,
+                SecondFire = Keys.Space
+            };
+            this._inputProcessor = new MouseKeyboardInputsProcessor(this.iStateManager);
+            this._p1Commands = PlayerCommands.SetRotatorCommands(p1Controls);
             // Can rotate
             this.rotator = new Rotator(0, 202);
             // Allows you to rotate.
@@ -85,21 +104,23 @@ namespace Parrallax.Eightway
         protected override void Update(GameTime gameTime)
         {
             // abort
-            var kState = Keyboard.GetState();
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kState.IsKeyDown(Keys.Escape))
-                Exit();
-
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
-            //var keys = KeyboardFunctions.CurrentPressedKeys(kState.GetPressedKeys(), kState, pKState);
+            var kState = Keyboard.GetState();
+            var mState = Mouse.GetState();
+            this.iStateManager.Update(gameTime, kState, mState);
 
+            KeyboardFunctions.QuitOnKeys(this, this.iStateManager.GetInputState().PressedKeys, Keys.Escape);
+
+            //var keys = KeyboardFunctions.CurrentPressedKeys(kState.GetPressedKeys(), kState, pKState);
+            var cmd= this._inputProcessor.Process(this._p1Commands);
+            if (cmd != null)
+                cmd.Execute(rotator);
             rotator.Update(delta);
-            _keyboardRotator.Update(gameTime, kState, GamePadState.Default);
 
             _foregroundLayter.Update(gameTime);
             _foregroundLayter2.Update(gameTime);
 
 
-            pKState = kState;
         }
 
         protected override void Draw(GameTime gameTime)
