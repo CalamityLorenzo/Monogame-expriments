@@ -1,10 +1,10 @@
 ﻿using GameLibrary;
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
-using InputTests.Commands;
 using InputTests.Inputs;
 using InputTests.KeyboardInput;
 using InputTests.MovingMan;
+using InputTests.WalkingManCommands;
 using Library.Animation;
 using Microsoft.Xna.Framework;
 
@@ -52,7 +52,6 @@ namespace InputTests
             };
 
             this.inputHandler = new InputHandler(p1Controls, inputsManager, new ActorCommandsList());
-
             this.movingObject = new MovingObject(this.spriteBatch, new Dimensions(50, 50), new Vector2(80, 180));
 
         }

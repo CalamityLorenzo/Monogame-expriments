@@ -1,7 +1,7 @@
 ﻿using GameLibrary.AppObjects;
-using InputTests.Commands;
 using InputTests.MovingMan;
 using InputTests.RotatorCommands;
+using InputTests.WalkingManCommands;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,28 +16,16 @@ namespace InputTests.KeyboardInput
         private List<KeyCommand<IWalkingMan>> Commands(PlayerControlKeys keys) => new List<KeyCommand<IWalkingMan>>
         {
             new KeyCommand<IWalkingMan>(keys.Up, KeyCommandPress.Down, new WalkUpCommand()
-                //new List<KeyCommand<IWalkingMan>>{
-                //    new KeyCommand<IWalkingMan>(keys.Left, KeyCommandPress.Pressed, new WalkUpLeftCommand()),
-                //    new KeyCommand<IWalkingMan>(keys.Right, KeyCommandPress.Pressed, new WalkUpRightCommand())}
                 ),
             new KeyCommand<IWalkingMan>(keys.Down, KeyCommandPress.Down, new WalkDownCommand()
-                //new List<KeyCommand<IWalkingMan>>{
-                //    new KeyCommand<IWalkingMan>(keys.Left, KeyCommandPress.Pressed, new WalkDownLeftCommand()),
-                //    new KeyCommand<IWalkingMan>(keys.Right, KeyCommandPress.Pressed, new WalkDownRightCommand())}
                 ),
             new KeyCommand<IWalkingMan>(keys.Left, KeyCommandPress.Down, new WalkLeftCommand()),
             new KeyCommand<IWalkingMan>(keys.Right, KeyCommandPress.Down, new WalkRightCommand()),
             new KeyCommand<IWalkingMan>(keys.Fire, KeyCommandPress.Down, new FireCommand()),
 
             new KeyCommand<IWalkingMan>(keys.Up, KeyCommandPress.Up, new WalkUpCommandRelease()
-                //new List<KeyCommand<IWalkingMan>>{
-                //    new KeyCommand<IWalkingMan>(keys.Left, KeyCommandPress.Pressed, new WalkUpLeftCommandRelease()),
-                //    new KeyCommand<IWalkingMan>(keys.Right, KeyCommandPress.Pressed, new WalkUpRightCommandRelease())}
                 ),
             new KeyCommand<IWalkingMan>(keys.Down, KeyCommandPress.Up, new WalkDownCommandRelease()
-                //new List<KeyCommand<IWalkingMan>>{
-                //    new KeyCommand<IWalkingMan>(keys.Left, KeyCommandPress.Pressed, new WalkDownLeftCommandRelease()),
-                //    new KeyCommand<IWalkingMan>(keys.Right, KeyCommandPress.Pressed, new WalkDownRightCommandRelease())}
                 ),
             new KeyCommand<IWalkingMan>(keys.Left, KeyCommandPress.Up, new WalkLeftCommandRelease()),
             new KeyCommand<IWalkingMan>(keys.Right, KeyCommandPress.Up, new WalkRightCommandRelease()),

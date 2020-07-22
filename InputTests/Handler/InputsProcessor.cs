@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Text;
 using GameLibrary.AppObjects;
 using GameLibrary.Inputs;
-using InputTests.Commands;
 using InputTests.KeyboardInput;
 using Microsoft.Xna.Framework.Input;
 

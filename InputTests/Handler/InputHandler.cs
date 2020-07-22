@@ -1,7 +1,7 @@
 ﻿using GameLibrary.AppObjects;
 using GameLibrary.Inputs;
 using GameLibrary.PlayerThings;
-using InputTests.Commands;
+using InputTests.WalkingManCommands;
 using InputTests.KeyboardInput;
 using InputTests.MovingMan;
 using Microsoft.Xna.Framework;

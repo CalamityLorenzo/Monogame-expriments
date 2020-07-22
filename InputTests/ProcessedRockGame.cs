@@ -1,7 +1,7 @@
 ﻿using GameLibrary;
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
-using InputTests.Commands;
+using InputTests.WalkingManCommands;
 using InputTests.Handler;
 using InputTests.Inputs;
 using InputTests.KeyboardInput;

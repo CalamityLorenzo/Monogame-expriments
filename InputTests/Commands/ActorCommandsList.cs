@@ -4,7 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace InputTests.Commands
+namespace InputTests.WalkingManCommands
 {
     public class ActorCommandsList
     {
@@ -14,19 +14,20 @@ namespace InputTests.Commands
         public IActorCommand<IWalkingMan> Down = new WalkDownCommand();
         public IActorCommand<IWalkingMan> Left = new WalkLeftCommand();
         public IActorCommand<IWalkingMan> Right = new WalkRightCommand();
-        public IActorCommand<IWalkingMan> UpLeft = new WalkUpLeftCommand();
-        public IActorCommand<IWalkingMan> UpRight = new WalkUpLeftCommand();
-        public IActorCommand<IWalkingMan> DownLeft = new WalkDownLeftCommand();
-        public IActorCommand<IWalkingMan> DownRight = new WalkDownRightCommand();
-
         public IActorCommand<IWalkingMan> UpRelease = new WalkUpCommandRelease();
         public IActorCommand<IWalkingMan> DownRelease = new WalkDownCommandRelease();
         public IActorCommand<IWalkingMan> LeftRelease = new WalkLeftCommandRelease();
         public IActorCommand<IWalkingMan> RightRelease = new WalkRightCommandRelease();
-        public IActorCommand<IWalkingMan> UpLeftRelease = new WalkUpLeftCommandRelease();
-        public IActorCommand<IWalkingMan> UpRightRelease = new WalkUpRightCommandRelease();
-        public IActorCommand<IWalkingMan> DownLeftRelease = new WalkDownLeftCommandRelease();
-        public IActorCommand<IWalkingMan> DownRightRelease = new WalkDownRightCommandRelease();
+
+        public IActorCommand<IWalkingMan> UpLeft = NULLWalkingManCommand.GetCommand;
+        public IActorCommand<IWalkingMan> UpRight = NULLWalkingManCommand.GetCommand;
+        public IActorCommand<IWalkingMan> DownLeft = NULLWalkingManCommand.GetCommand;
+        public IActorCommand<IWalkingMan> DownRight = NULLWalkingManCommand.GetCommand;
+        public IActorCommand<IWalkingMan> UpLeftRelease = NULLWalkingManCommand.GetCommand;
+        public IActorCommand<IWalkingMan> UpRightRelease = NULLWalkingManCommand.GetCommand;
+        public IActorCommand<IWalkingMan> DownLeftRelease = NULLWalkingManCommand.GetCommand;
+        public IActorCommand<IWalkingMan> DownRightRelease = NULLWalkingManCommand.GetCommand;
+
 
     }
 }
