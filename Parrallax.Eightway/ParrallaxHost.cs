@@ -26,14 +26,12 @@ namespace Parrallax.Eightway
         private MouseKeyboardInputsProcessor _inputProcessor;
         private List<KeyCommand<Rotator>> _p1Commands;
         Rotator rotator;
-        private KeyboardRotation _keyboardRotator;
+
         private InputsStateManager iStateManager;
         private ConfigurationData configData;
-        private BackgroundTilesLayer _backgroundTiles;
         private BackgroundRectanglesLayer _foregroundLayter;
         private BackgroundRectanglesLayer _foregroundLayter2;
         private Vector2 _centrePoint;
-        private KeyboardState pKState;
 
         public ParrallaxHost(ConfigurationData configData)
         {
@@ -84,8 +82,7 @@ namespace Parrallax.Eightway
             this._p1Commands = PlayerCommands.SetRotatorCommands(p1Controls);
             // Can rotate
             this.rotator = new Rotator(0, 202);
-            // Allows you to rotate.
-            this._keyboardRotator = new KeyboardRotation(this.rotator, player1Keys);
+            
 
             var slowCloud = this.GraphicsDevice.FromFileName("Content/backBackground.png");// spriteBatch.CreateFilleRectTexture( new Rectangle(0,0, gameWidth + 50, gameHEight + 50), Color.LightCyan);
             var fastCloud = this.GraphicsDevice.FromFileName("Content/frontBackground.png");  //spriteBatch.CreateFilleRectTexture(new Rectangle(0, 0, gameWidth + 50, gameHEight + 50), Color.Orange);
@@ -94,7 +91,7 @@ namespace Parrallax.Eightway
             // It's also the entire map for the backfround.
             var atlasRects = FramesGenerator.GenerateFrames(new FrameInfo[] { new FrameInfo(25, 25) }, new Dimensions(500, 500));
             var map = Enumerable.Range(0, atlasRects.Length).Select(i => i).ToList();
-            this._backgroundTiles = new BackgroundTilesLayer(spriteBatch, new Texture2D[] { fastCloud, fastCloud }, atlasRects, map, rotator, 0.20f, new Vector2(0, 0));
+            
             this._foregroundLayter = new BackgroundRectanglesLayer(spriteBatch, new Texture2D[] { fastCloud, fastCloud }, rotator, 0.35f, new Vector2(876, 486));
             this._foregroundLayter2 = new BackgroundRectanglesLayer(spriteBatch, new Texture2D[] { slowCloud, slowCloud }, rotator, 0.20f, new Vector2(876, 486));
 
@@ -111,10 +108,11 @@ namespace Parrallax.Eightway
 
             KeyboardFunctions.QuitOnKeys(this, this.iStateManager.GetInputState().PressedKeys, Keys.Escape);
 
-            //var keys = KeyboardFunctions.CurrentPressedKeys(kState.GetPressedKeys(), kState, pKState);
+            
             var cmd= this._inputProcessor.Process(this._p1Commands);
             if (cmd != null)
                 cmd.Execute(rotator);
+
             rotator.Update(delta);
 
             _foregroundLayter.Update(gameTime);

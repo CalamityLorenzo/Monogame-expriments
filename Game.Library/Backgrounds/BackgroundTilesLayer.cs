@@ -138,7 +138,6 @@ namespace GameLibrary.Drawing.Backgrounds
             for (var x = 0; x < _sourceArea.Length; ++x)
             {
                 var item = _sourceArea[x];
-
                 spriteBatch.Draw(item.Texture, item.DestinationStart, item.SourceArea, Color.White);
             }
         }

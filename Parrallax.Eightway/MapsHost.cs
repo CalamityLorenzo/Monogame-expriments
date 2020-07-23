@@ -38,7 +38,6 @@ namespace Parrallax.Eightway
         {
             // TODO: use this.Content to load your game content here
             arial = this.Content.Load<SpriteFont>("Arial");
-            // This is the global rotator. All Rotatiosn made through the keyboard are propogated by this object.
 
         }
 
