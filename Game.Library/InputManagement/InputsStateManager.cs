@@ -186,7 +186,7 @@ namespace GameLibrary.InputManagement
         public HashSet<Keys> KeysDown() => this._KeysDown;
         public Dictionary<Keys, PressedKey> PressedKeys() => this._CurrentPressedKeys;
 
-        public InputState GetInputState() => new InputState(_KeysUp, _KeysDown, _CurrentButtons,  _CurrentPressedKeys, HistoryKeys, HistoryMouseButtons);
+        public CurrentInputState GetInputState() => new CurrentInputState(_KeysUp, _KeysDown, _CurrentButtons,  _CurrentPressedKeys, HistoryKeys, HistoryMouseButtons);
 
     }
 }

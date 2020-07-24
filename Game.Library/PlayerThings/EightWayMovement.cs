@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameLibrary.PlayerThings
 {
+    [Obsolete]
     public enum EightWayPositions // Yes there is nine
     {
         Dead = 0,
@@ -21,6 +22,7 @@ namespace GameLibrary.PlayerThings
     // This class allows the an object to move in 8 directions, and stop
     // It hjas nothing to do with any inputs nor if a person is controlling it.
     // HOW EIghtWayPosition is reached, is different code.
+    [Obsolete]
     public class EightWayMovement
     {
         private EightWayPositions _previousDirection;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 
 namespace GameLibrary.PlayerThings
 {
+    [Obsolete]
     public enum PlayerControls
     {
         Unknown = 0,

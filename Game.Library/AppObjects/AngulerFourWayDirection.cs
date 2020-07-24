@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 namespace GameLibrary.AppObjects
 {
 
+    [Obsolete]
     public enum FourDirections
     {
         Unknown = 0,
@@ -23,6 +24,7 @@ namespace GameLibrary.AppObjects
     }
     // Sets a direction based on angles (Degrees).
     // Also includes a velocity too.
+    [Obsolete]
     public class AngularFourWayDirection : IGameObjectUpdate
     {
         private FourDirections currentDirection;

@@ -6,10 +6,10 @@ using System.Text;
 
 namespace GameLibrary.InputManagement
 {
-    public class InputState
+    public class CurrentInputState
     {
 
-        public InputState(HashSet<Keys> keysUp, HashSet<Keys> keysDown, Dictionary<MouseButton, PressedMouseButton> currentButtons, Dictionary<Keys, PressedKey> currentPressedKeys, Dictionary<Keys, float> historyKeys, Dictionary<MouseButton, float> historyMouseButtons)
+        public CurrentInputState(HashSet<Keys> keysUp, HashSet<Keys> keysDown, Dictionary<MouseButton, PressedMouseButton> currentButtons, Dictionary<Keys, PressedKey> currentPressedKeys, Dictionary<Keys, float> historyKeys, Dictionary<MouseButton, float> historyMouseButtons)
         {
             KeysUp = keysUp;
             KeysDown = keysDown;
