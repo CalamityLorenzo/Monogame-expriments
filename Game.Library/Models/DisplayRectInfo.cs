@@ -29,10 +29,10 @@ namespace GameLibrary.Models
 
     public class BaseRectInfo
     {
-        public BaseRectInfo(Rectangle destination, Vector2 destinationStart)
+        public BaseRectInfo(Rectangle destination, Vector2 offSetDestination)
         {
             this.DestinationArea = destination;
-            this.StartPos = destinationStart;
+            this.StartPos = offSetDestination;
         }
 
         public Rectangle DestinationArea { get; }

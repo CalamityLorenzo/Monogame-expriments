@@ -1,17 +1,14 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using GameLibrary.AppObjects;
-using GameLibrary.Inputs;
+﻿using System.Collections.Generic;
+using GameLibrary.Character;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameLibrary.InputManagement
 {
 
     /// <summary>
-    /// Process the keys being pressed, and returns the relevant commands to be actioned.
+    /// The Reciever that turns key presses into actor commands.
     /// </summary>
-   public class MouseKeyboardInputsReciever
+    public class MouseKeyboardInputsReciever
     {
         private InputsStateManager _inputs;
 

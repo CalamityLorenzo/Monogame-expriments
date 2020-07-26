@@ -1,8 +1,6 @@
 ﻿using GameData.CharacterActions;
-using GameLibrary.Inputs;
+using GameLibrary.Character;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GameData.Commands.WalkingMan
 {

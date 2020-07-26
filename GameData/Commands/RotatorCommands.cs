@@ -1,8 +1,5 @@
 ﻿using GameLibrary.AppObjects;
-using GameLibrary.Inputs;
-using System;
-using System.Collections.Generic;
-using System.Text;
+using GameLibrary.Character;
 
 namespace GameData.Commands
 {

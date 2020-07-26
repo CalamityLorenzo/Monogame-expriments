@@ -1,11 +1,8 @@
-﻿using GameLibrary.Inputs;
+﻿using GameLibrary.Character;
 using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Runtime.InteropServices;
-using System.Security.Permissions;
-using System.Text;
 
 namespace GameLibrary.InputManagement
 {

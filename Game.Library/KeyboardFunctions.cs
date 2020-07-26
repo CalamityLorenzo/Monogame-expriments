@@ -13,39 +13,13 @@ namespace GameLibrary
 {
     public static class KeyboardFunctions
     {
+    
         /// <summary>
-        /// puts the currently pressed keys into an array
-        /// Removes the dropped ones
+        /// Pass in a list of keys that trigger a hard quit (basically it's escape).
         /// </summary>
-        /// <param name="CurrentPressedKeys"></param>
-        /// <param name="currentState"></param>
-        /// <param name="previousState"></param>
-        /// <returns></returns>
-        public static IEnumerable<Keys> CurrentPressedKeys(IEnumerable<Keys> CurrentPressedKeys, KeyboardState currentState, KeyboardState previousState)
-        {
-            if (previousState == null)
-                return new List<Keys>();
-            HashSet<Keys> pressedKeysState = new HashSet<Keys>(CurrentPressedKeys);
-            var appKeys = currentState.GetPressedKeys();
-            // add newly pressed keys
-            foreach (var key in appKeys)
-            {
-                if (!previousState.IsKeyDown(key))
-                    pressedKeysState.Add(key);
-            }
-            var oldKeys = new HashSet<Keys>();
-            foreach (var pressedKey in pressedKeysState)
-            {
-                if (previousState.IsKeyDown(pressedKey) && !appKeys.Contains(pressedKey))
-                {
-                    oldKeys.Add(pressedKey);
-                }
-            }
-            // remove newly lifted keys
-            pressedKeysState.RemoveWhere(prk => oldKeys.Any(ok => ok == prk));
-            return pressedKeysState;
-        }
-
+        /// <param name="hostObject"></param>
+        /// <param name="pressedKeys"></param>
+        /// <param name="quitKeys"></param>
         public static void QuitOnKeys(Game hostObject, Dictionary<Keys, PressedKey> pressedKeys, params Keys[] quitKeys)
         {
             foreach(var item in quitKeys)

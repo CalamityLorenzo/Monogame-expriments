@@ -3,7 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace GameLibrary.Inputs
+namespace GameLibrary.Character
 {
     public interface IActorCommand<T>
     {

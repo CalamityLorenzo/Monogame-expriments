@@ -65,25 +65,10 @@ namespace InputTests
         {
             GraphicsDevice.Clear(Color.Black);
             this.spriteBatch.Begin();
-            //var vectorStart = new Vector2(10, 15);
-            //for (var x = 0; x < this.keysPressedwidths.Count; ++x)
-            //{
-            //    if (x == 0)
-            //    {
-            //        this.spriteBatch.DrawString(this.arialFont, keysPressedStrings[x], vectorStart, Color.Red);
-            //    }
-            //    else
-            //    {
-            //        vectorStart.X += keysPressedwidths[x - 1].X;
-            //        this.spriteBatch.DrawString(this.arialFont, keysPressedStrings[x], vectorStart, Color.Red);
-            //    }
-
-            //}
 
             this.spriteBatch.DrawString(this.arialFont, histry, new Vector2(300, 15), Color.Yellow);
 
             this.spriteBatch.End();
-            //base.Draw(gameTime);
         }
     }
 }

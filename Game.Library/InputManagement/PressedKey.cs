@@ -3,6 +3,9 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameLibrary.InputManagement
 {
+    /// <summary>
+    /// State of a pressed key
+    /// </summary>
     public class PressedKey
     {
         public Keys Key { get; set; }
