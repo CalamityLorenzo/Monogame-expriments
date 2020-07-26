@@ -15,6 +15,7 @@ using GameLibrary.InputManagement;
 using GameData.CharacterActions;
 using GameData.Commands;
 using GameData.UserInput;
+using GameData;
 
 namespace InputTests
 {
@@ -31,6 +32,9 @@ namespace InputTests
         private MovingObject movingObject;
 
         private Rotator rTater;
+
+        public VelocityManager VelocityManager { get; private set; }
+
         private Vector2 _centrePoint;
 
         public ProcessedRockGAme()
@@ -68,7 +72,8 @@ namespace InputTests
             this.player1Inputs = CommandBuilder.SetWalkingCommands(p1Controls);
             this.rTaterInputs = CommandBuilder.SetRotatorCommands(p1Controls);
             this.rTater = new Rotator(47, 80.4f);
-            this.movingObject = new MovingObject(this.spriteBatch, new Dimensions(50, 50), new Vector2(80, 180));
+            this.VelocityManager = new VelocityManager(44.0f, 0f, 0f);
+            this.movingObject = new MovingObject(this.spriteBatch, new Dimensions(50, 50), VelocityManager,  new Vector2(80, 180));
 
         }
 
