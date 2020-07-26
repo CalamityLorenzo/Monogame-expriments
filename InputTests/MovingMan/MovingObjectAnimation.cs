@@ -1,4 +1,5 @@
-﻿using GameLibrary.Extensions;
+﻿using GameData.CharacterActions;
+using GameLibrary.Extensions;
 using Library.Animation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

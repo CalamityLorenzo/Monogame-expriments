@@ -1,10 +1,13 @@
-﻿using GameLibrary;
+﻿using GameData.CharacterActions;
+using GameData.Commands;
+using GameData.UserInput;
+using GameLibrary;
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.InputManagement;
-using InputTests.KeyboardInput;
+
 using InputTests.MovingMan;
-using InputTests.WalkingManCommands;
+
 using Library.Animation;
 using Microsoft.Xna.Framework;
 
@@ -25,7 +28,7 @@ namespace InputTests
 
         private MovingObject movingObject;
         private List<KeyCommand<IWalkingMan>> p1Commands;
-        private MouseKeyboardInputsProcessor inputProcessor;
+        private MouseKeyboardInputsReciever inputProcessor;
 
         public MovingRockGame()
         {
@@ -42,7 +45,7 @@ namespace InputTests
             this.spriteBatch = new Microsoft.Xna.Framework.Graphics.SpriteBatch(GraphicsDevice);
             arialFont = this.Content.Load<SpriteFont>("NewArial");
 
-            var p1Controls = new PlayerControlKeys
+            var p1Controls = new PlayerKeyboardControls
             {
                 Up = Keys.W,
                 Down = Keys.S,
@@ -53,8 +56,8 @@ namespace InputTests
             };
 
             
-            this.p1Commands = PlayerCommands.SetCommands(p1Controls);
-            this.inputProcessor = new MouseKeyboardInputsProcessor(this.inputsManager);
+            this.p1Commands = CommandBuilder.SetWalkingCommands(p1Controls);
+            this.inputProcessor = new MouseKeyboardInputsReciever(this.inputsManager);
             this.movingObject = new MovingObject(this.spriteBatch, new Dimensions(50, 50), new Vector2(80, 180));
 
         }

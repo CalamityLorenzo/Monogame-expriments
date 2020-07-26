@@ -1,31 +1,31 @@
-﻿using GameLibrary;
+﻿using GameData.CharacterActions;
+using GameData.Commands;
+using GameData.UserInput;
+using GameLibrary;
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using GameLibrary.InputManagement;
-using GameLibrary.Models;
-using inputTests;
-using InputTests.KeyboardInput;
 using InputTests.MovingMan;
 using Library.Animation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.Direct2D1;
 using System.Collections.Generic;
+using System.Runtime.InteropServices;
 
 namespace InputTests
 {
     public class MovingObjectGame : Game
     {
         private GraphicsDeviceManager graphics;
-        private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
+        private SpriteBatch spriteBatch;
         private SpriteFont arialFont;
         private InputsStateManager iManger = new InputsStateManager();
 
         private MovingHead headsIWin;
         private List<KeyCommand<IWalkingMan>> p1Commands;
-        private MouseKeyboardInputsProcessor inputProcessor;
+        private MouseKeyboardInputsReciever inputProcessor;
         private MovingObjectAnimation _mo4;
         private CrossHairs _mouseHairs;
 
@@ -44,7 +44,7 @@ namespace InputTests
 
         protected override void LoadContent()
         {
-            this.spriteBatch = new Microsoft.Xna.Framework.Graphics.SpriteBatch(GraphicsDevice);
+            this.spriteBatch = new SpriteBatch(GraphicsDevice);
             arialFont = this.Content.Load<SpriteFont>("NewArial");
             var walkingLeft = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingLeft.png");
             var walkingRight = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingRight.png");
@@ -65,7 +65,7 @@ namespace InputTests
             var Green40x40 = this.spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 40, 40), Color.Green);
             var Blue40x40 = this.spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 40, 40), Color.Black);
 
-            var p1Controls = new PlayerControlKeys
+            var p1Controls = new PlayerKeyboardControls
             {
                 Up = Keys.W,
                 Down = Keys.S,
@@ -76,8 +76,8 @@ namespace InputTests
             };
 
             this.headsIWin  = new MovingHead(new Vector2(200,300), new Dimensions(80, 100));
-            this.p1Commands = PlayerCommands.SetCommands(p1Controls);
-            this.inputProcessor = new MouseKeyboardInputsProcessor(this.iManger);
+            this.p1Commands = CommandBuilder.SetWalkingCommands(p1Controls);
+            this.inputProcessor = new MouseKeyboardInputsReciever(this.iManger);
 
             _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, headsIWin, new Vector2(200, 300));
             _mouseHairs = new CrossHairs(spriteBatch, crossHairs, Mouse.GetState().Position.ToVector2(), new Rectangle(0, 0, this.GraphicsDevice.Viewport.Width, this.GraphicsDevice.Viewport.Height - 200));

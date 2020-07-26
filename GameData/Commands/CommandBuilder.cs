@@ -1,18 +1,19 @@
-﻿using GameLibrary.AppObjects;
+﻿using GameData.CharacterActions;
+using GameData.Commands.WalkingMan;
+using GameData.UserInput;
+using GameLibrary.AppObjects;
 using GameLibrary.InputManagement;
-using InputTests.MovingMan;
-using InputTests.RotatorCommands;
-using InputTests.WalkingManCommands;
 using System;
 using System.Collections.Generic;
 using System.Text;
 
-namespace InputTests.KeyboardInput
+namespace GameData.Commands
 {
-    public class PlayerCommands
+    // Helper class to build the list of commands required
+    public class CommandBuilder
     {
-        private readonly static Lazy<PlayerCommands> _cmd = new Lazy<PlayerCommands>(() => new PlayerCommands());
-        private PlayerCommands() { }
+        private readonly static Lazy<CommandBuilder> _cmd = new Lazy<CommandBuilder>(() => new CommandBuilder());
+        private CommandBuilder() { }
 
         private List<KeyCommand<IWalkingMan>> Commands(PlayerKeyboardControls keys) => new List<KeyCommand<IWalkingMan>>
         {
@@ -81,7 +82,7 @@ namespace InputTests.KeyboardInput
             })
         };
 
-        public static List<KeyCommand<IWalkingMan>> SetCommands(PlayerKeyboardControls keys)
+        public static List<KeyCommand<IWalkingMan>> SetWalkingCommands(PlayerKeyboardControls keys)
         {
             return _cmd.Value.Commands(keys);
         }

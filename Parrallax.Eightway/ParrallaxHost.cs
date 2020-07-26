@@ -23,7 +23,7 @@ namespace Parrallax.Eightway
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont arial;
-        private MouseKeyboardInputsProcessor _inputProcessor;
+        private MouseKeyboardInputsReciever _inputProcessor;
         private List<KeyCommand<Rotator>> _p1Commands;
         Rotator rotator;
 
@@ -78,7 +78,7 @@ namespace Parrallax.Eightway
                 Fire = Keys.LeftControl,
                 SecondFire = Keys.Space
             };
-            this._inputProcessor = new MouseKeyboardInputsProcessor(this.iStateManager);
+            this._inputProcessor = new MouseKeyboardInputsReciever(this.iStateManager);
             this._p1Commands = PlayerCommands.SetRotatorCommands(p1Controls);
             // Can rotate
             this.rotator = new Rotator(0, 202);

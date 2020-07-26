@@ -1,4 +1,5 @@
-﻿using GameLibrary.AppObjects;
+﻿using GameData.CharacterActions;
+using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

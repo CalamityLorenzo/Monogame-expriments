@@ -1,8 +1,8 @@
 using Microsoft.Xna.Framework.Input;
 
-namespace InputTests.KeyboardInput
+namespace GameData.UserInput
 {
-    public class PlayerControlKeys{
+    public class PlayerKeyboardControls{
        public Keys Up{get;set;}
        public Keys Down{get;set;}
        public Keys Left{get;set;}

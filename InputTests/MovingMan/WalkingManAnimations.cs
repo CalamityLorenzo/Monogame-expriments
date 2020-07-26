@@ -1,4 +1,5 @@
-﻿using Library.Animation;
+﻿using GameData.CharacterActions;
+using Library.Animation;
 using System;
 using System.Collections.Generic;
 using System.Text;

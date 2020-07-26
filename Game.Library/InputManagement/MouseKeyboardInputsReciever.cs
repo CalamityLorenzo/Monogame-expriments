@@ -7,11 +7,15 @@ using Microsoft.Xna.Framework.Input;
 
 namespace GameLibrary.InputManagement
 {
-   public class MouseKeyboardInputsProcessor
+
+    /// <summary>
+    /// Process the keys being pressed, and returns the relevant commands to be actioned.
+    /// </summary>
+   public class MouseKeyboardInputsReciever
     {
         private InputsStateManager _inputs;
 
-        public MouseKeyboardInputsProcessor(InputsStateManager inputs)
+        public MouseKeyboardInputsReciever(InputsStateManager inputs)
         {
             _inputs = inputs;
         }
@@ -40,6 +44,14 @@ namespace GameLibrary.InputManagement
             return currentCommand;
         }
 
+        /// <summary>
+        /// Where the magic happends
+        /// List of commands can be changed during an update.
+        /// This should occur BEFORE any state changes to your entites are applied.
+        /// </summary>
+        /// <typeparam name="T"></typeparam>
+        /// <param name="keyCommands"></param>
+        /// <returns></returns>
         public IActorCommand<T> Process<T>(List<KeyCommand<T>> keyCommands)
         {
             foreach(var keyCommand in keyCommands)

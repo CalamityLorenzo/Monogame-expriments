@@ -7,10 +7,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Commands\ActorCommandsList.cs" />
+    <Compile Remove="Commands\WalkingManCommands.cs" />
     <Compile Remove="KeyboardInput\InputManager.cs" />
     <Compile Remove="KeyboardInput\MouseButtons.cs" />
+    <Compile Remove="KeyboardInput\PlayerCommands.cs" />
+    <Compile Remove="KeyboardInput\PlayerKeyboardControls.cs" />
     <Compile Remove="KeyboardInput\PressedKey.cs" />
     <Compile Remove="KeyboardInput\PressedMouseButton.cs" />
+    <Compile Remove="MovingMan\IWalkingMan.cs" />
+    <Compile Remove="RotatorCommands\RotatorCommands.cs" />
   </ItemGroup>
 
   <ItemGroup>
@@ -19,6 +25,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\Game.Library\Game.Library.csproj" />
+    <ProjectReference Include="..\GameData\GameData.csproj" />
   </ItemGroup>
 
   <ItemGroup>
@@ -40,6 +47,12 @@
     <None Update="Content\WalkingRight.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Folder Include="Commands\" />
+    <Folder Include="KeyboardInput\" />
+    <Folder Include="RotatorCommands\" />
   </ItemGroup>
 
 </Project>

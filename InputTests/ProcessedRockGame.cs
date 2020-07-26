@@ -1,22 +1,20 @@
 ﻿using GameLibrary;
-using GameLibrary.Animation;
 using GameLibrary.AppObjects;
-using InputTests.WalkingManCommands;
 
-using InputTests.KeyboardInput;
+
+
 using InputTests.MovingMan;
-using Library.Animation;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using System.Windows.Forms;
 using Keys = Microsoft.Xna.Framework.Input.Keys;
 using GameLibrary.Extensions;
 using GameLibrary.InputManagement;
+using GameData.CharacterActions;
+using GameData.Commands;
+using GameData.UserInput;
 
 namespace InputTests
 {
@@ -26,7 +24,7 @@ namespace InputTests
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
         private SpriteFont arialFont;
         private InputsStateManager inputsManager;
-        private MouseKeyboardInputsProcessor inputsProcessor;
+        private MouseKeyboardInputsReciever inputsProcessor;
 
         private List<KeyCommand<IWalkingMan>> player1Inputs;
         private List<KeyCommand<Rotator>> rTaterInputs;
@@ -50,7 +48,7 @@ namespace InputTests
             this.spriteBatch = new Microsoft.Xna.Framework.Graphics.SpriteBatch(GraphicsDevice);
             arialFont = this.Content.Load<SpriteFont>("NewArial");
 
-            var p1Controls = new PlayerControlKeys
+            var p1Controls = new PlayerKeyboardControls
             {
                 Up = Keys.W,
                 Down = Keys.S,
@@ -66,9 +64,9 @@ namespace InputTests
             // create the integral to convert to float/
             _centrePoint = new Point(centreHoriz, centreVert).ToVector2();
 
-            this.inputsProcessor = new MouseKeyboardInputsProcessor(inputsManager);
-            this.player1Inputs = PlayerCommands.SetCommands(p1Controls);
-            this.rTaterInputs = PlayerCommands.SetRotatorCommands(p1Controls);
+            this.inputsProcessor = new MouseKeyboardInputsReciever(inputsManager);
+            this.player1Inputs = CommandBuilder.SetWalkingCommands(p1Controls);
+            this.rTaterInputs = CommandBuilder.SetRotatorCommands(p1Controls);
             this.rTater = new Rotator(47, 80.4f);
             this.movingObject = new MovingObject(this.spriteBatch, new Dimensions(50, 50), new Vector2(80, 180));
 

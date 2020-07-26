@@ -1,8 +1,7 @@
 ﻿using GameLibrary;
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
-using InputTests.WalkingManCommands;
-using InputTests.KeyboardInput;
+
 using InputTests.MovingMan;
 using Library.Animation;
 using Microsoft.Xna.Framework;
@@ -13,6 +12,9 @@ using System;
 using System.Collections.Generic;
 using System.Text;
 using GameLibrary.InputManagement;
+using GameData.CharacterActions;
+using GameData.UserInput;
+using GameData.Commands;
 
 namespace InputTests
 {
@@ -23,7 +25,7 @@ namespace InputTests
         private SpriteFont arialFont;
         private List<KeyCommand<IWalkingMan>> p1Commands;
         private InputsStateManager keymouseState;
-        private MouseKeyboardInputsProcessor inputProcessor;
+        private MouseKeyboardInputsReciever inputProcessor;
         private MovingHead headsIWin;
 
         private MovingObjectAnimation _mo4;
@@ -58,7 +60,7 @@ namespace InputTests
             });
 
             var crossHairs = Texture2D.FromFile(GraphicsDevice, "./Content/CrossHairs_one.png");
-            var p1Controls = new PlayerControlKeys
+            var p1Controls = new PlayerKeyboardControls
             {
                 Up = Keys.W,
                 Down = Keys.S,
@@ -68,10 +70,10 @@ namespace InputTests
                 SecondFire = Keys.Space
             };
 
-            this.p1Commands = PlayerCommands.SetCommands(p1Controls);
+            this.p1Commands = CommandBuilder.SetWalkingCommands(p1Controls);
 
             this.keymouseState = new InputsStateManager();
-            this.inputProcessor = new MouseKeyboardInputsProcessor(keymouseState);
+            this.inputProcessor = new MouseKeyboardInputsReciever(keymouseState);
 
             this.headsIWin = new MovingHead(new Vector2(200, 300), new Dimensions(80, 100));
             _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, headsIWin, new Vector2(200, 300));
