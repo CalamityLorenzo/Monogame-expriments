@@ -46,7 +46,6 @@ namespace InputTests
         {
             this.spriteBatch = new SpriteBatch(GraphicsDevice);
             arialFont = this.Content.Load<SpriteFont>("NewArial");
-
         }
 
         protected override void Update(GameTime gameTime)
