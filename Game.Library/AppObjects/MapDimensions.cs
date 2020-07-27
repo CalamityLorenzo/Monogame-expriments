@@ -6,6 +6,9 @@ using System.Threading.Tasks;
 
 namespace GameLibrary.AppObjects
 {
+    /// <summary>
+    /// Describes a complete Maps dimensions
+    /// </summary>
     public class MapDimensions
     {
         int Width { get; set; }

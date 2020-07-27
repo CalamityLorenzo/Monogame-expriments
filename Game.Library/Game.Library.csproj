@@ -5,6 +5,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="AppObjects\AngulerFourWayDirection.cs" />
     <Compile Remove="PlayerThings\EightWayMovement.cs" />
   </ItemGroup>
 

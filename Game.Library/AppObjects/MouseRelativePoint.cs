@@ -5,8 +5,10 @@ using System.Text;
 
 namespace GameLibrary.AppObjects
 {
-    // Returns the vector from a one point relative to a fixed point
-    // Also can return the angle as a unitvecotor
+    /// <summary>
+    /// Returns the vector from a one point relative to a fixed point
+    /// Also can return the angle as a unitvecotor
+    /// </summary>
     public class MouseRelativePoint
     {
         private Vector2 _previousPosition;

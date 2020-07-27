@@ -22,10 +22,11 @@ namespace InputTests
     {
         private GraphicsDeviceManager graphics;
         private Microsoft.Xna.Framework.Graphics.SpriteBatch spriteBatch;
+        private InputsStateManager keymouseState;
+        private MouseKeyboardInputsReciever inputReciever;
+        
         private SpriteFont arialFont;
         private List<KeyCommand<IWalkingMan>> p1Commands;
-        private InputsStateManager keymouseState;
-        private MouseKeyboardInputsReciever inputProcessor;
         private MovingHead headsIWin;
 
         private MovingObjectAnimation _mo4;
@@ -72,8 +73,7 @@ namespace InputTests
 
             this.p1Commands = CommandBuilder.SetWalkingCommands(p1Controls);
 
-            this.keymouseState = new InputsStateManager();
-            this.inputProcessor = new MouseKeyboardInputsReciever(keymouseState);
+            this.inputReciever = new MouseKeyboardInputsReciever(keymouseState);
 
             this.headsIWin = new MovingHead(new Vector2(200, 300), new Dimensions(80, 100));
             _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, headsIWin, new Vector2(200, 300));
@@ -85,15 +85,13 @@ namespace InputTests
             var kState = Keyboard.GetState();
             var mState = Mouse.GetState();
             this.keymouseState.Update(gameTime, kState, mState);
-            
-
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, keymouseState.PressedKeys(), Keys.Escape);
             _mouseHairs.SetPosition(mState.Position.ToVector2());
             //time
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit
-            var command = this.inputProcessor.Process(this.p1Commands);
+            var command = this.inputReciever.Process(this.p1Commands);
             if(command!=null)
                 command.Execute(_mo4);
 
