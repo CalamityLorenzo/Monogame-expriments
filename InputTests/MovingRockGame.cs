@@ -31,7 +31,7 @@ namespace InputTests
         private List<KeyCommand<IWalkingMan>> p1Commands;
         private MouseKeyboardInputsReciever inputProcessor;
 
-        public VelocityManager VelocityManager { get; private set; }
+        public BasicVelocityManager VelocityManager { get; private set; }
 
         public MovingRockGame()
         {
@@ -61,7 +61,7 @@ namespace InputTests
             
             this.p1Commands = CommandBuilder.SetWalkingCommands(p1Controls);
             this.inputProcessor = new MouseKeyboardInputsReciever(this.inputsManager);
-            this.VelocityManager = new VelocityManager(44.0f, 0f, 0f);
+            this.VelocityManager = new BasicVelocityManager(0f, 0f);
 
             this.movingObject = new MovingObject(this.spriteBatch, new Dimensions(50, 50),this.VelocityManager, new Vector2(80, 180));
 

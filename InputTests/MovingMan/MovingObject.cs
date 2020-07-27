@@ -14,13 +14,13 @@ namespace InputTests.MovingMan
     {
         private readonly SpriteBatch spriteBatch;
         private readonly Dimensions blockSize;
-        private readonly VelocityManager velocites;
+        private readonly BasicVelocityManager velocites;
         private Vector2 _currentPos;
         private float velocityX;
         private float velocityY;
         private Texture2D _texture;
 
-        public MovingObject(SpriteBatch spriteBatch, Dimensions blockSize, VelocityManager velocites, Vector2 startPos)
+        public MovingObject(SpriteBatch spriteBatch, Dimensions blockSize, BasicVelocityManager velocites, Vector2 startPos)
         {
             this.spriteBatch = spriteBatch;
             this.blockSize = blockSize;

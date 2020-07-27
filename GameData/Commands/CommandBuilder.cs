@@ -15,7 +15,7 @@ namespace GameData.Commands
         private readonly static Lazy<CommandBuilder> _cmd = new Lazy<CommandBuilder>(() => new CommandBuilder());
         private CommandBuilder() { }
 
-        private List<KeyCommand<IWalkingMan>> Commands(PlayerKeyboardControls keys) => new List<KeyCommand<IWalkingMan>>
+        private List<KeyCommand<IWalkingMan>> WalkingCommands(PlayerKeyboardControls keys) => new List<KeyCommand<IWalkingMan>>
         {
             new KeyCommand<IWalkingMan>(keys.Up, KeyCommandPress.Down, new WalkUpCommand()
                 ),
@@ -82,14 +82,34 @@ namespace GameData.Commands
             })
         };
 
+        private List<KeyCommand<IBasicMotion>> MapMovement(PlayerKeyboardControls keys)=>new List<KeyCommand<IBasicMotion>>
+        {
+            new KeyCommand<IBasicMotion>(keys.Up, KeyCommandPress.Down, new UpVelocityCommand()
+                ),
+            new KeyCommand<IBasicMotion>(keys.Down, KeyCommandPress.Down, new DownVelocityCommand()
+                ),
+            new KeyCommand<IBasicMotion>(keys.Left, KeyCommandPress.Down, new LeftVelocityCommand()),
+            new KeyCommand<IBasicMotion>(keys.Right, KeyCommandPress.Down, new RightVelocityCommand()),
+
+            new KeyCommand<IBasicMotion>(keys.Up, KeyCommandPress.Up, new UpVelocityCommandRelease()
+                ),
+            new KeyCommand<IBasicMotion>(keys.Down, KeyCommandPress.Up, new DownVelocityCommandRelease()
+                ),
+            new KeyCommand<IBasicMotion>(keys.Left, KeyCommandPress.Up, new LeftVelocityCommandRelease()),
+            new KeyCommand<IBasicMotion>(keys.Right, KeyCommandPress.Up, new RightVelocityCommandRelease()),
+        };
+
+
         public static List<KeyCommand<IWalkingMan>> SetWalkingCommands(PlayerKeyboardControls keys)
         {
-            return _cmd.Value.Commands(keys);
+            return _cmd.Value.WalkingCommands(keys);
         }
 
         public static List<KeyCommand<Rotator>> SetRotatorCommands(PlayerKeyboardControls keys)
         {
             return _cmd.Value.RotatorCmds(keys);
         }
+
+        public static List<KeyCommand<IBasicMotion>> GetBasicMapMotion(PlayerKeyboardControls keys) => _cmd.Value.MapMovement(keys);
     }
 }

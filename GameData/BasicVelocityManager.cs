@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameLibrary.AppObjects;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Data;
@@ -10,12 +11,11 @@ namespace GameData
     /// You compose your object so this is what managers he velocity
     /// Then at update read the values.
     /// </summary>
-    public class VelocityManager
+    public class BasicVelocityManager : IVelocinator
     {
 
-        public VelocityManager(float maxVelocity, float startVelocityX, float startVelocityY)
+        public BasicVelocityManager(float startVelocityX, float startVelocityY)
         {
-            MaxVelocity = maxVelocity;
             VelocityY = startVelocityY;
             VelocityX = startVelocityX;
         }

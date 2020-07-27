@@ -36,7 +36,7 @@ namespace MonoGameTests
             graphics.PreferredBackBufferHeight = 400;
             Content.RootDirectory = "Content";
 
-            this.configData = Configuration.Manager
+            this.configData = ConfigurationBuilder.Manager
                     .LoadJsonFile("opts.json")
                     .LoadJsonFile("opts2.json")
                     .Build();

@@ -24,27 +24,25 @@ namespace GameLibrary.Config.App
         }
 
         // Simple Case leaning on Json.net
-        public T ToResultType<T>(string propertyName) where T : class
-        {
+        public T ToResultType<T>(string propertyName) where T : class{
             return this.ToResultType<T>(propertyName, (str) => JsonSerializer.Deserialize<T>(str));
         }
     }
-    public class Configuration
+    public class ConfigurationBuilder
     {
-        private static Lazy<Configuration> configInstance = new Lazy<Configuration>(() => new Configuration());
-        private Configuration() { }
+        private static Lazy<ConfigurationBuilder> configInstance = new Lazy<ConfigurationBuilder>(() => new ConfigurationBuilder());
+        private ConfigurationBuilder() { }
         private bool BuildComplete = false;
-        public static Configuration Manager => configInstance.Value;
+        public static ConfigurationBuilder Manager => configInstance.Value;
 
         private HashSet<string> fileNames = new HashSet<string>();
         private List<JsonDocument> LoadedData = new List<JsonDocument>();
 
-        public Configuration LoadJsonFile(string jsonfilePath)
+        public ConfigurationBuilder LoadJsonFile(string jsonfilePath)
         {
             fileNames.Add(jsonfilePath);
             return this;
         }
-
 
         public ConfigurationData Build()
         {

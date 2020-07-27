@@ -1,4 +1,6 @@
-﻿using GameLibrary;
+﻿using GameData.Commands;
+using GameData.UserInput;
+using GameLibrary;
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Config.App;
@@ -7,7 +9,6 @@ using GameLibrary.Extensions;
 using GameLibrary.InputManagement;
 using GameLibrary.Models;
 using GameLibrary.PlayerThings;
-using InputTests.KeyboardInput;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
@@ -52,7 +53,7 @@ namespace Parrallax.Eightway
         {
             var screenData = configData.ToResultType<ScreenData>("ScreenOptions");
             var player1Dictionary = configData.ToResultType<Dictionary<string, string>>("Player1Controls");
-            var player1Keys = GeneralExtensions.ConvertToKeySet<PlayerControls>(player1Dictionary);
+            
             // Configure the screen.
             graphics.PreferredBackBufferWidth = screenData.ScreenWidth;
             graphics.PreferredBackBufferHeight = screenData.ScreenHeight;
@@ -68,7 +69,7 @@ namespace Parrallax.Eightway
 
             iStateManager = new InputsStateManager();
 
-            var p1Controls = new PlayerControlKeys
+            var p1Controls = new PlayerKeyboardControls
             {
                 Up = Keys.W,
                 Down = Keys.S,
@@ -78,7 +79,7 @@ namespace Parrallax.Eightway
                 SecondFire = Keys.Space
             };
             this._inputProcessor = new MouseKeyboardInputsReciever(this.iStateManager);
-            this._p1Commands = PlayerCommands.SetRotatorCommands(p1Controls);
+            this._p1Commands = CommandBuilder.SetRotatorCommands(p1Controls);
             // Can rotate
             this.rotator = new Rotator(0, 202);
             
@@ -91,8 +92,8 @@ namespace Parrallax.Eightway
             var atlasRects = FramesGenerator.GenerateFrames(new FrameInfo[] { new FrameInfo(25, 25) }, new Dimensions(500, 500));
             var map = Enumerable.Range(0, atlasRects.Length).Select(i => i).ToList();
             
-            this._foregroundLayter = new BackgroundRectanglesLayer(spriteBatch, new Texture2D[] { fastCloud, fastCloud }, rotator, 0.35f, new Vector2(876, 486));
-            this._foregroundLayter2 = new BackgroundRectanglesLayer(spriteBatch, new Texture2D[] { slowCloud, slowCloud }, rotator, 0.20f, new Vector2(876, 486));
+            this._foregroundLayter = new BackgroundRectanglesLayer(spriteBatch, new Texture2D[] { fastCloud, fastCloud }, rotator, .42f, new Vector2(876, 486));
+            this._foregroundLayter2 = new BackgroundRectanglesLayer(spriteBatch, new Texture2D[] { slowCloud, slowCloud }, rotator, .26f, new Vector2(876, 486));
 
             base.Initialize();
         }

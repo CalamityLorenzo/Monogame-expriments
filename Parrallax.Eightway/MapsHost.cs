@@ -12,6 +12,12 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Linq;
 using System.Collections.Generic;
+using GameData;
+using GameLibrary.InputManagement;
+using GameData.UserInput;
+using System.Data;
+using GameData.Commands;
+using GameData.CharacterActions;
 
 namespace Parrallax.Eightway
 {
@@ -20,10 +26,16 @@ namespace Parrallax.Eightway
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         SpriteFont arial;
-        AngularFourWayDirection fourway;
-        private Keyboard4Way _keyboard4Way;
         private ConfigurationData configData;
-        private KeyboardState pKState;
+        private MapVelocityManager velocityManager;
+        private Rotator rotator;
+        private InputsStateManager inputState;
+
+        public MouseKeyboardInputsReciever InputsReciever { get; private set; }
+
+        private List<KeyCommand<Rotator>> rTateCmds;
+        private List<KeyCommand<IWalkingMan>> p1Cmds;
+        private List<KeyCommand<IBasicMotion>> mapCmds;
         private BoundedBackground backgroundMap;
 
         public MapsHost(ConfigurationData configData)
@@ -45,7 +57,17 @@ namespace Parrallax.Eightway
         {
             var screenData = configData.ToResultType<ScreenData>("ScreenOptions");
             var player1Dictionary = configData.ToResultType<Dictionary<string, string>>("Player1Controls");
-            var player1Keys = GeneralExtensions.ConvertToKeySet<PlayerControls>(player1Dictionary);
+
+            var p1Controls = new PlayerKeyboardControls
+            {
+                Up = Enum.Parse<Keys>(player1Dictionary["Up"]),
+                Down = Enum.Parse<Keys>(player1Dictionary["Down"]),
+                Left = Enum.Parse<Keys>(player1Dictionary["Left"]),
+                Right = Enum.Parse<Keys>(player1Dictionary["Right"]),
+                Fire = Enum.Parse<Keys>(player1Dictionary["Fire"]),
+                SecondFire = Enum.Parse<Keys>(player1Dictionary["Special"])
+            };
+
             // Configure the screen.
             graphics.PreferredBackBufferWidth = screenData.ScreenWidth;
             graphics.PreferredBackBufferHeight = screenData.ScreenHeight;
@@ -53,11 +75,6 @@ namespace Parrallax.Eightway
             graphics.ApplyChanges();
             // Assign the drawerer
             spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // Can rotate
-            this.fourway = new AngularFourWayDirection (FourDirections.Stopped, 0.5f);
-            // Allows you to rotate.
-            this._keyboard4Way = new Keyboard4Way(this.fourway, player1Keys);
 
             var slowCloud = this.GraphicsDevice.FromFileName("Content/backBackground.png");
             var fastCloud = this.GraphicsDevice.FromFileName("Content/frontBackground.png");
@@ -67,7 +84,16 @@ namespace Parrallax.Eightway
             var atlasRects = FramesGenerator.GenerateFrames(new FrameInfo[] { new FrameInfo(32, 32) }, new Dimensions(96, 64));
             var map = GeneralExtensions.LoadCsvMapData("Maps/BorderMap.csv");
             var topLeft = new Vector2(-123, -127);
-            backgroundMap = new BoundedBackground(spriteBatch, sprite, atlasRects, map, new Dimensions(32, 32), new Rectangle(0,0, 1024,1152), fourway, topLeft, GraphicsDevice.Viewport);
+            this.velocityManager = new MapVelocityManager(0f, 0f, 0.8f, 0.8f);
+            this.rotator = new Rotator(27, 99);
+            this.inputState = new InputsStateManager();
+            this.InputsReciever = new MouseKeyboardInputsReciever(inputState);
+
+            this.rTateCmds = CommandBuilder.SetRotatorCommands(p1Controls);
+            this.p1Cmds = CommandBuilder.SetWalkingCommands(p1Controls);
+            this.mapCmds = CommandBuilder.GetBasicMapMotion(p1Controls);
+
+            backgroundMap = new BoundedBackground(spriteBatch, sprite, atlasRects, map, new Dimensions(32, 32), new Rectangle(0,0, 1024,1152), rotator, velocityManager, topLeft, GraphicsDevice.Viewport);
 
             base.Initialize();
         }
@@ -75,17 +101,22 @@ namespace Parrallax.Eightway
         protected override void Update(GameTime gameTime)
         {
             // abort
-            var kState = Keyboard.GetState();
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || kState.IsKeyDown(Keys.Escape))
-                Exit();
-
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
+            var kState = Keyboard.GetState();
+            this.inputState.Update(gameTime, kState, Mouse.GetState());
+
+            KeyboardFunctions.QuitOnKeys(this, this.inputState.PressedKeys(), Keys.Escape);
+
+            var rTateCmd = this.InputsReciever.Process(rTateCmds);
+            var mapCmd = this.InputsReciever.Process(mapCmds);
+
+            if (rTateCmd != null)
+                rTateCmd.Execute(this.rotator);
+            if (mapCmd != null)
+                mapCmd.Execute(this.velocityManager);
             
-            this._keyboard4Way.Update(gameTime, kState, new GamePadState());
-            this.fourway.Update(delta);
             backgroundMap.Update(gameTime);
 
-            pKState = kState;
         }
 
         protected override void Draw(GameTime gameTime)

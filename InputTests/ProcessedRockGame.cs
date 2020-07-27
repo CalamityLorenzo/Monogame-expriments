@@ -33,7 +33,7 @@ namespace InputTests
 
         private Rotator rTater;
 
-        public VelocityManager VelocityManager { get; private set; }
+        public BasicVelocityManager VelocityManager { get; private set; }
 
         private Vector2 _centrePoint;
 
@@ -71,8 +71,8 @@ namespace InputTests
             this.inputsProcessor = new MouseKeyboardInputsReciever(inputsManager);
             this.player1Inputs = CommandBuilder.SetWalkingCommands(p1Controls);
             this.rTaterInputs = CommandBuilder.SetRotatorCommands(p1Controls);
-            this.rTater = new Rotator(47, 80.4f);
-            this.VelocityManager = new VelocityManager(44.0f, 0f, 0f);
+            this.rTater = new Rotator(47, 115.4f);
+            this.VelocityManager = new BasicVelocityManager(0f, 0f);
             this.movingObject = new MovingObject(this.spriteBatch, new Dimensions(50, 50), VelocityManager,  new Vector2(80, 180));
 
         }

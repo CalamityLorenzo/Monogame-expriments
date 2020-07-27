@@ -41,10 +41,6 @@ namespace PlayerCharacter
             _spriteBatch = new SpriteBatch(_graphicsDevice.GraphicsDevice);
 
             this.Content.RootDirectory = "./Content";
-            //var headRect = new Rectangle(0, 0, 77, 35);
-            //var bodyRect = new Rectangle(0, 0, 77, 65);
-            //var head = this._spriteBatch.CreateFilledRectTexture(headRect, Color.LightGoldenrodYellow);
-            //var body = this._spriteBatch.CreateFilledRectTexture(bodyRect, Color.DeepSkyBlue);
 
             var walkingLeft = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingLeft-headless.png");
             var walkingRight = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingRight-headless.png");
@@ -55,6 +51,7 @@ namespace PlayerCharacter
             var standingFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(standing.Width, standing.Height));
             var wlAnimation = new BlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
             var standingAnimation = new BlockAnimationObject(standingFrames, new float[] { 0.500f, 0.250f, 0.250f, 0.250f }, true);
+
             var bodyAnims = new BodyAnimations(new Dictionary<string, BlockAnimationObject>
             {
                 { "WalkLeft", wlAnimation },

@@ -15,7 +15,7 @@ namespace Parrallax.Eightway
         [STAThread]
         static void Main()
         {
-            var configData = Configuration.Manager
+            var configData = ConfigurationBuilder.Manager
                              .LoadJsonFile("opts.json")
                              .LoadJsonFile("opts2.json")
                              .Build();

@@ -22,14 +22,15 @@ namespace GameLibrary.Drawing.Backgrounds
         private List<int> map;
         private Dimensions tileDimensions;
         private Rectangle bounds;
-        private AngularFourWayDirection fourway;
+        private readonly Rotator rotator;
+        private readonly IVelocinator velocityManager;
         private Vector2 _currentPosition;
         private List<DisplayRectInfo> _sourceRects;
         private Vector2 _previousPosition;
         private Viewport viewport;
         private Dimensions mapDimensions;
 
-        public BoundedBackground(SpriteBatch spriteBatch, Texture2D sprite, Rectangle[] atlasRects, List<int> map, Dimensions tileDimensions, Rectangle bounds, AngularFourWayDirection fourway, Vector2 backgroundStartPos, Viewport viewPort)
+        public BoundedBackground(SpriteBatch spriteBatch, Texture2D sprite, Rectangle[] atlasRects, List<int> map, Dimensions tileDimensions, Rectangle bounds, Rotator rotator, IVelocinator velocityManager, Vector2 backgroundStartPos, Viewport viewPort)
         {
             this.spriteBatch = spriteBatch;
             this.sprite = sprite;
@@ -37,7 +38,8 @@ namespace GameLibrary.Drawing.Backgrounds
             this.map = map;
             this.tileDimensions = tileDimensions;
             this.bounds = bounds;
-            this.fourway = fourway;
+            this.rotator = rotator;
+            this.velocityManager = velocityManager;
             this._currentPosition = backgroundStartPos;
             this._previousPosition = Vector2.Add(_currentPosition, Vector2.One);
             this.viewport =  viewPort;
@@ -47,13 +49,16 @@ namespace GameLibrary.Drawing.Backgrounds
             this.mapDimensions = new Dimensions(bounds.Width / tileDimensions.Width, bounds.Height / tileDimensions.Height);
         }
 
+
+
         public void Update(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            var currentDirection = fourway.CurrentDirectionVector;
-            var currentVelocity = fourway.Velocity();
+            var currentDirection = GeneralExtensions.UnitAngleVector(rotator.CurrentAngle);
+            var currentVelocity = velocityManager.VelocityX;
 
-            this._currentPosition += (currentDirection * currentVelocity) * delta;
+            this._currentPosition =_currentPosition.AddX(currentVelocity * delta)
+                                    .AddY(velocityManager.VelocityY*delta) ;
 
             if (_currentPosition != _previousPosition)
             {
