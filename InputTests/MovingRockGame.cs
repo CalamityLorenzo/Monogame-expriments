@@ -59,7 +59,7 @@ namespace InputTests
             };
 
             
-            this.p1Commands = CommandBuilder.SetWalkingCommands(p1Controls);
+            this.p1Commands = CommandBuilder.GetWalkingCommands(p1Controls);
             this.inputProcessor = new MouseKeyboardInputsReciever(this.inputsManager);
             this.VelocityManager = new BasicVelocityManager(0f, 0f);
 

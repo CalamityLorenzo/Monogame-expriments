@@ -71,7 +71,7 @@ namespace InputTests
                 SecondFire = Keys.Space
             };
 
-            this.p1Commands = CommandBuilder.SetWalkingCommands(p1Controls);
+            this.p1Commands = CommandBuilder.GetWalkingCommands(p1Controls);
 
             this.inputReciever = new MouseKeyboardInputsReciever(keymouseState);
 

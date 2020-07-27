@@ -89,8 +89,8 @@ namespace Parrallax.Eightway
             this.inputState = new InputsStateManager();
             this.InputsReciever = new MouseKeyboardInputsReciever(inputState);
 
-            this.rTateCmds = CommandBuilder.SetRotatorCommands(p1Controls);
-            this.p1Cmds = CommandBuilder.SetWalkingCommands(p1Controls);
+            this.rTateCmds = CommandBuilder.GetRotatorCommands(p1Controls);
+            this.p1Cmds = CommandBuilder.GetWalkingCommands(p1Controls);
             this.mapCmds = CommandBuilder.GetBasicMapMotion(p1Controls);
 
             backgroundMap = new BoundedBackground(spriteBatch, sprite, atlasRects, map, new Dimensions(32, 32), new Rectangle(0,0, 1024,1152), rotator, velocityManager, topLeft, GraphicsDevice.Viewport);

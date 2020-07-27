@@ -100,12 +100,12 @@ namespace GameData.Commands
         };
 
 
-        public static List<KeyCommand<IWalkingMan>> SetWalkingCommands(PlayerKeyboardControls keys)
+        public static List<KeyCommand<IWalkingMan>> GetWalkingCommands(PlayerKeyboardControls keys)
         {
             return _cmd.Value.WalkingCommands(keys);
         }
 
-        public static List<KeyCommand<Rotator>> SetRotatorCommands(PlayerKeyboardControls keys)
+        public static List<KeyCommand<Rotator>> GetRotatorCommands(PlayerKeyboardControls keys)
         {
             return _cmd.Value.RotatorCmds(keys);
         }

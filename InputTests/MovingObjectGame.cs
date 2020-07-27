@@ -76,7 +76,7 @@ namespace InputTests
             };
 
             this.headsIWin  = new MovingHead(new Vector2(200,300), new Dimensions(80, 100));
-            this.p1Commands = CommandBuilder.SetWalkingCommands(p1Controls);
+            this.p1Commands = CommandBuilder.GetWalkingCommands(p1Controls);
             this.inputProcessor = new MouseKeyboardInputsReciever(this.iManger);
 
             _mo4 = new MovingObjectAnimation(this.spriteBatch, walkingLeft, walkingRight, standing, walkingAnims, headsIWin, new Vector2(200, 300));

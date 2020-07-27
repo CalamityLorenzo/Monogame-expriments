@@ -79,7 +79,7 @@ namespace Parrallax.Eightway
                 SecondFire = Keys.Space
             };
             this._inputProcessor = new MouseKeyboardInputsReciever(this.iStateManager);
-            this._p1Commands = CommandBuilder.SetRotatorCommands(p1Controls);
+            this._p1Commands = CommandBuilder.GetRotatorCommands(p1Controls);
             // Can rotate
             this.rotator = new Rotator(0, 202);
             
