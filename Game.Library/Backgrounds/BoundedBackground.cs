@@ -58,8 +58,7 @@ namespace GameLibrary.Drawing.Backgrounds
             var currentVelocity = velocityManager.VelocityX;
 
             this._currentPosition =_currentPosition.AddX(currentVelocity * delta)
-                                    .AddY(velocityManager.VelocityY*delta) ;
-
+                                    .AddY(velocityManager.VelocityY*delta);
             if (_currentPosition != _previousPosition)
             {
                 //Debug.WriteLine(_currentPosition);

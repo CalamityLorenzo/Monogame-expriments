@@ -9,5 +9,6 @@ namespace GameData.UserInput
        public Keys Right{get;set;}
        public Keys Fire {get;set;}
        public Keys SecondFire{get;set;}
+       public Keys Special{get;set; }
     }
 }

@@ -1,11 +1,11 @@
-using MonoGameTests;
+using GameLibrary.Config.App;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace LibraryTests
+namespace BasicJeep
 {
     static class Program
     {
@@ -15,7 +15,12 @@ namespace LibraryTests
         [STAThread]
         static void Main()
         {
-            using (var game = new Game1())
+            var configData = ConfigurationBuilder.Manager
+                            .LoadJsonFile("Config/opts.json")
+                            .LoadJsonFile("Config/opts2.json")
+                            .Build();
+
+            using (var game = new BasicJeepGame(configData))
                 game.Run();
         }
     }

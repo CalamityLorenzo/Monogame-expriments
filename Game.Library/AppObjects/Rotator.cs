@@ -8,6 +8,7 @@ using System.Threading.Tasks;
 
 namespace GameLibrary.AppObjects
 {
+    // Which direction we are rotating in 
     public enum RotatorState
     {
         Unknown = 0,

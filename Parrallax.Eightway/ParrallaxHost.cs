@@ -25,10 +25,10 @@ namespace Parrallax.Eightway
         SpriteBatch spriteBatch;
         SpriteFont arial;
         private MouseKeyboardInputsReciever _inputProcessor;
-        private List<KeyCommand<Rotator>> _p1Commands;
-        Rotator rotator;
-
         private InputsStateManager iStateManager;
+        Rotator rotator;
+        private List<KeyCommand<Rotator>> _p1Commands;
+
         private ConfigurationData configData;
         private BackgroundRectanglesLayer _foregroundLayter;
         private BackgroundRectanglesLayer _foregroundLayter2;
