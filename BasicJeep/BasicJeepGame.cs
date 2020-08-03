@@ -1,4 +1,5 @@
-﻿using GameData;
+﻿using BasicJeep.BasicAnimation;
+using GameData;
 using GameData.CharacterActions;
 using GameData.Commands;
 using GameData.UserInput;
@@ -14,6 +15,7 @@ using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
 using System.Configuration;
+using System.Linq;
 using System.Text;
 
 namespace BasicJeep
@@ -31,7 +33,7 @@ namespace BasicJeep
         private MapVelocityManager basicVelocity;
         private List<KeyCommand<IBasicMotion>> velocityCmds;
 
-        public JeepCharacter JeepChar { get; private set; }
+        internal JeepCharacter JeepChar { get; private set; }
 
         public BasicJeepGame(ConfigurationData configData)
         {
@@ -60,11 +62,11 @@ namespace BasicJeep
             this.rotator = new Rotator(348, 202);
             this.rotatorCommands = CommandBuilder.GetRotatorCommands(p1Controls);
             var jeepAtlas = Texture2d.FromFileName(this.GraphicsDevice, "Content/Jeep.png");
-            var jeepFrames = FramesGenerator.GenerateFrames(new FrameInfo(243, 243), new Dimensions(jeepAtlas.Width, jeepAtlas.Height));
+            var jeepFrames = new AnimationPhrase(FramesGenerator.GenerateFrames(new FrameInfo(243, 243), new Dimensions(jeepAtlas.Width, jeepAtlas.Height)).Select(o => new AnimationFrame { Frame = o, LengthOfFrame = -1 }),false);
             this.basicVelocity = new MapVelocityManager(0f, 0f, 23f, 23f);
             
             this.velocityCmds = CommandBuilder.GetBasicMapMotion(p1Controls);
-            this.JeepChar = new JeepCharacter(this.spriteBatch, jeepAtlas, jeepFrames, rotator, basicVelocity, new Vector2(80, 80));
+            this.JeepChar = new JeepCharacter(this.spriteBatch, jeepAtlas, new List<AnimationPhrase> { jeepFrames }, rotator, basicVelocity, new Vector2(80, 80));
         }
 
         protected override void Update(GameTime gameTime)
