@@ -62,11 +62,11 @@ namespace BasicJeep
             this.rotator = new Rotator(348, 202);
             this.rotatorCommands = CommandBuilder.GetRotatorCommands(p1Controls);
             var jeepAtlas = Texture2d.FromFileName(this.GraphicsDevice, "Content/Jeep.png");
-            var jeepFrames = new AnimationPhrase(FramesGenerator.GenerateFrames(new FrameInfo(243, 243), new Dimensions(jeepAtlas.Width, jeepAtlas.Height)).Select(o => new AnimationFrame { Frame = o, LengthOfFrame = -1 }),false);
+            var jeepFrames = new AnimationPhraseHost(FramesGenerator.GenerateFrames(new FrameInfo(243, 243), new Dimensions(jeepAtlas.Width, jeepAtlas.Height)).Select(o => new AnimationFrame { Frame = o, LengthOfFrame = -1 }),false);
             this.basicVelocity = new MapVelocityManager(0f, 0f, 23f, 23f);
             
             this.velocityCmds = CommandBuilder.GetBasicMapMotion(p1Controls);
-            this.JeepChar = new JeepCharacter(this.spriteBatch, jeepAtlas, new List<AnimationPhrase> { jeepFrames }, rotator, basicVelocity, new Vector2(80, 80));
+            this.JeepChar = new JeepCharacter(this.spriteBatch, jeepAtlas, new List<AnimationPhraseHost> { jeepFrames }, rotator, basicVelocity, new Vector2(80, 80));
         }
 
         protected override void Update(GameTime gameTime)
