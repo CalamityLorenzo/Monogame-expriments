@@ -17,10 +17,12 @@ namespace GameLibrary.Config.App
             ConfigData = new List<JsonDocument>(configData);
         }
 
-        public T ToResultType<T>(string propertyName, Func<string, T> mapFunc) where T : class
+        public T ToResultType<T>(string propertyName, Func<string, T> mapFunc=null) where T : class
         {
             var matchedObject = this.ConfigData.Select(o => o.RootElement).First(p => p.TryGetProperty(propertyName, out var kim));
-            return JsonSerializer.Deserialize<T>(matchedObject.GetProperty(propertyName).GetRawText());
+            var map = mapFunc??  new Func<string, T>((str)=> JsonSerializer.Deserialize<T>(matchedObject.GetProperty(propertyName).GetRawText()));
+            return map(propertyName);
+            // sreturn JsonSerializer.Deserialize<T>(matchedObject.GetProperty(propertyName).GetRawText());
         }
 
         // Simple Case leaning on Json.net

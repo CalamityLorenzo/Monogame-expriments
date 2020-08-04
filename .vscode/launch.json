@@ -47,6 +47,17 @@
             "stopAtEntry": false
         },
         {
+            "name": ".NET Core Launch (Basic jeep)",
+            "type": "coreclr",
+            "request": "launch",
+            "preLaunchTask": "build",
+            "program": "${workspaceFolder}/BasicJeep/bin/Debug/netcoreapp3.1/BasicJeep.dll",
+            "args": [],
+            "cwd": "${workspaceFolder}/BasicJeep",
+            "console": "internalConsole",
+            "stopAtEntry": false
+        },
+        {
             "name": ".NET Core Attach",
             "type": "coreclr",
             "request": "attach",
