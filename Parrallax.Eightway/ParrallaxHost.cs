@@ -51,8 +51,8 @@ namespace Parrallax.Eightway
 
         protected override void Initialize()
         {
-            var screenData = configData.ToResultType<ScreenData>("ScreenOptions");
-            var player1Dictionary = configData.ToResultType<Dictionary<string, string>>("Player1Controls");
+            var screenData = configData.Get<ScreenData>("ScreenOptions");
+            var player1Dictionary = configData.Get<Dictionary<string, string>>("Player1Controls");
             
             // Configure the screen.
             graphics.PreferredBackBufferWidth = screenData.ScreenWidth;

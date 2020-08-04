@@ -1,0 +1,171 @@
+{
+  "Up": {
+    "isRepeating": false,
+    "startFrame": 17,
+    "frames": [
+      {
+        "Frame": {
+          "X": 0,
+          "Y": 0,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "UpUpRight": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 243,
+          "Y": 0,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "UpRight": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 486,
+          "Y": 0,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "Right": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 0,
+          "Y": 243,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "DownRight": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 243,
+          "Y": 243,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "DownDownRight": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 486,
+          "Y": 243,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "Down": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 0,
+          "Y": 486,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "DownDownLeft": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 243,
+          "Y": 486,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "DownLeft": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 486,
+          "Y": 486,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "Left": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 0,
+          "Y": 729,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "UpLeft": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 243,
+          "Y": 729,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "UpUpLeft": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 486,
+          "Y": 729,
+          "Width": 243,
+          "Height": 243
+        }
+      }
+    ]
+  },
+  "JeepAtlas": "Content/Jeep.png"
+}

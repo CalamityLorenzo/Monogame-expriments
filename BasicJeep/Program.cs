@@ -18,6 +18,7 @@ namespace BasicJeep
             var configData = ConfigurationBuilder.Manager
                             .LoadJsonFile("Config/opts.json")
                             .LoadJsonFile("Config/opts2.json")
+                            .LoadJsonFile("Config/BasicJeepData.json")
                             .Build();
 
             using (var game = new BasicJeepGame(configData))

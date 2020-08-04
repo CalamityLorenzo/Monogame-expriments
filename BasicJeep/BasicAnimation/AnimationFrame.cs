@@ -2,9 +2,11 @@
 using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Text.Json.Serialization;
 
 namespace BasicJeep.BasicAnimation
-{
+{ 
+    [JsonConverter(typeof(AnimationFrameConverter))]
     internal class AnimationFrame
     {
         /// <summary>

@@ -17,7 +17,13 @@ namespace GameLibrary.Config.App
             ConfigData = new List<JsonDocument>(configData);
         }
 
-        public T ToResultType<T>(string propertyName, Func<string, T> mapFunc=null) where T : class
+        public string Get(string propertyName)
+        {
+            var itm = this.ConfigData.Select(o => o.RootElement).First(p => p.TryGetProperty(propertyName, out var kim));
+            return itm.GetProperty(propertyName).ToString();
+        }
+
+        public T Get<T>(string propertyName, Func<string, T> mapFunc=null) where T : class
         {
             var matchedObject = this.ConfigData.Select(o => o.RootElement).First(p => p.TryGetProperty(propertyName, out var kim));
             var map = mapFunc??  new Func<string, T>((str)=> JsonSerializer.Deserialize<T>(matchedObject.GetProperty(propertyName).GetRawText()));
@@ -26,8 +32,14 @@ namespace GameLibrary.Config.App
         }
 
         // Simple Case leaning on Json.net
-        public T ToResultType<T>(string propertyName) where T : class{
-            return this.ToResultType<T>(propertyName, (str) => JsonSerializer.Deserialize<T>(str));
+        public T Get<T>(string propertyName) where T : class{
+            var itm = this.ConfigData.Where(o => o.RootElement.TryGetProperty(propertyName, out var prop)).First();
+            var property = itm.RootElement.GetProperty(propertyName);
+            var opts = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true
+            };
+            return JsonSerializer.Deserialize<T>(property.ToString(),opts);
         }
     }
     public class ConfigurationBuilder
