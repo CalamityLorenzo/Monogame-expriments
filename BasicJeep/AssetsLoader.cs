@@ -1,4 +1,4 @@
-﻿using BasicJeep.BasicAnimation;
+﻿using GameLibrary.Animation;
 using GameLibrary.Config.App;
 using GameLibrary.Extensions;
 using Microsoft.Xna.Framework.Graphics;

@@ -7,11 +7,11 @@ using System.Text;
 
 namespace Library.Animation
 {
-    public abstract class AnimationHost
+    public abstract class OldAnimationHost
     {
-        protected BlockAnimationObject CurrentAnimation { get; private set; }
+        protected OldBlockAnimationObject CurrentAnimation { get; private set; }
 
-        protected void SetCurrent(BlockAnimationObject animation)
+        protected void SetCurrent(OldBlockAnimationObject animation)
         {
             this.CurrentAnimation?.CancelAnimation();
             this.CurrentAnimation = animation;

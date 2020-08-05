@@ -1,18 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
-using SharpDX.Direct2D1.Effects;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Diagnostics;
-using System.Drawing.Design;
-using System.Text;
 
-namespace BasicJeep.BasicAnimation
+namespace GameLibrary.Animation
 {
     /// <summary>
     /// Runs the included frames.
     /// </summary>
-    internal class AnimationPhraseHost : IAnimationHost
+    public class AnimationPhraseHost : IAnimationHost
     {
         private int _currentFrame;
         private float timeSinceFrameUpdated;

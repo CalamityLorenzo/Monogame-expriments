@@ -3,6 +3,7 @@ using GameData.Commands;
 using GameData.UserInput;
 using GameLibrary;
 using GameLibrary.Animation;
+using GameLibrary.Animation.Utilities;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using GameLibrary.InputManagement;
@@ -52,9 +53,9 @@ namespace InputTests
             var crossHairs = Texture2D.FromFile(GraphicsDevice, "./Content/CrossHairs_one.png");
             var wlFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(walkingLeft.Width, walkingLeft.Height));
             var standingFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(standing.Width, standing.Height));
-            var wlAnimation = new BlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
-            var standingAnimation = new BlockAnimationObject(standingFrames, new float[] { 0.500f, 0.250f, 0.250f, 0.250f }, true);
-            var walkingAnims = new WalkingManAnimations(new Dictionary<string, BlockAnimationObject>
+            var wlAnimation = new OldBlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
+            var standingAnimation = new OldBlockAnimationObject(standingFrames, new float[] { 0.500f, 0.250f, 0.250f, 0.250f }, true);
+            var walkingAnims = new WalkingManAnimations(new Dictionary<string, OldBlockAnimationObject>
             {
                 { "MoveLeft", wlAnimation },
                 { "MoveRight", wlAnimation },

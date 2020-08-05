@@ -11,7 +11,7 @@ namespace Library.Animation
 
     // Given a set of frames and a series of timings.
     // Calculate and return the next frame.
-    public class BlockAnimationObject
+    public class OldBlockAnimationObject
     {
         private readonly Rectangle[] frames;
         private readonly float[] timings;
@@ -30,7 +30,7 @@ namespace Library.Animation
         private int _currentFrame = 0;
         private float _frameDelta = 0f; // Accumlator for between frame updates. ONce this cross the threshold.
 
-        public BlockAnimationObject(Rectangle[] frames, float[] timings, bool isRepeating)
+        public OldBlockAnimationObject(Rectangle[] frames, float[] timings, bool isRepeating)
         {
             this.frames = frames;
             this.timings = timings;

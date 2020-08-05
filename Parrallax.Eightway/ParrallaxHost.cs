@@ -2,6 +2,7 @@
 using GameData.UserInput;
 using GameLibrary;
 using GameLibrary.Animation;
+using GameLibrary.Animation.Utilities;
 using GameLibrary.AppObjects;
 using GameLibrary.Config.App;
 using GameLibrary.Drawing.Backgrounds;

@@ -1,13 +1,14 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameLibrary.Config.App;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text;
 using System.Text.Json.Serialization;
 
-namespace BasicJeep.BasicAnimation
+namespace GameLibrary.Animation
 { 
     [JsonConverter(typeof(AnimationFrameConverter))]
-    internal class AnimationFrame
+    public class AnimationFrame
     {
         /// <summary>
         /// Location on the atlas for the frame.

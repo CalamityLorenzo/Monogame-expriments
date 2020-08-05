@@ -1,14 +1,9 @@
-﻿using BasicJeep.BasicAnimation;
-using GameLibrary.Animation;
+﻿using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
-    using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Linq;
-using System.Text;
 
 namespace BasicJeep
 {

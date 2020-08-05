@@ -1,13 +1,10 @@
-﻿using BasicJeep.BasicAnimation;
-using GameData;
+﻿using GameData;
 using GameData.CharacterActions;
 using GameData.Commands;
 using GameData.UserInput;
 using GameLibrary;
-using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Config.App;
-using GameLibrary.Extensions;
 using GameLibrary.InputManagement;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

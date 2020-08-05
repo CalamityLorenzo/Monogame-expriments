@@ -6,13 +6,13 @@ using System.Text;
 
 namespace InputTests.MovingMan
 {
-    public class WalkingManAnimations : AnimationHost, IWalkingMan
+    public class WalkingManAnimations : OldAnimationHost, IWalkingMan
     {
-        private readonly Dictionary<string, BlockAnimationObject> animations;
+        private readonly Dictionary<string, OldBlockAnimationObject> animations;
         private string currentAnim = "";
 
 
-        public WalkingManAnimations(Dictionary<string, BlockAnimationObject> animations)
+        public WalkingManAnimations(Dictionary<string, OldBlockAnimationObject> animations)
         {
             this.animations = animations;
         }

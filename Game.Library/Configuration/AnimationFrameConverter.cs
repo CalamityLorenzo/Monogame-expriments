@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameLibrary.Animation;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Runtime.InteropServices;
@@ -6,7 +7,7 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace BasicJeep.BasicAnimation
+namespace GameLibrary.Config.App
 {
     /// <summary>
     /// Used to import json on animation frames (Mainly the sodding rectangles)

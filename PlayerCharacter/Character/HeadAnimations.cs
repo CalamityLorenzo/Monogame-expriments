@@ -6,13 +6,13 @@ using System.Text;
 
 namespace PlayerCharacter.Character
 {
-    class HeadAnimations : AnimationHost
+    class HeadAnimations : OldAnimationHost
     {
         
-        private readonly Dictionary<string, BlockAnimationObject> animations;
+        private readonly Dictionary<string, OldBlockAnimationObject> animations;
         private string currentAnim;
 
-        public HeadAnimations(Dictionary<string, BlockAnimationObject> animations)
+        public HeadAnimations(Dictionary<string, OldBlockAnimationObject> animations)
         {
             this.animations = animations;
         }

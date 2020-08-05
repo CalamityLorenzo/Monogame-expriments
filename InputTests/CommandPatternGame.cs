@@ -15,6 +15,7 @@ using GameLibrary.InputManagement;
 using GameData.CharacterActions;
 using GameData.UserInput;
 using GameData.Commands;
+using GameLibrary.Animation.Utilities;
 
 namespace InputTests
 {
@@ -51,9 +52,9 @@ namespace InputTests
             var standing = Texture2D.FromFile(GraphicsDevice, "./Content/Standing.png");
             var wlFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(walkingLeft.Width, walkingLeft.Height));
             var standingFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(standing.Width, standing.Height));
-            var wlAnimation = new BlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
-            var standingAnimation = new BlockAnimationObject(standingFrames, new float[] { 0.500f, 0.250f, 0.250f, 0.250f }, true);
-            var walkingAnims = new WalkingManAnimations(new Dictionary<string, BlockAnimationObject>
+            var wlAnimation = new OldBlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
+            var standingAnimation = new OldBlockAnimationObject(standingFrames, new float[] { 0.500f, 0.250f, 0.250f, 0.250f }, true);
+            var walkingAnims = new WalkingManAnimations(new Dictionary<string, OldBlockAnimationObject>
             {
                 { "MoveLeft", wlAnimation },
                 { "MoveRight", wlAnimation },

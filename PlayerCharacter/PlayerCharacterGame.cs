@@ -1,4 +1,5 @@
 ﻿using GameLibrary.Animation;
+using GameLibrary.Animation.Utilities;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using Library.Animation;
@@ -49,17 +50,17 @@ namespace PlayerCharacter
             var crossHairs = Texture2D.FromFile(GraphicsDevice, "./Content/CrossHairs_one.png");
             var wlFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(walkingLeft.Width, walkingLeft.Height));
             var standingFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(standing.Width, standing.Height));
-            var wlAnimation = new BlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
-            var standingAnimation = new BlockAnimationObject(standingFrames, new float[] { 0.500f, 0.250f, 0.250f, 0.250f }, true);
+            var wlAnimation = new OldBlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
+            var standingAnimation = new OldBlockAnimationObject(standingFrames, new float[] { 0.500f, 0.250f, 0.250f, 0.250f }, true);
 
-            var bodyAnims = new BodyAnimations(new Dictionary<string, BlockAnimationObject>
+            var bodyAnims = new BodyAnimations(new Dictionary<string, OldBlockAnimationObject>
             {
                 { "WalkLeft", wlAnimation },
                 { "WalkRight", wlAnimation },
                 {"Standing",  standingAnimation }
             });
 
-            var headAnims = new HeadAnimations(new Dictionary<string, BlockAnimationObject>
+            var headAnims = new HeadAnimations(new Dictionary<string, OldBlockAnimationObject>
             {
                 {"LookUp" , null},
                 {"LookDown", null },

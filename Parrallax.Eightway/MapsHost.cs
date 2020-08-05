@@ -18,6 +18,7 @@ using GameData.UserInput;
 using System.Data;
 using GameData.Commands;
 using GameData.CharacterActions;
+using GameLibrary.Animation.Utilities;
 
 namespace Parrallax.Eightway
 {

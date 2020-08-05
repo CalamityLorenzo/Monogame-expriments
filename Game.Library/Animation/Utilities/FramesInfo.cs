@@ -1,4 +1,4 @@
-﻿namespace GameLibrary.Animation
+﻿namespace GameLibrary.Animation.Utilities
 {
     // DEscription object for a frame
     // USe this to create the rectangle for the frame from imported data.

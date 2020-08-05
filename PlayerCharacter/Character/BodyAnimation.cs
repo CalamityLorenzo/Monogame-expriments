@@ -6,12 +6,12 @@ using System.Text;
 
 namespace PlayerCharacter.Character
 {
-    class BodyAnimations : AnimationHost, IWalkingAnimationState
+    class BodyAnimations : OldAnimationHost, IWalkingAnimationState
     {
-        private Dictionary<string, BlockAnimationObject> animations;
+        private Dictionary<string, OldBlockAnimationObject> animations;
         private string currentAnim;
 
-        public BodyAnimations(Dictionary<string, BlockAnimationObject> animations)
+        public BodyAnimations(Dictionary<string, OldBlockAnimationObject> animations)
         {
             this.animations = animations;
         }

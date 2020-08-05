@@ -8,7 +8,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace GameLibrary.Animation
+namespace GameLibrary.Animation.Utilities
 {
     public static class FramesGenerator
     {
