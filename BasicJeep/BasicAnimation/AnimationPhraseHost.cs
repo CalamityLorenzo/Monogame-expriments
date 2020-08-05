@@ -9,6 +9,9 @@ using System.Text;
 
 namespace BasicJeep.BasicAnimation
 {
+    /// <summary>
+    /// Runs the included frames.
+    /// </summary>
     internal class AnimationPhraseHost : IAnimationHost
     {
         private int _currentFrame;

@@ -8,6 +8,9 @@ using System.Text.Json.Serialization;
 
 namespace BasicJeep.BasicAnimation
 {
+    /// <summary>
+    /// Used to import json on animation frames (Mainly the sodding rectangles)
+    /// </summary>
     internal class AnimationFrameConverter : JsonConverter<AnimationFrame>
     {
         public AnimationFrameConverter()

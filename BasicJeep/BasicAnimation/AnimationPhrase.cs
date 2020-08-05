@@ -4,6 +4,9 @@ using System.Text;
 
 namespace BasicJeep.BasicAnimation
 {
+    /// <summary>
+    /// Simple list of frames as data.
+    /// </summary>
     internal class AnimationPhrase
     {
         public List<AnimationFrame> Frames { get; set; }

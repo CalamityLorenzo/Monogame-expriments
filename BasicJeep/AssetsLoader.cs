@@ -37,8 +37,8 @@ namespace BasicJeep
                new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("DownLeft")),
 
                new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("Left")),
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("UpUpLeft")),
                new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("UpLeft")),
+               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("UpUpLeft")),
             };
         }
 

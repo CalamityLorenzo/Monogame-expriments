@@ -46,21 +46,21 @@ namespace BasicJeep
         {
             return currentAngle switch
             {
-                var angle when angle > 350 && angle<= 360 || angle >= 0f && angle <= 20f => this.animation[0].CurrentFrame(),  
-                var angle when angle > 20f && angle <= 50f => this.animation[1].CurrentFrame(),
-                var angle when angle > 50f && angle <= 80f => this.animation[2].CurrentFrame(),
+                var angle when angle > 345 && angle<= 360 || angle >= 0f && angle <= 15f => this.animation[0].CurrentFrame(),  
+                var angle when angle > 15f && angle < 45f => this.animation[1].CurrentFrame(),
+                var angle when angle >= 45f && angle < 75f => this.animation[2].CurrentFrame(),
 
-                var angle when angle > 80f && angle <= 110f => this.animation[3].CurrentFrame(),
-                var angle when angle > 110f && angle <= 140f => this.animation[4].CurrentFrame(),
-                var angle when angle > 140f && angle <= 170f => this.animation[5].CurrentFrame(),
+                var angle when angle >= 75f && angle <= 105f => this.animation[3].CurrentFrame(),
+                var angle when angle > 105f && angle <= 135f => this.animation[4].CurrentFrame(),
+                var angle when angle > 135f && angle <= 165f => this.animation[5].CurrentFrame(),
 
-                var angle when angle > 170f && angle <= 200f => this.animation[6].CurrentFrame(),
-                var angle when angle > 200f && angle <= 230f => this.animation[7].CurrentFrame(),
-                var angle when angle > 230f && angle <= 260f => this.animation[8].CurrentFrame(),
+                var angle when angle > 165f && angle < 195f => this.animation[6].CurrentFrame(),
+                var angle when angle >= 195f && angle < 225f => this.animation[7].CurrentFrame(),
+                var angle when angle >= 225f && angle <= 255f => this.animation[8].CurrentFrame(),
 
-                var angle when angle > 260f && angle <= 300f => this.animation[9].CurrentFrame(),
-                var angle when angle > 300f && angle <= 325f => this.animation[10].CurrentFrame(),
-                var angle when angle > 325f && angle <= 350f => this.animation[11].CurrentFrame(),
+                var angle when angle > 255f && angle <= 285f => this.animation[9].CurrentFrame(),
+                var angle when angle > 285f && angle <= 315f => this.animation[10].CurrentFrame(),
+                var angle when angle > 315f && angle <= 345f => this.animation[11].CurrentFrame(),
                 _ => this.animation[0].CurrentFrame()
             };
         }

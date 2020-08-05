@@ -57,12 +57,14 @@ namespace BasicJeep
             spriteBatch = new SpriteBatch(GraphicsDevice);
             var p1ControlList = configData.Get<Dictionary<string, string>>("Player1Controls");
             var p1Controls = MapConfigToControls.Map(p1ControlList);
+        // jeep movement and direction are handleed by two classes.
             this.rotator = new Rotator(348, 202);
             this.rotatorCommands = CommandBuilder.GetRotatorCommands(p1Controls);
+            this.basicVelocity = new MapVelocityManager(0f, 0f, 45f, 45f);
+            this.velocityCmds = CommandBuilder.GetBasicMapMotion(p1Controls);
+            
             var jeepAtlas = this.assets.JeepAtlas();
             var jeepFrames = this.assets.JeepAnimations();
-            this.basicVelocity = new MapVelocityManager(0f, 0f, 23f, 23f);
-            this.velocityCmds = CommandBuilder.GetBasicMapMotion(p1Controls);
             this.JeepChar = new JeepCharacter(this.spriteBatch, jeepAtlas, jeepFrames.ToList(), rotator, basicVelocity, new Vector2(80, 80));
         }
 
