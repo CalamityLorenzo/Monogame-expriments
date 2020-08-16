@@ -7,6 +7,8 @@ using System.Text;
 
 namespace Library.Animation
 {
+
+    [Obsolete]
     public abstract class OldAnimationHost
     {
         protected OldBlockAnimationObject CurrentAnimation { get; private set; }

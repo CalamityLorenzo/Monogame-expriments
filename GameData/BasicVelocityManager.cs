@@ -1,9 +1,4 @@
 ﻿using GameLibrary.AppObjects;
-using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Data;
-using System.Text;
 
 namespace GameData
 {
@@ -20,8 +15,8 @@ namespace GameData
             VelocityX = startVelocityX;
         }
 
-        public void SetVelocityX(float x) => this.VelocityX = x >MaxVelocity?MaxVelocity:x;
-        public void SetVelocityY(float y) => this.VelocityY = y>MaxVelocity?MaxVelocity:y;
+        public void SetVelocityX(float x) => this.VelocityX = x > MaxVelocity ? MaxVelocity : x;
+        public void SetVelocityY(float y) => this.VelocityY = y > MaxVelocity ? MaxVelocity : y;
 
         public float MaxVelocity { get; }
         public float VelocityY { get; internal set; }

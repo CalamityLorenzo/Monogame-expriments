@@ -1,4 +1,5 @@
-﻿using GameLibrary.Animation;
+﻿using GameData.UserInput;
+using GameLibrary.Animation;
 using GameLibrary.Config.App;
 using GameLibrary.Extensions;
 using Microsoft.Xna.Framework.Graphics;
@@ -23,22 +24,22 @@ namespace BasicJeep
         public IEnumerable<IAnimationHost> JeepAnimations()
         {
 
-            return new List<AnimationPhraseHost>{
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("Up")),
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("UpUpRight")),
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("UpRight")),
+            return new List<AnimationPhrase>{
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("Up") },.200f),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("UpUpRight")},.200f),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("UpRight")},.200f),
 
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("Right")),
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("DownRight")),
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("DownDownRight")),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("Right")},.200f),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("DownRight")},.200f),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("DownDownRight")},.200f),
 
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("Down")),
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("DownDownLeft")),
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("DownLeft")),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("Down")},.200f),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("DownDownLeft")},.200f),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("DownLeft")},.200f),
 
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("Left")),
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("UpLeft")),
-               new AnimationPhraseHost(this.Config.Get<AnimationPhrase>("UpUpLeft")),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("Left")},.200f),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("UpLeft")},.200f),
+               new AnimationPhrase(new List<AnimationFrames>{ this.Config.Get<AnimationFrames>("UpUpLeft")},.200f),
             };
         }
 

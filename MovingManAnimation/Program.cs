@@ -5,7 +5,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace PlayerCharacter
+namespace MovingManAnimation
 {
     static class Program
     {
@@ -16,14 +16,12 @@ namespace PlayerCharacter
         static void Main()
         {
             var configData = ConfigurationBuilder.Manager
-                 .LoadJsonFile("opts.json")
-                 .LoadJsonFile("opts2.json")
-                 .Build();
-
-            using (var game = new PlayerCharacterGame(configData))
-            {
+                             .LoadJsonFile("config/opts.json")
+                             .LoadJsonFile("config/opts2.json")
+                             .LoadJsonFile("config/MovingMan.json")
+                             .Build();
+            using (var game = new MovingManGame(configData))
                 game.Run();
-            }
         }
     }
 }

@@ -30,7 +30,7 @@ namespace PlayerCharacter
         private Texture2D mouseHWidth;
         private Point mousePosition;
 
-        public PlayerCharacterGame()
+        public PlayerCharacterGame(GameLibrary.Config.App.ConfigurationData configData)
         {
             _graphicsDevice = new GraphicsDeviceManager(this);
             _graphicsDevice.PreferredBackBufferWidth = 800;

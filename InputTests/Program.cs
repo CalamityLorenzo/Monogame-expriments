@@ -14,7 +14,7 @@ namespace InputTests
         [STAThread]
         static void Main()
         {
-            using (var game = new ProcessedRockGAme()) // ProcessedRockGAme()) // MovingObjectGame()) 
+            using (var game = new MovingObjectGame()) // ProcessedRockGAme()) // MovingObjectGame()) 
                 game.Run();
         }
     }

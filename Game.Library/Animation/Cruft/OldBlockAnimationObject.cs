@@ -11,6 +11,7 @@ namespace Library.Animation
 
     // Given a set of frames and a series of timings.
     // Calculate and return the next frame.
+    [Obsolete]
     public class OldBlockAnimationObject
     {
         private readonly Rectangle[] frames;

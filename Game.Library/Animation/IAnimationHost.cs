@@ -11,6 +11,7 @@ namespace GameLibrary.Animation
         bool IsRepeating { get; }
         Rectangle CurrentFrame();
         int CurrentFrameIndex();
+        void SetFrameLength(float frameLength);
         void Start(int? frameId);
         void Stop();
         void Update(float deltaTime);

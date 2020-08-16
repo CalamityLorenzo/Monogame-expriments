@@ -1,0 +1,203 @@
+{
+  "PlayerAtlas": "Content/MovingManAtlas.png",
+  "Left": {
+    "isRepeating": true,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 0,
+          "Y": 40,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 72,
+          "Y": 40,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 144,
+          "Y": 40,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 216,
+          "Y": 40,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 288,
+          "Y": 40,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 360,
+          "Y": 40,
+          "Width": 72,
+          "Height": 40
+        }
+      }
+    ]
+  },
+  "Right": {
+    "isRepeating": true,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 0,
+          "Y": 0,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 72,
+          "Y": 0,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 144,
+          "Y": 0,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 216,
+          "Y": 0,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 288,
+          "Y": 0,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 360,
+          "Y": 0,
+          "Width": 72,
+          "Height": 40
+        }
+      }
+    ]
+  },
+  "Standing": {
+    "isRepeating": true,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 0,
+          "Y": 80,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 72,
+          "Y": 80,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 144,
+          "Y": 80,
+          "Width": 72,
+          "Height": 40
+        }
+      },
+      {
+        "Frame": {
+          "X": 216,
+          "Y": 80,
+          "Width": 72,
+          "Height": 40
+        }
+      }
+    ]
+  },
+  "AimHead": {
+    "isRepeating": false,
+    "startFrame": 0,
+    "frames": [
+      {
+        "Frame": {
+          "X": 72,
+          "Y": 120,
+          "Width": 72,
+          "Height": 45
+        }
+      },
+      {
+        "Frame": {
+          "X": 144,
+          "Y": 120,
+          "Width": 72,
+          "Height": 45
+        }
+      },
+      {
+        "Frame": {
+          "X": 216,
+          "Y": 120,
+          "Width": 72,
+          "Height": 45
+        }
+      },
+      {
+        "Frame": {
+          "X": 288,
+          "Y": 120,
+          "Width": 72,
+          "Height": 45
+        }
+      },
+      {
+        "Frame": {
+          "X": 360,
+          "Y": 120,
+          "Width": 72,
+          "Height": 45
+        }
+      },
+      {
+        "Frame": {
+          "X": 432,
+          "Y": 120,
+          "Width": 72,
+          "Height": 45
+        }
+      }
+    ]
+  }
+}

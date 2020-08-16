@@ -28,8 +28,8 @@ namespace GameLibrary.Config.App
                 var y= frame.GetProperty("Y").GetInt32();
                 var width= frame.GetProperty("Width").GetInt32();
                 var height= frame.GetProperty("Height").GetInt32();
-                var length = frame.TryGetProperty("LengthOfFrame", out var lengthof) ? lengthof.GetInt32() : 1;
-                return new AnimationFrame { Frame = new Rectangle(x, y, width, height), LengthOfFrame = length };
+                var length = frame.TryGetProperty("LengthOfFrame", out var lengthof) ? (float) lengthof.GetDouble() : 1;
+                return new AnimationFrame { Frame = new Rectangle(x, y, width, height), LengthOfFrameMultiplier = length };
             }
         }
 

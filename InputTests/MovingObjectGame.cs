@@ -50,7 +50,7 @@ namespace InputTests
             var walkingLeft = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingLeft.png");
             var walkingRight = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingRight.png");
             var standing = Texture2D.FromFile(GraphicsDevice, "./Content/Standing.png");
-            var crossHairs = Texture2D.FromFile(GraphicsDevice, "./Content/CrossHairs_one.png");
+            var crossHairs = Texture2D.FromFile(GraphicsDevice, "./Content/CrossHairs_one.png");  
             var wlFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(walkingLeft.Width, walkingLeft.Height));
             var standingFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(standing.Width, standing.Height));
             var wlAnimation = new OldBlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
