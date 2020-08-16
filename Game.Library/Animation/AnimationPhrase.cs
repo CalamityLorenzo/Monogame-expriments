@@ -35,7 +35,7 @@ namespace GameLibrary.Animation
             this._allFrames = new List<AnimationFrames>(frames);
             this._totalFrameCount = _allFrames.Select(o => o.Frames).Sum(o => o.Count);
             _currentFrameSet = 0;
-            _currentFrameTotal = -1;
+            _currentFrameTotal = 0;
             _currentFrameLocalIdx = 0;
             this.timeBetweenframes = timeBetweenframes;
             this._isRepeating = isRepeating;
