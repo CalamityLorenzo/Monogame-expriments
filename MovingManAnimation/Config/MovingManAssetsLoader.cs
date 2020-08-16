@@ -20,9 +20,9 @@ namespace MovingManAnimation.Config
 
         public Texture2D PlayerAtlas()=>this._graphics.FromFileName(_config.Get("PlayerAtlas"));
 
-        public IEnumerable<AnimationPhrase> Animations()
+        public AnimationSet Animations()
         {
-            return new List<AnimationPhrase>
+            IList<AnimationPhrase> allPhrases = new List<AnimationPhrase>
             {
                 new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("Left") },.200f),      // Up
                 new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("Right") },.200f),     // Down
@@ -31,6 +31,10 @@ namespace MovingManAnimation.Config
                 new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("Standing") },.200f),
                 new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("AimHead") },.200f),
             };
+
+            var animSet = new AnimationSet(allPhrases, .200f);
+
+            return animSet;
         }
 
         public PlayerKeyboardControls Player1KeyboardControls()

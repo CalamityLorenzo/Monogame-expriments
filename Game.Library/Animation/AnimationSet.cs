@@ -1,29 +1,30 @@
-﻿using GameLibrary.Animation;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace GameLibrary.Animation
 {
     /// <summary>
     /// Runs a set of other IAnimationHost objects
     /// Be they phrases or other sets. This is composition??
+    /// A host of phrases. An entire character is to be host in a set.
     /// Assume the
     /// </summary>
     public class AnimationSet : IAnimationHost, IEnumerable<IAnimationHost>
     {
         private readonly IList<IAnimationHost> animations;
+        private readonly float timebetweenFrames;
 
-        public bool IsRepeating { get; }
+        public bool IsRepeating => this._currentAnimation.IsRepeating;
 
         private IAnimationHost _currentAnimation;
 
-        public AnimationSet(IList<IAnimationHost> animations, bool repeating)
+        public AnimationSet(IList<AnimationPhrase> animations, float timebetweenFrames)
         {
-            this.animations = animations;
-            this.IsRepeating = repeating;
+            this.animations = animations.Select(o => {o.SetFrameLength(timebetweenFrames); return (IAnimationHost)o; }).ToList();
+            this.timebetweenFrames = timebetweenFrames;
             this._currentAnimation = animations[0];
         }
 
@@ -34,17 +35,18 @@ namespace GameLibrary.Animation
 
         public void Update(float deltaTime)
         {
-            throw new NotImplementedException();
+            this._currentAnimation.Update(deltaTime);
         }
 
         public int CurrentFrameIndex()
         {
-            throw new NotImplementedException();
+            return this._currentAnimation.CurrentFrameIndex();
         }
 
         public void SetFrameLength(float frameLength)
         {
-            throw new NotImplementedException();
+            foreach (var itm in this.animations)
+                itm.SetFrameLength(frameLength);
         }
 
         public void Start(int? frameId=null)
@@ -59,7 +61,7 @@ namespace GameLibrary.Animation
 
         public IAnimationHost this [int index]
         {
-            get => null;
+            get { this.SelectAnimation(index); return _currentAnimation; }
             set => this.SelectAnimation(index);
         }
 

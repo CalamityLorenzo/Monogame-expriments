@@ -14,17 +14,18 @@ namespace MovingManAnimation.Character
         private readonly SpriteBatch spritebatch;
         private readonly Texture2D atlas;
         private readonly IVelocinator velos;
-        private readonly List<IAnimationHost> animation;
+        //private readonly List<IAnimationHost> animation;
+        private readonly AnimationSet animation;
         private IAnimationHost currentAnimation;
         private Vector2 currentPos;
 
-        public BasicCharacter(SpriteBatch spritebatch, Texture2D atlas, IEnumerable<IAnimationHost> animation, IVelocinator velos, Vector2 startPos)
+        public BasicCharacter(SpriteBatch spritebatch, Texture2D atlas, AnimationSet animation, IVelocinator velos, Vector2 startPos)
         {
             this._currentAnimationIndex = -1;  // Standing
             this.spritebatch = spritebatch;
             this.atlas = atlas;
             this.velos = velos;
-            this.animation = new List<IAnimationHost>(animation);
+            this.animation = animation;
             this.currentAnimation = this.animation[0]; 
             this.currentPos = startPos;
         }
@@ -53,9 +54,7 @@ namespace MovingManAnimation.Character
 
             if (animationIdx != _currentAnimationIndex){
                 _currentAnimationIndex = animationIdx;
-                this.currentAnimation.Stop();
                 this.currentAnimation = this.animation[_currentAnimationIndex];
-                this.currentAnimation.Start(null);
             }
         }
 

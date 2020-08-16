@@ -1,5 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -140,6 +140,11 @@ namespace GameLibrary.Animation
         public void SetFrameLength(float frameLength)
         {
             this.timeBetweenframes = frameLength;
+        }
+
+        public IEnumerator<AnimationFrames> GetEnumerator()
+        {
+            return this._allFrames.GetEnumerator();
         }
     }
 }
