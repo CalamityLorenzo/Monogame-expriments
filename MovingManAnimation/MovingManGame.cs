@@ -2,6 +2,7 @@
 using GameData.CharacterActions;
 using GameData.Commands;
 using GameLibrary;
+using GameLibrary.AppObjects;
 using GameLibrary.Config.App;
 using GameLibrary.InputManagement;
 using Microsoft.Xna.Framework;
@@ -19,9 +20,9 @@ namespace MovingManAnimation
         private InputsStateManager iManger;
         private SpriteBatch spriteBatch;
         private MovingManAssetsLoader assetsLoader;
-        private MapVelocityManager basicVelocity;
+        private IVelocinator basicVelocity;
         private List<KeyCommand<IBasicMotion>> velocityCmds;
-        private BasicCharacter manChar;
+        private BasicCharacterWithCommands manChar;
         private readonly ConfigurationData configData;
 
         private readonly MouseKeyboardInputsReciever _inputReciever;
@@ -53,7 +54,8 @@ namespace MovingManAnimation
             var p1Controls = assetsLoader.Player1KeyboardControls();
             var playerAtlas = assetsLoader.PlayerAtlas();
             var animations = assetsLoader.Animations();
-            this.basicVelocity = new MapVelocityManager(0f, 0f, 45f, 45f);
+            //this.basicVelocity = new MapVelocityManager(0f, 0f, 45f, 45f);
+            this.basicVelocity = new BasicVelocityManager(0f, 0f);
             this.velocityCmds = CommandBuilder.GetBasicMapMotion(p1Controls);
 
             // My player needs
@@ -61,7 +63,8 @@ namespace MovingManAnimation
             // 2. Position
             // 3. Animations 
             // 4. Velocity
-            this.manChar = new BasicCharacter(this.spriteBatch, playerAtlas, animations, basicVelocity, new Vector2(40, 50));
+            // this.manChar = new BasicCharacter(this.spriteBatch, playerAtlas, animations, basicVelocity, new Vector2(40, 50));
+            this.manChar = new BasicCharacterWithCommands(this.spriteBatch, playerAtlas, animations, basicVelocity, new Vector2(40, 50), 45f, 45f);
         }
 
         protected override void Update(GameTime gameTime)
@@ -73,9 +76,9 @@ namespace MovingManAnimation
             iManger.Update(gameTime, kState, mState);
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, iManger.PressedKeys(), Keys.Escape);
-            var velocityCmd = this._inputReciever.Process(this.velocityCmds);
+            var velocityCmd = this._inputReciever.MapCommands(this.velocityCmds);
             if (velocityCmd != null){
-                velocityCmd.Execute(basicVelocity);
+                velocityCmd.Execute(this.manChar);
             }
 
 

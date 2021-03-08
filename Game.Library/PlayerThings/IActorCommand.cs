@@ -1,9 +1,4 @@
-﻿using Microsoft.Xna.Framework.Media;
-using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GameLibrary.Character
+﻿namespace GameLibrary.Character
 {
     public interface IActorCommand<T>
     {

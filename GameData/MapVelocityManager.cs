@@ -61,5 +61,10 @@ namespace GameData
             this.VelocityY = - this.speedY;
 
         }
+
+        public void Jump()
+        {
+
+        }
     }
 }

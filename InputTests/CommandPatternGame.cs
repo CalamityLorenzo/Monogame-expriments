@@ -92,7 +92,7 @@ namespace InputTests
             //time
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit
-            var command = this.inputReciever.Process(this.p1Commands);
+            var command = this.inputReciever.MapCommands(this.p1Commands);
             if(command!=null)
                 command.Execute(_mo4);
 

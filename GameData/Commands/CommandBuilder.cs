@@ -84,19 +84,17 @@ namespace GameData.Commands
 
         private List<KeyCommand<IBasicMotion>> MapMovement(PlayerKeyboardControls keys)=>new List<KeyCommand<IBasicMotion>>
         {
-            new KeyCommand<IBasicMotion>(keys.Up, KeyCommandPress.Down, new UpVelocityCommand()
-                ),
-            new KeyCommand<IBasicMotion>(keys.Down, KeyCommandPress.Down, new DownVelocityCommand()
-                ),
+            new KeyCommand<IBasicMotion>(keys.Up, KeyCommandPress.Down, new UpVelocityCommand()),
+            new KeyCommand<IBasicMotion>(keys.Down, KeyCommandPress.Down, new DownVelocityCommand()),
             new KeyCommand<IBasicMotion>(keys.Left, KeyCommandPress.Down, new LeftVelocityCommand()),
             new KeyCommand<IBasicMotion>(keys.Right, KeyCommandPress.Down, new RightVelocityCommand()),
-
             new KeyCommand<IBasicMotion>(keys.Up, KeyCommandPress.Up, new UpVelocityCommandRelease()
                 ),
             new KeyCommand<IBasicMotion>(keys.Down, KeyCommandPress.Up, new DownVelocityCommandRelease()
                 ),
             new KeyCommand<IBasicMotion>(keys.Left, KeyCommandPress.Up, new LeftVelocityCommandRelease()),
             new KeyCommand<IBasicMotion>(keys.Right, KeyCommandPress.Up, new RightVelocityCommandRelease()),
+            new KeyCommand<IBasicMotion>(keys.Special, KeyCommandPress.Down, new JumpCommand())
         };
 
 

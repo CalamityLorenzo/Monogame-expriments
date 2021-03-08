@@ -49,7 +49,7 @@ namespace GameLibrary.InputManagement
         /// <typeparam name="T"></typeparam>
         /// <param name="keyCommands"></param>
         /// <returns></returns>
-        public IActorCommand<T> Process<T>(List<KeyCommand<T>> keyCommands)
+        public IActorCommand<T> MapCommands<T>(List<KeyCommand<T>> keyCommands)
         {
             foreach(var keyCommand in keyCommands)
             {

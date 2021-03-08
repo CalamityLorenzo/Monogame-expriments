@@ -73,8 +73,8 @@ namespace BasicJeep
             this._iStateManager.Update(gameTime, Keyboard.GetState(), Mouse.GetState());
             KeyboardFunctions.QuitOnKeys(this, this._iStateManager.GetInputState().PressedKeys, Keys.Escape);
 
-            var rotateCmd = this._inputReciever.Process(this.rotatorCommands);
-            var velocityCmd = this._inputReciever.Process(this.velocityCmds);
+            var rotateCmd = this._inputReciever.MapCommands(this.rotatorCommands);
+            var velocityCmd = this._inputReciever.MapCommands(this.velocityCmds);
             if (rotateCmd != null)
                 rotateCmd.Execute(rotator);
             if (velocityCmd != null)

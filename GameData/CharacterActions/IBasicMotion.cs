@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GameData.CharacterActions
+﻿namespace GameData.CharacterActions
 {
     public interface IBasicMotion
     {
@@ -14,5 +10,6 @@ namespace GameData.CharacterActions
         void EndMoveRight();
         void EndMoveDown();
         void EndMoveUp();
+        void Jump();
     }
 }

@@ -29,8 +29,9 @@ namespace GameLibrary.Animation
         private bool _paused = false;
         private float timeBetweenframes;
         private bool _isRepeating;
-
-        public AnimationPhrase(IEnumerable<AnimationFrames> frames, float timeBetweenframes, bool isRepeating = true)
+        private string _name;
+        public string Name => _name;
+        public AnimationPhrase(IEnumerable<AnimationFrames> frames, float timeBetweenframes, bool isRepeating = true, string name =null)
         {
             this._allFrames = new List<AnimationFrames>(frames);
             this._totalFrameCount = _allFrames.Select(o => o.Frames).Sum(o => o.Count);
@@ -39,6 +40,19 @@ namespace GameLibrary.Animation
             _currentFrameLocalIdx = 0;
             this.timeBetweenframes = timeBetweenframes;
             this._isRepeating = isRepeating;
+            _name = name?? "";
+        }
+
+        public AnimationPhrase(IEnumerable<AnimationFrames> frames, float timeBetweenframes, string name = "")
+        {
+            this._allFrames = new List<AnimationFrames>(frames);
+            this._totalFrameCount = _allFrames.Select(o => o.Frames).Sum(o => o.Count);
+            _currentFrameSet = 0;
+            _currentFrameTotal = 0;
+            _currentFrameLocalIdx = 0;
+            this.timeBetweenframes = timeBetweenframes;
+            this._isRepeating = true;
+            _name = name;
         }
 
         public void Update(float deltaTime)
@@ -145,6 +159,11 @@ namespace GameLibrary.Animation
         public IEnumerator<AnimationFrames> GetEnumerator()
         {
             return this._allFrames.GetEnumerator();
+        }
+
+        public override string ToString()
+        {
+            return $"{Name} {_totalFrameCount}";
         }
     }
 }

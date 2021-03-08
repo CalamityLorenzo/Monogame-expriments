@@ -108,8 +108,8 @@ namespace Parrallax.Eightway
 
             KeyboardFunctions.QuitOnKeys(this, this.inputState.PressedKeys(), Keys.Escape);
 
-            var rTateCmd = this.InputsReciever.Process(rTateCmds);
-            var mapCmd = this.InputsReciever.Process(mapCmds);
+            var rTateCmd = this.InputsReciever.MapCommands(rTateCmds);
+            var mapCmd = this.InputsReciever.MapCommands(mapCmds);
 
             if (rTateCmd != null)
                 rTateCmd.Execute(this.rotator);

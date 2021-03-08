@@ -1,9 +1,5 @@
 ﻿using GameData.CharacterActions;
-using GameLibrary.AppObjects;
 using GameLibrary.Character;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GameData.Commands
 {
@@ -69,6 +65,14 @@ namespace GameData.Commands
         public void Execute(IBasicMotion actor)
         {
             actor.EndMoveRight();
+        }
+    }
+
+    public class JumpCommand : IActorCommand<IBasicMotion>
+    {
+        public void Execute(IBasicMotion actor)
+        {
+            actor.Jump();
         }
     }
 }

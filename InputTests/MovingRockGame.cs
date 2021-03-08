@@ -79,7 +79,7 @@ namespace InputTests
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //! Check all the keys and shit
-            var command = this.inputProcessor.Process(this.p1Commands);
+            var command = this.inputProcessor.MapCommands(this.p1Commands);
             if(command!=null)
                 command.Execute(movingObject);
 

@@ -38,8 +38,25 @@ namespace GameLibrary.Config.App
             var opts = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true
+                
             };
             return JsonSerializer.Deserialize<T>(property.ToString(),opts);
+        }
+
+        // Simple Case leaning on Json.net
+        //With a Custom Converter
+        public T Get<T, C>(string propertyName) where T : class
+                                                where C : JsonConverter<T>, new ()
+        {
+            var itm = this.ConfigData.Where(o => o.RootElement.TryGetProperty(propertyName, out var prop)).First();
+            var property = itm.RootElement.GetProperty(propertyName);
+            var opts = new JsonSerializerOptions
+            {
+                PropertyNameCaseInsensitive = true,
+                Converters = { new C() }
+
+            };
+            return JsonSerializer.Deserialize<T>(property.ToString(), opts);
         }
     }
     public class ConfigurationBuilder

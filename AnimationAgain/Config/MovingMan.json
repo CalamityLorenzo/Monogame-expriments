@@ -1,275 +1,250 @@
 {
   "PlayerAtlas": "Content/MovingManAtlas.png",
-  "Left": {
-    "isRepeating": true,
-    "startFrame": 0,
-    "frames": [
-      {
-        "Frame": {
+  "Frames": [
+    {
+      "Name": "Right",
+      "isRepeating": true,
+      "startFrame": 0,
+      "frames": [
+        {
           "X": 0,
           "Y": 40,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
           "X": 72,
           "Y": 40,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
           "X": 144,
           "Y": 40,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
           "X": 216,
           "Y": 40,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
           "X": 288,
           "Y": 40,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
           "X": 360,
           "Y": 40,
           "Width": 72,
           "Height": 40
         }
-      }
-    ]
-  },
-  "Right": {
-    "isRepeating": true,
-    "startFrame": 0,
-    "frames": [
-      {
-        "Frame": {
+      ]
+    },
+    {
+      "Name": "Left",
+      "isRepeating": true,
+      "startFrame": 0,
+      "frames": [
+        {
+
           "X": 0,
           "Y": 0,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 72,
           "Y": 0,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 144,
           "Y": 0,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 216,
           "Y": 0,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 288,
           "Y": 0,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 360,
           "Y": 0,
           "Width": 72,
           "Height": 40
         }
-      }
-    ]
-  },
-  "Standing": {
-    "isRepeating": true,
-    "startFrame": 0,
-    "frames": [
-      {
-        "Frame": {
+      ]
+    },
+    {
+      "Name": "Standing",
+      "isRepeating": true,
+      "startFrame": 0,
+      "frames": [
+        {
           "X": 0,
           "Y": 80,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 72,
           "Y": 80,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 144,
           "Y": 80,
           "Width": 72,
           "Height": 40
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 216,
           "Y": 80,
           "Width": 72,
           "Height": 40
         }
-      }
-    ]
-  },
-  "JumpLeft": {
-    "isRepeating": true,
-    "startFrame": 0,
-    "frames": [
-      {
-        "Frame": {
+      ]
+    },
+    {
+      "Name": "JumpLeft",
+      "isRepeating": true,
+      "startFrame": 0,
+      "frames": [
+        {
+
           "X": 72,
           "Y": 40,
           "Width": 72,
           "Height": 40
         }
-      }
-    ]
-  },
-  "JumpRight": {
-    "isRepeating": true,
-    "startFrame": 0,
-    "frames": [
-      {
-        "Frame": {
+      ]
+    },
+    {
+      "Name": "JumpRight",
+      "isRepeating": true,
+      "startFrame": 0,
+      "frames": [
+        {
+
           "X": 72,
           "Y": 0,
           "Width": 72,
           "Height": 40
         }
-      }
-    ]
-  },
-  "WaitLeft": {
-    "isRepeating": true,
-    "startFrame": 0,
-    "frames": [
-      {
-        "Frame": {
+      ]
+    },
+    {
+      "Name": "WaitLeft",
+      "isRepeating": true,
+      "startFrame": 0,
+      "frames": [
+        {
+
           "X": 72,
           "Y": 120,
           "Width": 72,
           "Height": 45
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 144,
           "Y": 120,
           "Width": 72,
           "Height": 45
         }
-      }
-    ]
-  },
-  "WaitRight": {
-    "isRepeating": true,
-    "startFrame": 0,
-    "frames": [
-      {
-        "Frame": {
+      ]
+    },
+    {
+      "Name": "WaitRight",
+      "isRepeating": true,
+      "startFrame": 0,
+      "frames": [
+        {
+
           "X": 72,
           "Y": 120,
           "Width": 72,
           "Height": 45
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 144,
           "Y": 120,
           "Width": 72,
           "Height": 45
         }
-      }
-    ]
-  },
-  "AimHead": {
-    "isRepeating": false,
-    "startFrame": 0,
-    "frames": [
-      {
-        "Frame": {
+      ]
+    },
+    {
+      "Name": "AimHead",
+      "isRepeating": false,
+      "startFrame": 0,
+      "frames": [
+        {
           "X": 72,
           "Y": 122,
           "Width": 72,
           "Height": 45
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 144,
           "Y": 122,
           "Width": 72,
           "Height": 45
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 216,
           "Y": 122,
           "Width": 72,
           "Height": 45
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 288,
           "Y": 122,
           "Width": 72,
           "Height": 45
-        }
-      },
-      {
-        "Frame": {
+        },
+        {
+
           "X": 360,
           "Y": 122,
           "Width": 72,
           "Height": 45
-        }
-      },
-      {
-        "Frame": {
+
+        },
+        {
+
           "X": 432,
           "Y": 122,
           "Width": 72,
           "Height": 45
         }
-      }
-    ]
-  }
+      ]
+    }
+  ]
 }

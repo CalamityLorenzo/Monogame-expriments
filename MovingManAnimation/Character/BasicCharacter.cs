@@ -3,7 +3,6 @@ using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System.Collections.Generic;
 
 
 namespace MovingManAnimation.Character
@@ -57,8 +56,6 @@ namespace MovingManAnimation.Character
                 this.currentAnimation = this.animation[_currentAnimationIndex];
             }
         }
-
-        
 
         public void Draw(GameTime time)
         {

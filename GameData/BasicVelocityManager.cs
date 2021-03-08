@@ -15,8 +15,11 @@ namespace GameData
             VelocityX = startVelocityX;
         }
 
-        public void SetVelocityX(float x) => this.VelocityX = x > MaxVelocity ? MaxVelocity : x;
-        public void SetVelocityY(float y) => this.VelocityY = y > MaxVelocity ? MaxVelocity : y;
+        //public void SetVelocityX(float x) => this.VelocityX = x > MaxVelocity ? MaxVelocity : x;
+        //public void SetVelocityY(float y) => this.VelocityY = y > MaxVelocity ? MaxVelocity : y;
+
+        public void SetVelocityX(float x) => this.VelocityX = x; // > MaxVelocity ? MaxVelocity : x;
+        public void SetVelocityY(float y) => this.VelocityY = y;// > MaxVelocity ? MaxVelocity : y;
 
         public float MaxVelocity { get; }
         public float VelocityY { get; internal set; }

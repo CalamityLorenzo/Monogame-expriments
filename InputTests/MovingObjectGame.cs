@@ -97,7 +97,7 @@ namespace InputTests
             KeyboardFunctions.QuitOnKeys(this, iManger.PressedKeys(), Keys.Escape);
             _mouseHairs.SetPosition(mState.Position.ToVector2());
             
-            var cmds = this.inputProcessor.Process(this.p1Commands);
+            var cmds = this.inputProcessor.MapCommands(this.p1Commands);
 
             if (cmds != null)
                 cmds.Execute(this._mo4);
