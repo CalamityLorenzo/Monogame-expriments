@@ -1,4 +1,6 @@
 ﻿using System.Collections.Generic;
+using System.Diagnostics;
+using System.IO;
 using GameLibrary.Character;
 using Microsoft.Xna.Framework.Input;
 
@@ -55,6 +57,7 @@ namespace GameLibrary.InputManagement
             {
                 if(TestKeyState(keyCommand.Key, keyCommand.PressType))
                 {
+                Debug.WriteLine( keyCommand.Key.ToString() + " " + ( keyCommand.PressType == KeyCommandPress.Up));
                     var command = this.ValidateSubKeys(keyCommand.SubKey);
                     if (command == null)
                         return keyCommand.Command;

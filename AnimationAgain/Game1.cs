@@ -89,15 +89,6 @@ namespace AnimationAgain
         void SetPlayingFrame(HashSet<Keys> pressed)
         {
 
-            if (pressed.Contains(Keys.D1)) this.animationPlayer.SetFrames(anims.FirstOrDefault(a => a.Key == "Right"));
-            if (pressed.Contains(Keys.D2)) this.animationPlayer.SetFrames(anims.FirstOrDefault(a => a.Key == "Left"));
-            if (pressed.Contains(Keys.D3)) this.animationPlayer.SetFrames(anims.FirstOrDefault(a => a.Key == "Standing"));
-            if (pressed.Contains(Keys.D4)) this.animationPlayer.SetFrames(anims.FirstOrDefault(a => a.Key == "JumpLeft"));
-            if (pressed.Contains(Keys.D5)) this.animationPlayer.SetFrames(anims.FirstOrDefault(a => a.Key == "JumpRight"));
-            if (pressed.Contains(Keys.D6)) this.animationPlayer.SetFrames(anims.FirstOrDefault(a => a.Key == "WaitLeft"));
-            if (pressed.Contains(Keys.D7)) this.animationPlayer.SetFrames(anims.FirstOrDefault(a => a.Key == "WaitRight"));
-
-
             if (pressed.Contains(Keys.Up)) { this.animSpeed += 0.05f; this.animationPlayer.SetSpeed(this.animSpeed); }
             if (pressed.Contains(Keys.Down))
             {
@@ -120,9 +111,8 @@ namespace AnimationAgain
             if(activeCommand!=null)
             activeCommand.Execute(basicChar);
 
-            //SetPlayingFrame(inputManager.KeysDown());
-
-            this.animationPlayer.Update(delta);
+            basicChar.Update(delta);
+            SetPlayingFrame(inputManager.KeysDown());
             base.Update(gameTime);
         }
 

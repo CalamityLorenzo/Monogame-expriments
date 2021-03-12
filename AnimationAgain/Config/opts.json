@@ -9,10 +9,10 @@
     "StartVector": [100,100]
   },
   "Player1Controls": {
-    "Up": "W",
-    "Down": "S",
-    "Left": "A",
-    "Right": "D",
+    "Up": "D1",
+    "Down": "D2",
+    "Left": "D4",
+    "Right": "D3",
     "Fire": "Enter",
     "Action": "LeftControl",
     "Special":  "Space"

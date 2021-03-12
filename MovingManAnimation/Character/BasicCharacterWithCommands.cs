@@ -2,7 +2,6 @@
 using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
-using Microsoft.VisualBasic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
@@ -57,7 +56,6 @@ namespace MovingManAnimation.Character
 
         private void UpdateAnimationState()
         {
-
             if ((velos.VelocityX < 1 && velos.VelocityX > -1) && (velos.VelocityY < 1 && velos.VelocityY > -1))
             {
                 var animIndex = 4;

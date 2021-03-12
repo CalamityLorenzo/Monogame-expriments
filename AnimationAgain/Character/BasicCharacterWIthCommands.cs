@@ -1,12 +1,12 @@
 ﻿using AnimationAgain.Animation;
 using GameData.CharacterActions;
 using GameLibrary.AppObjects;
+using GameLibrary.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
-using System.Text;
 
 namespace AnimationAgain.Character
 {
@@ -28,7 +28,7 @@ namespace AnimationAgain.Character
         private float jumpSpeed = 60f;
         private float jumpCutOff = 0f; // When we start a jump, if we 'fall' back to this position the jump is complete.
 
-        public BasicCharacterWithCommands(SpriteBatch spritebatch, Dictionary<string, Rectangle[]> frameSets, AnimationPlayer animPlayer, IVelocinator velos,  Texture2D atlas, Vector2 startPos, float speedX, float speedY)
+        public BasicCharacterWithCommands(SpriteBatch spritebatch, Dictionary<string, Rectangle[]> frameSets, AnimationPlayer animPlayer, IVelocinator velos, Texture2D atlas, Vector2 startPos, float speedX, float speedY)
         {
             this._currentAnimationIndex = "Standing";  // Standing
             this.spritebatch = spritebatch;
@@ -40,57 +40,48 @@ namespace AnimationAgain.Character
             this.speedX = speedX;
             this.speedY = speedY;
             // Where we draw the in relative position to the rest of the body.
-
+            animPlayer.SetFrames(frameSets.Single(a => a.Key == _currentAnimationIndex));
         }
 
 
         public void Update(float deltaTime)
         {
-            //this.currentPos = currentPos.AddX(1f * deltaTime)
-            //            .AddY(1f * deltaTime);
+            this.currentPos = currentPos.AddX(velos.VelocityX * deltaTime)
+                        .AddY(velos.VelocityY * deltaTime);
             this.ManageJump();
+            this.animPlayer.Update(deltaTime);
             this.UpdateAnimationState();
         }
 
         private void UpdateAnimationState()
         {
 
-            //if ((velos.VelocityX < 1 && velos.VelocityX > -1) && (velos.VelocityY < 1 && velos.VelocityY > -1))
-            //{
-            //    var animIndex = 4;
-            //    if (animIndex != _currentAnimationIndex)
-            //    {
-            //        _currentAnimationIndex = animIndex;
-            //        this.currentAnimation = this.animation[4];
-            //    }
-            //}
+            if ((velos.VelocityX < 1 && velos.VelocityX > -1) && (velos.VelocityY < 1 && velos.VelocityY > -1))
+            {
+                this.SetAnimation("Standing");
+                //animPlayer.SetFrames(frameSets.Single(a => a.Key == "Standing"));
+            }
         }
 
         public void Draw(GameTime time)
         {
             // Body
             spritebatch.Draw(atlas, this.currentPos, animPlayer.CurrentFrame(), Color.White);
-            // head
-
         }
 
         private void SetAnimation(string animationSet)
         {
-            if (animationSet != _currentAnimationIndex)
-            {
-                _currentAnimationIndex = animationSet;
-                this.animPlayer.SetFrames(this.frameSets.FirstOrDefault(a => a.Key == animationSet));
-            }
+            _currentAnimationIndex = animationSet;
+            this.animPlayer.SetFrames(this.frameSets.FirstOrDefault(a => a.Key == animationSet));
         }
 
         public void MoveLeft()
         {
-             this.velos.SetVelocityX(-this.speedX);
+            this.velos.SetVelocityX(-this.speedX);
             if (!this.isJumping)
             {
                 SetAnimation("Left");
             }
-
         }
 
         public void MoveRight()
@@ -98,7 +89,6 @@ namespace AnimationAgain.Character
             this.velos.SetVelocityX(this.speedX);
             if (!this.isJumping)
             {
-                var animationIdx = 0;
                 SetAnimation("Right");
             }
         }
@@ -107,16 +97,20 @@ namespace AnimationAgain.Character
         {
             this.velos.SetVelocityY(-this.speedY);
             //SetAnimation(0);
-            if (_currentAnimationIndex != "Left" || _currentAnimationIndex != "Right")
+            if (_currentAnimationIndex == "Left" || _currentAnimationIndex == "Right")
+                SetAnimation(_currentAnimationIndex);
+            else
                 SetAnimation("Left");
+
         }
 
         public void MoveDown()
         {
             this.velos.SetVelocityY(this.speedY);
-            if (_currentAnimationIndex != "Left" || _currentAnimationIndex != "Right")
+            if (_currentAnimationIndex == "Left" || _currentAnimationIndex == "Right")
+                SetAnimation(_currentAnimationIndex);
+            else
                 SetAnimation("Right");
-
 
         }
 
@@ -147,9 +141,7 @@ namespace AnimationAgain.Character
         public void Jump()
         {
             if (!this.isJumping)
-            {
                 this.BeginJump();
-            }
         }
 
         private void BeginJump()
@@ -160,15 +152,6 @@ namespace AnimationAgain.Character
             // What direction are we facing?
             if (this._currentAnimationIndex == "Left")
                 anim = "JumpLeft";
-            //else if (this.velos.VelocityX > 0)
-            //{
-            //    anim = 6;
-            //}
-            //if (this.velos.VelocityX < 0)
-            //{
-            //    anim = 5;
-            //}
-
             this.SetAnimation(anim);
             this.velos.SetVelocityY(-this.jumpSpeed); //Launch into SPAAAAAACE
         }
@@ -178,23 +161,21 @@ namespace AnimationAgain.Character
             if (this.isJumping)
             {
 
-                //var anim = "JumpRight";
-                //// What direction are we facing?
-                //if (this._currentAnimationIndex == "JumpLeft")
-                //    anim = "JumpLeft";
-                //else if (this.velos.VelocityX > 0)
-                //{
-                //    anim = 6;
-                //}
-                //if (this.velos.VelocityX < 0)
-                //{
-                //    anim = 7;
-                //}
-                //if (anim != 0)
-                //    this.SetAnimation(anim);
+                var anim = "JumpRight";
+                // What direction are we facing?
+                if (this._currentAnimationIndex == "JumpLeft")
+                    anim = "JumpLeft";
+                else if (this.velos.VelocityX > 0)
+                {
+                    anim = "JumpLeft";
+                }
+                if (this.velos.VelocityX < 0)
+                {
+                    anim = "JumpRight";
+                }
+                this.SetAnimation(anim);
 
-
-                //// DId we get high enough.
+                // DId we get high enough.
                 if (currentPos.Y <= jumpCutOff - realtiveJumpHeight)
                 {
                     this.velos.SetVelocityY(+this.jumpSpeed);
@@ -203,22 +184,19 @@ namespace AnimationAgain.Character
                 {
                     this.isJumping = false;
                     this.velos.SetVelocityY(0f);
-                    this.SetAnimation("Standing");
-                }
-                    //    // change the animation to somwthing more appropriate
-                //    var subAnim = 0;
-                //    if (this.velos.VelocityX > 0)
-                //    {
-                //        subAnim = 2;
-                //    }
-                //    if (this.velos.VelocityX < 0)
-                //    {
-                //        subAnim = 3;
-                //    }
+                    // change the animation to somwthing more appropriate
+                    var subAnim = "Standing";
+                    if (this.velos.VelocityX > 0)
+                    {
+                        subAnim = "Right";
+                    }
+                    if (this.velos.VelocityX < 0)
+                    {
+                        subAnim = "Left";
+                    }
 
-                //    if (subAnim != 0)
-                //        this.SetAnimation(subAnim);
-                //}
+                    this.SetAnimation(subAnim);
+                }
             }
         }
     }

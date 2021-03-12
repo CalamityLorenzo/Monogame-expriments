@@ -42,8 +42,8 @@ namespace GameLibrary.InputManagement
 
             // Compare last with current for upsies.
             // Reset the list so we only have the most current keys
-            _CurrentPressedKeys = new Dictionary<Keys, PressedKey>();
-            _KeysDown = new HashSet<Keys>();
+            var _currentPressedKeys = new Dictionary<Keys, PressedKey>();
+            var _keysDown = new HashSet<Keys>();
             var doubleClickedKeys = this.DoubleClickedKeys(pressedKeys, totalTime, this.doubleClickLength);
             foreach (var key in pressedKeys){
                 // Key already pressed
@@ -53,21 +53,24 @@ namespace GameLibrary.InputManagement
                     val.DurationPressed += delta;
                     // you can only have double cliced for like moment.
                     val.IsDoubleClick = false;
-                    _CurrentPressedKeys.Add(key, val);
+                    _currentPressedKeys.Add(key, val);
                 }
                 else
                 {
                     // freshly pressed.
-                    _KeysDown.Add(key);
-                    _CurrentPressedKeys.Add(key, new PressedKey { DurationPressed = 0f, IsDoubleClick = DoubleClicked(key, totalTime, this.doubleClickLength), Key = key });
+                    _keysDown.Add(key);
+                    _currentPressedKeys.Add(key, new PressedKey { DurationPressed = 0f, IsDoubleClick = DoubleClicked(key, totalTime, this.doubleClickLength), Key = key });
                     AddToHistory(key, totalTime);
                 }
-            }
 
+
+            }
+            this._CurrentPressedKeys = _currentPressedKeys;
+            this._KeysDown = _keysDown;
             // is when it has been released.
             // So this should be the same keys as added to the history.
             // find kets that were in the previous run, that are not in the current
-            this._KeysUp = new HashSet<Keys>(this._PreviousPressedKeys.Where(pk=>!_CurrentPressedKeys.Any(cp=>cp.Key == pk.Key)).Select(p=>p.Key));
+            this._KeysUp = new HashSet<Keys>(this._PreviousPressedKeys.Where(pk=>!_CurrentPressedKeys.Any(cp=>cp.Key == pk.Key)).Select(p=>p.Key).ToList());
 
             // Was pressed but now is not (Released Keys)
             _PreviousPressedKeys = _CurrentPressedKeys;
@@ -170,7 +173,6 @@ namespace GameLibrary.InputManagement
             return dbClicked;
         }
         
-
         public Dictionary<MouseButton, PressedMouseButton> PressedMouseButtons() => this._CurrentButtons;
         public HashSet<MouseButton> ReleasedMouseButtons() => this.ReleasedButtons;
 

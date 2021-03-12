@@ -80,8 +80,6 @@ namespace MovingManAnimation
             if (velocityCmd != null){
                 velocityCmd.Execute(this.manChar);
             }
-
-
             manChar.Update(delta);
         }
 
