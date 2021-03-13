@@ -93,8 +93,8 @@ namespace InputTests
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit
             var command = this.inputReciever.MapCommands(this.p1Commands);
-            if(command!=null)
-                command.Execute(_mo4);
+            
+                command.ForEach(cmd => cmd.Execute(_mo4));
 
             this.headsIWin.SetViewDestination(mState.Position.ToVector2());
             _mo4.Update(gameTime, delta);

@@ -75,10 +75,10 @@ namespace BasicJeep
 
             var rotateCmd = this._inputReciever.MapCommands(this.rotatorCommands);
             var velocityCmd = this._inputReciever.MapCommands(this.velocityCmds);
-            if (rotateCmd != null)
-                rotateCmd.Execute(rotator);
-            if (velocityCmd != null)
-                velocityCmd.Execute(basicVelocity);
+
+            rotateCmd.ForEach(rotate => rotate.Execute(rotator));
+
+            velocityCmd.ForEach(v => v.Execute(basicVelocity));
             rotator.Update(delta);
             JeepChar.Update(delta);
         }

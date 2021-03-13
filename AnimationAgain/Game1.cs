@@ -59,7 +59,7 @@ namespace AnimationAgain
 
             // TODO: use this.Content to load your game content here
 
-            
+
         }
 
         protected override void Initialize()
@@ -108,8 +108,8 @@ namespace AnimationAgain
             this.inputManager.Update(gameTime, Keyboard.GetState(), Mouse.GetState());
 
             var activeCommand = this.inputReceiver.MapCommands(this.velocityCmds);
-            if(activeCommand!=null)
-            activeCommand.Execute(basicChar);
+            if (activeCommand != null)
+                activeCommand.ForEach(a => a.Execute(basicChar));
 
             basicChar.Update(delta);
             SetPlayingFrame(inputManager.KeysDown());

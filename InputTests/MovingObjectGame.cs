@@ -99,8 +99,8 @@ namespace InputTests
             
             var cmds = this.inputProcessor.MapCommands(this.p1Commands);
 
-            if (cmds != null)
-                cmds.Execute(this._mo4);
+
+            cmds.ForEach(cmd => cmd.Execute(this._mo4));
             this.headsIWin.SetViewDestination(mState.Position.ToVector2());
             _mo4.Update(gameTime, delta);
             _mouseHairs.Update(gameTime, delta);

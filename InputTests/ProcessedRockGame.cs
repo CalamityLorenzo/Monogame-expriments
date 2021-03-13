@@ -89,12 +89,12 @@ namespace InputTests
             //time
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            var command = this.inputsProcessor.MapCommands(this.player1Inputs);
-            var rTaterCommand = this.inputsProcessor.MapCommands(this.rTaterInputs);
-            if(command!=null)
-                command.Execute(movingObject);
-            if (rTaterCommand != null)
-                rTaterCommand.Execute(this.rTater);
+            var commands = this.inputsProcessor.MapCommands(this.player1Inputs);
+            var rTaterCommands = this.inputsProcessor.MapCommands(this.rTaterInputs);
+
+            commands.ForEach(command => command.Execute(movingObject));
+
+            rTaterCommands.ForEach(rTater => rTater.Execute(this.rTater));
 
             movingObject.Update(gameTime, delta);
             rTater.Update(delta);

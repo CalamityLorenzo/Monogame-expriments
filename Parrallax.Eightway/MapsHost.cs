@@ -111,10 +111,8 @@ namespace Parrallax.Eightway
             var rTateCmd = this.InputsReciever.MapCommands(rTateCmds);
             var mapCmd = this.InputsReciever.MapCommands(mapCmds);
 
-            if (rTateCmd != null)
-                rTateCmd.Execute(this.rotator);
-            if (mapCmd != null)
-                mapCmd.Execute(this.velocityManager);
+            rTateCmd.ForEach(rt => rt.Execute(this.rotator));
+            mapCmd.ForEach(mp => mp.Execute(this.velocityManager));
             
             backgroundMap.Update(gameTime);
 

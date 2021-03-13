@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 
 namespace GameLibrary.InputManagement
@@ -10,14 +11,14 @@ namespace GameLibrary.InputManagement
     public class InputsStateManager
     {
         private float doubleClickLength = 750f; // Time in millisecsond to allow a dobule click
-        
+
         private Dictionary<Keys, PressedKey> _PreviousPressedKeys = new Dictionary<Keys, PressedKey>();
         private Dictionary<Keys, PressedKey> _CurrentPressedKeys = new Dictionary<Keys, PressedKey>();
 
         private Dictionary<MouseButton, PressedMouseButton> _CurrentButtons = new Dictionary<MouseButton, PressedMouseButton>();
         private Dictionary<MouseButton, PressedMouseButton> _PreviousButtons = new Dictionary<MouseButton, PressedMouseButton>();
 
-            
+
         private HashSet<Keys> _KeysUp = new HashSet<Keys>();
         private HashSet<Keys> _KeysDown = new HashSet<Keys>();
 
@@ -34,6 +35,7 @@ namespace GameLibrary.InputManagement
 
         public void Update(GameTime time, KeyboardState kState, MouseState mState)
         {
+
             var delta = (float)time.ElapsedGameTime.TotalSeconds;
             var totalTime = (float)time.TotalGameTime.TotalMilliseconds;
             var pressedKeys = kState.GetPressedKeys();
@@ -44,8 +46,9 @@ namespace GameLibrary.InputManagement
             // Reset the list so we only have the most current keys
             var _currentPressedKeys = new Dictionary<Keys, PressedKey>();
             var _keysDown = new HashSet<Keys>();
-            var doubleClickedKeys = this.DoubleClickedKeys(pressedKeys, totalTime, this.doubleClickLength);
-            foreach (var key in pressedKeys){
+            // var doubleClickedKeys = this.DoubleClickedKeys(pressedKeys, totalTime, this.doubleClickLength);
+            foreach (var key in pressedKeys)
+            {
                 // Key already pressed
                 if (_PreviousPressedKeys.ContainsKey(key))
                 {
@@ -62,15 +65,22 @@ namespace GameLibrary.InputManagement
                     _currentPressedKeys.Add(key, new PressedKey { DurationPressed = 0f, IsDoubleClick = DoubleClicked(key, totalTime, this.doubleClickLength), Key = key });
                     AddToHistory(key, totalTime);
                 }
-
-
             }
             this._CurrentPressedKeys = _currentPressedKeys;
             this._KeysDown = _keysDown;
+
             // is when it has been released.
             // So this should be the same keys as added to the history.
             // find kets that were in the previous run, that are not in the current
-            this._KeysUp = new HashSet<Keys>(this._PreviousPressedKeys.Where(pk=>!_CurrentPressedKeys.Any(cp=>cp.Key == pk.Key)).Select(p=>p.Key).ToList());
+            this._KeysUp = new HashSet<Keys>();
+            foreach(var key in _PreviousPressedKeys)
+            {
+                if (kState.IsKeyUp(key.Key))
+                {
+                  //  Debug.WriteLine($"Key up : {key.Key}");
+                    _KeysUp.Add(key.Key);
+                }
+            }
 
             // Was pressed but now is not (Released Keys)
             _PreviousPressedKeys = _CurrentPressedKeys;
@@ -172,19 +182,19 @@ namespace GameLibrary.InputManagement
             }
             return dbClicked;
         }
-        
+
         public Dictionary<MouseButton, PressedMouseButton> PressedMouseButtons() => this._CurrentButtons;
         public HashSet<MouseButton> ReleasedMouseButtons() => this.ReleasedButtons;
 
         public Dictionary<Keys, float> HistoryKeyboard() => this.HistoryKeys;
         public Dictionary<Keys, float> HistoryMouse() => this.HistoryKeys;
-        
+
         // Theses are only true once, then they are discarded.
         public HashSet<Keys> KeysUp() => this._KeysUp;
         public HashSet<Keys> KeysDown() => this._KeysDown;
         public Dictionary<Keys, PressedKey> PressedKeys() => this._CurrentPressedKeys;
 
-        public CurrentInputState GetInputState() => new CurrentInputState(_KeysUp, _KeysDown, _CurrentButtons,  _CurrentPressedKeys, HistoryKeys, HistoryMouseButtons);
+        public CurrentInputState GetInputState() => new CurrentInputState(_KeysUp, _KeysDown, _CurrentButtons, _CurrentPressedKeys, HistoryKeys, HistoryMouseButtons);
 
     }
 }

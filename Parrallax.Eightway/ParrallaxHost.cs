@@ -110,9 +110,9 @@ namespace Parrallax.Eightway
             KeyboardFunctions.QuitOnKeys(this, this.iStateManager.GetInputState().PressedKeys, Keys.Escape);
 
             
-            var cmd= this._inputProcessor.MapCommands(this._p1Commands);
-            if (cmd != null)
-                cmd.Execute(rotator);
+            var cmds= this._inputProcessor.MapCommands(this._p1Commands);
+
+            cmds.ForEach(cmd => cmd.Execute(rotator));
 
             rotator.Update(delta);
 

@@ -1,8 +1,4 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace InputTests
 {
@@ -14,7 +10,7 @@ namespace InputTests
         [STAThread]
         static void Main()
         {
-            using (var game = new MovingObjectGame()) // ProcessedRockGAme()) // MovingObjectGame()) 
+            using (var game = new MovingRockGame()) // ProcessedRockGAme()) // MovingObjectGame()) 
                 game.Run();
         }
     }

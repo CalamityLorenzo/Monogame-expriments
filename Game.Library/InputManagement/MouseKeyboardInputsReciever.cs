@@ -1,8 +1,7 @@
-﻿using System.Collections.Generic;
-using System.Diagnostics;
-using System.IO;
-using GameLibrary.Character;
+﻿using GameLibrary.Character;
 using Microsoft.Xna.Framework.Input;
+using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace GameLibrary.InputManagement
 {
@@ -27,7 +26,7 @@ namespace GameLibrary.InputManagement
                 KeyCommandPress.Up => this._inputs.KeysUp().Contains(key),
                 KeyCommandPress.Down => this._inputs.KeysDown().Contains(key),
                 KeyCommandPress.Pressed => this._inputs.PressedKeys().ContainsKey(key),
-                _=>false
+                _ => false
             };
 
         }
@@ -35,7 +34,7 @@ namespace GameLibrary.InputManagement
         private IActorCommand<T> ValidateSubKeys<T>(IEnumerable<KeyCommand<T>> subkeys)
         {
             IActorCommand<T> currentCommand = null;
-            foreach(var key in subkeys)
+            foreach (var key in subkeys)
             {
                 if (TestKeyState(key.Key, key.PressType))
                     currentCommand = key.Command;
@@ -51,20 +50,40 @@ namespace GameLibrary.InputManagement
         /// <typeparam name="T"></typeparam>
         /// <param name="keyCommands"></param>
         /// <returns></returns>
-        public IActorCommand<T> MapCommands<T>(List<KeyCommand<T>> keyCommands)
+        //public IActorCommand<T> MapSingleCommands<T>(List<KeyCommand<T>> keyCommands)
+        //{
+        //    foreach (var keyCommand in keyCommands)
+        //    {
+        //        if (TestKeyState(keyCommand.Key, keyCommand.PressType))
+        //        {
+        //            Debug.WriteLine(keyCommand.Key.ToString() + " " + (keyCommand.PressType == KeyCommandPress.Up));
+        //            var command = this.ValidateSubKeys(keyCommand.SubKey);
+        //            if (command == null)
+        //                return keyCommand.Command;
+        //            return command;
+        //        }
+        //    }
+        //    return null; //not cool.
+        //}
+
+        public List<IActorCommand<T>> MapCommands<T>(List<KeyCommand<T>> keyCommands)
         {
-            foreach(var keyCommand in keyCommands)
+            var results = new List<IActorCommand<T>>();
+            foreach (var keyCommand in keyCommands)
             {
-                if(TestKeyState(keyCommand.Key, keyCommand.PressType))
+                if (TestKeyState(keyCommand.Key, keyCommand.PressType))
                 {
-                Debug.WriteLine( keyCommand.Key.ToString() + " " + ( keyCommand.PressType == KeyCommandPress.Up));
                     var command = this.ValidateSubKeys(keyCommand.SubKey);
                     if (command == null)
-                        return keyCommand.Command;
-                    return command;
+                    {
+                        if (keyCommand.Command != null)
+                            results.Add(keyCommand.Command);
+                    }
+                    else
+                        results.Add(command);
                 }
             }
-            return null; //not cool.
+            return results;
         }
     }
 }

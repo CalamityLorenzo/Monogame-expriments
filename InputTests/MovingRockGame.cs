@@ -3,20 +3,15 @@ using GameData.CharacterActions;
 using GameData.Commands;
 using GameData.UserInput;
 using GameLibrary;
-using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.InputManagement;
 
 using InputTests.MovingMan;
-
-using Library.Animation;
 using Microsoft.Xna.Framework;
 
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace InputTests
 {
@@ -58,12 +53,12 @@ namespace InputTests
                 SecondFire = Keys.Space
             };
 
-            
+
             this.p1Commands = CommandBuilder.GetWalkingCommands(p1Controls);
             this.inputProcessor = new MouseKeyboardInputsReciever(this.inputsManager);
             this.VelocityManager = new BasicVelocityManager(0f, 0f);
 
-            this.movingObject = new MovingObject(this.spriteBatch, new Dimensions(50, 50),this.VelocityManager, new Vector2(80, 180));
+            this.movingObject = new MovingObject(this.spriteBatch, new Dimensions(50, 50), this.VelocityManager, new Vector2(80, 180));
 
         }
 
@@ -79,9 +74,8 @@ namespace InputTests
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
             //! Check all the keys and shit
-            var command = this.inputProcessor.MapCommands(this.p1Commands);
-            if(command!=null)
-                command.Execute(movingObject);
+            var cmds = this.inputProcessor.MapCommands(this.p1Commands);
+            cmds.ForEach(command => command.Execute(movingObject));
 
             movingObject.Update(gameTime, delta);
             base.Update(gameTime);
