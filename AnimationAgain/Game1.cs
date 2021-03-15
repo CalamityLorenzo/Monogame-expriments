@@ -1,10 +1,10 @@
-﻿using AnimationAgain.Animation;
-using AnimationAgain.Character;
+﻿using AnimationAgain.Character;
 using AnimationAgain.Guns;
 using GameData;
 using GameData.CharacterActions;
 using GameData.Commands;
 using GameLibrary;
+using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Config.App;
 using GameLibrary.Extensions;
@@ -14,7 +14,6 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using MovingManAnimation.Config;
 using System.Collections.Generic;
-using System.Runtime.CompilerServices;
 
 namespace AnimationAgain
 {
@@ -48,8 +47,10 @@ namespace AnimationAgain
 
 
         private float animSpeed = 0.5f;
+        private int currentBullet = 0;
 
         public bool FIRE { get; private set; }
+        public bool INCREMENTBULLET { get; private set; }
 
         public Game1()
         {
@@ -107,7 +108,7 @@ namespace AnimationAgain
             this.bulletFactory = new BulletFactory(this._spriteBatch, assetsLoader.BulletAtlases(), bulletAnimation);
 
 
-            this.gunPosOffSet = new Vector2(3, 38);
+            this.gunPosOffSet = new Vector2(1, 37);
             gunDirection = new MouseRelativePoint(new Point(100, 200));
 
             basicChar = new BasicCharacterWithCommands(this._spriteBatch, playterAnimations, this.playerAnimationPlayer, velos, playerAtlas, new Vector2(100, 200), 57, 57);
@@ -137,6 +138,21 @@ namespace AnimationAgain
             }
             if (mState.LeftButton == ButtonState.Released)
                 this.FIRE = true;
+
+            if (mState.RightButton == ButtonState.Pressed)
+            {
+                if (this.INCREMENTBULLET)
+                {
+                    this.currentBullet += 1;
+                    if (currentBullet > 2) { this.currentBullet = 0; }
+                    this.gun.SetBullet(currentBullet);
+                }
+
+                this.INCREMENTBULLET = false;
+            }
+
+            if (mState.RightButton == ButtonState.Released)
+                this.INCREMENTBULLET = true;
         }
 
         protected override void Update(GameTime gameTime)

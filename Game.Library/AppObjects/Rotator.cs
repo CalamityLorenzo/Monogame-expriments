@@ -16,11 +16,11 @@ namespace GameLibrary.AppObjects
     public class Rotator : IUpdateableGameObject
     {
 
-        public float CurrentAngle { get; private set; }
         private float PreviousAngle { get; set; }
         public float RatePerSecond { get; private set; }
         public RotatorState State { get; private set; }
         public float DestinationAngle { get; private set; }
+        public float CurrentAngle { get; private set; }
 
         public Rotator(int startAngle, float anglesPerSecond)
         {

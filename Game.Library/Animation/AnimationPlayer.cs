@@ -2,9 +2,14 @@
 using System.Collections.Generic;
 using System.Linq;
 
-namespace AnimationAgain.Animation
+namespace GameLibrary.Animation
 {
-    class AnimationPlayer
+    /// <summary>
+    /// Plays the animation
+    /// YUou can provode a brace of animations at construction
+    /// Or add one as you go along
+    /// </summary>
+    public class AnimationPlayer
     {
         private readonly float defaultTimebetweenframes;
         private float velocity = 1f;
@@ -73,7 +78,7 @@ namespace AnimationAgain.Animation
             this.paused = true;
         }
 
-        internal void SetSpeed(float animSpeed)
+        public void SetSpeed(float animSpeed)
         {
             this.velocity = animSpeed;
         }

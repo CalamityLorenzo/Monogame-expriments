@@ -1,13 +1,12 @@
-﻿using AnimationAgain.Animation;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace AnimationAgain.Frameloaders
+namespace GameLibrary.Animation.Utilities
 {
-    internal class mFrameSetConverter : JsonConverter<Dictionary<string, AnimationFramesCollection>>
+    public class AnimationFramesCollectionConverter : JsonConverter<Dictionary<string, AnimationFramesCollection>>
     {
         public override Dictionary<string, AnimationFramesCollection> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {

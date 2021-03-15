@@ -1,4 +1,4 @@
-﻿using AnimationAgain.Animation;
+﻿using GameLibrary.Animation;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 using System.Linq;

@@ -3,8 +3,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Security.Policy;
 
 namespace AnimationAgain.Guns
 {
@@ -13,16 +11,21 @@ namespace AnimationAgain.Guns
         private readonly SpriteBatch spriteBatch;
         private readonly IDrawableGameObject bullet;
         private Vector2 currentPosition;
+        private int currentBulletType;
+
         private IList<BulletObject> FiredBullets { get; set; }
         public BulletFactory Factory { get; }
         public Vector2 CurrentPosition { get => currentPosition; }
-        
+
+        private Random rnd = new Random();
+
         public BasicGun(SpriteBatch spriteBatch, BulletFactory factory, Vector2 startPos)
         {
             FiredBullets = new List<BulletObject>();
             this.spriteBatch = spriteBatch;
             Factory = factory;
             this.currentPosition = startPos;
+            this.currentBulletType = 0;
         }
 
         public void Update(float deltaTime)
@@ -54,7 +57,8 @@ namespace AnimationAgain.Guns
 
         public void Fire(Vector2 direction)
         { 
-            var bullet = this.Factory.CreateBullet(1);
+            
+            var bullet = this.Factory.CreateBullet(rnd.Next(0,3));
             var magnitude = direction.Length();
             //var untiVe = new Vector2(direction.X > 0 ? direction.X / magnitude : 0,
             //                    direction.Y > 0 ? direction.Y / magnitude : 0);
@@ -65,7 +69,7 @@ namespace AnimationAgain.Guns
             relativeVector.Normalize();
                 
             bullet.SetDirection(relativeVector);
-            bullet.SetSpeed(88f);
+            bullet.SetSpeed(rnd.Next(95, 130));
             this.FiredBullets.Add(bullet);
         }
 
@@ -73,6 +77,11 @@ namespace AnimationAgain.Guns
         {
             foreach (var bullet in FiredBullets)
                 bullet.Draw(gameTime);
+        }
+
+        internal void SetBullet(int currentBullet)
+        {
+            this.currentBulletType = currentBullet;
         }
     }
 }

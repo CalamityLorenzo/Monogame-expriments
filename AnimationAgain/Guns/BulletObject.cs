@@ -1,4 +1,4 @@
-﻿using AnimationAgain.Animation;
+﻿using GameLibrary.Animation;
 using GameLibrary.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;

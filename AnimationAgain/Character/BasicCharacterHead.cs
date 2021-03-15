@@ -1,5 +1,5 @@
-﻿using AnimationAgain.Animation;
-using GameData.CharacterActions;
+﻿using GameData.CharacterActions;
+using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using Microsoft.Xna.Framework;

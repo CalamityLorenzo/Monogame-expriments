@@ -1,4 +1,5 @@
 ﻿using GameData.CharacterActions;
+using GameLibrary.Animation;
 using GameLibrary.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
@@ -14,27 +15,27 @@ namespace InputTests.MovingMan
         private readonly Texture2D standing;
         private Texture2D currentTexture;
         private MovingHead head;
-        private readonly WalkingManAnimations animations;
+        private readonly AnimationPlayer animationPlayer;
         private Vector2 _currentPos;
 
         private float velocityX;
         private float velocityY;
         private Texture2D _magiDot;
 
-        public MovingObjectAnimation(SpriteBatch spriteBatch, Texture2D walkLeft, Texture2D walkRight, Texture2D standing, WalkingManAnimations animations, MovingHead head, Vector2 startpos)
+        public MovingObjectAnimation(SpriteBatch spriteBatch, Texture2D walkLeft, Texture2D walkRight, Texture2D standing, AnimationPlayer animationPlayer, MovingHead head, Vector2 startpos)
         {
             this.spriteBatch = spriteBatch;
             this.walkLeft = walkLeft;
             this.walkRight = walkRight;
             this.standing = standing;
-            this.animations = animations;
+            this.animationPlayer = animationPlayer;
             this._currentPos = startpos;
             velocityX = 0f;
             velocityY = 0f;
             this.currentTexture = standing;
             this.head = head;
             head.SetViewDestination(_currentPos);
-            animations.Standing();
+            animationPlayer.SetFrames("Standing");
         }
 
         public Vector2 CurrentPosition => _currentPos;
@@ -50,35 +51,34 @@ namespace InputTests.MovingMan
             this.head.Update(gameTime, deltaTime);
             if (this._magiDot == null)
                 _magiDot = spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, 2, 2), Color.Black);
-            this.animations.Update(gameTime, deltaTime);
+            this.animationPlayer.Update(deltaTime);
         }
 
         public void Draw(GameTime time)
         {
             // we assume that we don't need to sop and create a new abtchj
-            spriteBatch.Draw(currentTexture, this.CurrentPosition, animations.CurrentFrame(), Color.White);
+            spriteBatch.Draw(currentTexture, this.CurrentPosition, animationPlayer.CurrentFrame(), Color.White);
             spriteBatch.Draw(_magiDot, this.head.TopLeft, Color.White);
         }
 
         public void MoveLeft()
         {
             this.velocityX = -44f;
-            this.animations.MoveLeft();
+            this.animationPlayer.SetFrames("MoveLeft");
             this.currentTexture = this.walkLeft;
         }
 
         public void MoveRight()
         {
             this.velocityX = +44f;
-            this.animations.MoveRight();
+            this.animationPlayer.SetFrames("MoveRight");
             this.currentTexture = this.walkRight;
         }
 
         public void MoveUp()
         {
             this.velocityY = -44f;
-            this.animations.MoveUp();
-
+            this.animationPlayer.SetFrames("MoveLeft");
             this.currentTexture = this.walkLeft;
 
         }
@@ -86,7 +86,7 @@ namespace InputTests.MovingMan
         public void MoveDown()
         {
             this.velocityY = 44f;
-            this.animations.MoveDown();
+            this.animationPlayer.SetFrames("MoveRight");
 
             this.currentTexture = this.walkRight;
 
@@ -107,7 +107,7 @@ namespace InputTests.MovingMan
             this.currentTexture = standing;
             this.velocityX = 0f;
             this.velocityY = 0f;
-            this.animations.Standing();
+            this.animationPlayer.SetFrames("Standing");
         }
 
         public void EndMoveLeft()

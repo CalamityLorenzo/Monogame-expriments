@@ -1,7 +1,6 @@
-﻿using AnimationAgain.Animation;
-using AnimationAgain.Frameloaders;
-using GameData.UserInput;
+﻿using GameData.UserInput;
 using GameLibrary.Animation;
+using GameLibrary.Animation.Utilities;
 using GameLibrary.Config.App;
 using GameLibrary.Extensions;
 using Microsoft.Xna.Framework.Graphics;
@@ -33,14 +32,14 @@ namespace MovingManAnimation.Config
         public Dictionary<string, AnimationFramesCollection> Animations()
         {
 
-            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, mFrameSetConverter>("Frames"); //, a => ("What", new Rectangle[])); ;
+            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, AnimationFramesCollectionConverter>("Frames"); //, a => ("What", new Rectangle[])); ;
             return frames;
         }
 
         public Dictionary<string, AnimationFramesCollection> GunAnimations()
         {
 
-            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, mFrameSetConverter>("Frames"); //, a => ("What", new Rectangle[])); ;
+            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, AnimationFramesCollectionConverter>("Frames"); //, a => ("What", new Rectangle[])); ;
             return frames;
         }
 
@@ -64,7 +63,7 @@ namespace MovingManAnimation.Config
 
         internal Dictionary<string, AnimationFramesCollection> BulletAnimations()
         {
-            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, mFrameSetConverter>("BulletFrames"); //, a => ("What", new Rectangle[])); ;
+            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, AnimationFramesCollectionConverter>("BulletFrames"); //, a => ("What", new Rectangle[])); ;
             return frames;
         }
     }

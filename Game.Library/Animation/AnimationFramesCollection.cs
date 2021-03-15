@@ -1,13 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using System;
-using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
 
-namespace AnimationAgain.Animation
+namespace GameLibrary.Animation
 {
-    class AnimationFramesCollection : IEnumerable<Microsoft.Xna.Framework.Rectangle>
+    public class AnimationFramesCollection
     {
         private static Lazy<AnimationFramesCollection> EmptySet = new Lazy<AnimationFramesCollection>(() => new AnimationFramesCollection("Null", false, 0, new List<Rectangle>()));
 
@@ -23,15 +21,6 @@ namespace AnimationAgain.Animation
         public int StartFrame { get; set; }
         public Rectangle[] Frames { get; private set; }
         
-        public IEnumerator<Rectangle> GetEnumerator()
-        {
-            return this.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return this.Frames.GetEnumerator();
-        }
 
         public override string ToString()
         {

@@ -1,12 +1,10 @@
-﻿using AnimationAgain.Animation;
-using GameData.CharacterActions;
+﻿using GameData.CharacterActions;
+using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
 
 namespace AnimationAgain.Character
 {

@@ -1,21 +1,16 @@
-﻿using GameLibrary;
+﻿using GameData.CharacterActions;
+using GameData.Commands;
+using GameData.UserInput;
+using GameLibrary;
 using GameLibrary.Animation;
+using GameLibrary.Animation.Utilities;
 using GameLibrary.AppObjects;
-
+using GameLibrary.InputManagement;
 using InputTests.MovingMan;
-using Library.Animation;
 using Microsoft.Xna.Framework;
-
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System;
 using System.Collections.Generic;
-using System.Text;
-using GameLibrary.InputManagement;
-using GameData.CharacterActions;
-using GameData.UserInput;
-using GameData.Commands;
-using GameLibrary.Animation.Utilities;
 
 namespace InputTests
 {
@@ -52,12 +47,14 @@ namespace InputTests
             var standing = Texture2D.FromFile(GraphicsDevice, "./Content/Standing.png");
             var wlFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(walkingLeft.Width, walkingLeft.Height));
             var standingFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(standing.Width, standing.Height));
-            var wlAnimation = new OldBlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
-            var standingAnimation = new OldBlockAnimationObject(standingFrames, new float[] { 0.500f, 0.250f, 0.250f, 0.250f }, true);
-            var walkingAnims = new WalkingManAnimations(new Dictionary<string, OldBlockAnimationObject>
+            var wlAnimation = new AnimationFramesCollection("MoveLeft", true, 0, wlFrames); // new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
+            var standingAnimation = new AnimationFramesCollection("Standing", true,0, standingFrames); // new float[] { 0.500f, 0.250f, 0.250f, 0.250f }, true);
+            var wrAnimation = new AnimationFramesCollection("MoveRight", true, 0, wlFrames); // new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
+
+            var walkingAnims = new AnimationPlayer(.200f, new Dictionary<string, AnimationFramesCollection>
             {
                 { "MoveLeft", wlAnimation },
-                { "MoveRight", wlAnimation },
+                { "MoveRight", wrAnimation },
                 {"Standing",  standingAnimation }
             });
 

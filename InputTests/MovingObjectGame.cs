@@ -8,12 +8,10 @@ using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using GameLibrary.InputManagement;
 using InputTests.MovingMan;
-using Library.Animation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Runtime.InteropServices;
 
 namespace InputTests
 {
@@ -50,15 +48,16 @@ namespace InputTests
             var walkingLeft = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingLeft.png");
             var walkingRight = Texture2D.FromFile(GraphicsDevice, "./Content/WalkingRight.png");
             var standing = Texture2D.FromFile(GraphicsDevice, "./Content/Standing.png");
-            var crossHairs = Texture2D.FromFile(GraphicsDevice, "./Content/CrossHairs_one.png");  
+            var crossHairs = Texture2D.FromFile(GraphicsDevice, "./Content/CrossHairs_one.png");
             var wlFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(walkingLeft.Width, walkingLeft.Height));
             var standingFrames = FramesGenerator.GenerateFrames(new FrameInfo(72, 77), new Dimensions(standing.Width, standing.Height));
-            var wlAnimation = new OldBlockAnimationObject(wlFrames, new float[] { 0.200f, 0.200f, 0.200f, 0.200f }, true);
-            var standingAnimation = new OldBlockAnimationObject(standingFrames, new float[] { 0.500f, 0.250f, 0.250f, 0.250f }, true);
-            var walkingAnims = new WalkingManAnimations(new Dictionary<string, OldBlockAnimationObject>
+            var wlAnimation = new AnimationFramesCollection("MoveLeft", true, 0, wlFrames);
+            var wlRight = new AnimationFramesCollection("MoveRight", true, 0, wlFrames);
+            var standingAnimation = new AnimationFramesCollection("Standing", true, 0, standingFrames);
+            var walkingAnims = new AnimationPlayer(.200f, new Dictionary<string, AnimationFramesCollection>
             {
                 { "MoveLeft", wlAnimation },
-                { "MoveRight", wlAnimation },
+                { "MoveRight", wlRight },
                 {"Standing",  standingAnimation }
             });
 
@@ -76,7 +75,7 @@ namespace InputTests
                 SecondFire = Keys.Space
             };
 
-            this.headsIWin  = new MovingHead(new Vector2(200,300), new Dimensions(80, 100));
+            this.headsIWin = new MovingHead(new Vector2(200, 300), new Dimensions(80, 100));
             this.p1Commands = CommandBuilder.GetWalkingCommands(p1Controls);
             this.inputProcessor = new MouseKeyboardInputsReciever(this.iManger);
 
@@ -96,7 +95,7 @@ namespace InputTests
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, iManger.PressedKeys(), Keys.Escape);
             _mouseHairs.SetPosition(mState.Position.ToVector2());
-            
+
             var cmds = this.inputProcessor.MapCommands(this.p1Commands);
 
 
@@ -104,7 +103,7 @@ namespace InputTests
             this.headsIWin.SetViewDestination(mState.Position.ToVector2());
             _mo4.Update(gameTime, delta);
             _mouseHairs.Update(gameTime, delta);
-            
+
             base.Update(gameTime);
         }
 
@@ -114,7 +113,7 @@ namespace InputTests
             this.spriteBatch.Begin();
             _mo4.Draw(gameTime);
             _mouseHairs.Draw(gameTime);
-            var mString  = this.arialFont.MeasureString($"Angle : {this.headsIWin.ViewingAngle}");
+            var mString = this.arialFont.MeasureString($"Angle : {this.headsIWin.ViewingAngle}");
             this.spriteBatch.DrawString(this.arialFont, $"Angle : {this.headsIWin.ViewingAngle}", new Vector2(10, 10), Color.White);
             this.spriteBatch.End();
         }

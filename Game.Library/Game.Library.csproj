@@ -6,6 +6,13 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <Compile Remove="Animation\AnimationFrame.cs" />
+    <Compile Remove="Animation\AnimationFrames.cs" />
+    <Compile Remove="Animation\AnimationPhrase.cs" />
+    <Compile Remove="Animation\AnimationSet.cs" />
+    <Compile Remove="Animation\Cruft\OLDAnimationHost.cs" />
+    <Compile Remove="Animation\Cruft\OldBlockAnimationObject.cs" />
+    <Compile Remove="Animation\IAnimationHost.cs" />
     <Compile Remove="AppObjects\AngulerFourWayDirection.cs" />
     <Compile Remove="PlayerThings\EightWayMovement.cs" />
   </ItemGroup>
