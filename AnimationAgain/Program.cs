@@ -13,6 +13,7 @@ namespace AnimationAgain
                              .LoadJsonFile("config/opts.json")
                              .LoadJsonFile("config/opts2.json")
                              .LoadJsonFile("config/MovingMan.json")
+                             .LoadJsonFile("config/Bullets.json")
                              .Build();
 
             using (var game = new Game1(configData))

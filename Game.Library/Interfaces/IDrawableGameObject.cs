@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Microsoft.Xna.Framework;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -8,9 +9,9 @@ namespace GameLibrary.Interfaces
 {
     // Used for all the assets inside a 'proper'
     // IDrawing IUpdateable thingy.
-    public interface IGameObjectDrawing : IGameObjectUpdate
+    public interface IDrawableGameObject : IUpdateableGameObject
     {
-        void Draw();
+        void Draw(GameTime gameTime);
     }
 
     public interface IGameContainerDrawing :IGameContainerUpdate

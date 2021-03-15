@@ -1,8 +1,5 @@
-﻿using GameLibrary.Models;
-using Microsoft.Xna.Framework.Input;
-using System;
+﻿using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GameLibrary.InputManagement
 {

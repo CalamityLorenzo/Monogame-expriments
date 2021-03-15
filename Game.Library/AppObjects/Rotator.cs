@@ -1,10 +1,5 @@
 ﻿using GameLibrary.Interfaces;
 using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameLibrary.AppObjects
 {
@@ -18,7 +13,7 @@ namespace GameLibrary.AppObjects
     }
 
     // Allows you to rotate a set amount degrees per second
-    public class Rotator : IGameObjectUpdate
+    public class Rotator : IUpdateableGameObject
     {
 
         public float CurrentAngle { get; private set; }

@@ -1,9 +1,9 @@
-﻿using AnimationAgain.Frameloaders;
+﻿using AnimationAgain.Animation;
+using AnimationAgain.Frameloaders;
 using GameData.UserInput;
 using GameLibrary.Animation;
 using GameLibrary.Config.App;
 using GameLibrary.Extensions;
-using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
 
@@ -21,26 +21,26 @@ namespace MovingManAnimation.Config
         }
 
         public Texture2D PlayerAtlas() => this._graphics.FromFileName(_config.Get("PlayerAtlas"));
+        public List<Texture2D> BulletAtlases() => new List<Texture2D> {
+                this._graphics.FromFileName(_config.Get("Bullet1")),
+                this._graphics.FromFileName(_config.Get("Bullet2")),
+                this._graphics.FromFileName(_config.Get("Bullet3")),
 
-        public Dictionary<string, Rectangle[]> Animations()
+                    };
+
+
+
+        public Dictionary<string, AnimationFramesCollection> Animations()
         {
 
-           var frames =  _config.Get<Dictionary<string, Rectangle[]>, mFrameSetConverter>("Frames"); //, a => ("What", new Rectangle[])); ;
+            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, mFrameSetConverter>("Frames"); //, a => ("What", new Rectangle[])); ;
+            return frames;
+        }
 
-            //IList<AnimationPhrase> allPhrases = new List<AnimationPhrase>
-            //{
-            //    new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("Left") },.200f,"Left"),
-            //    new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("Right") },.200f, "Right"),
-            //    new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("Standing") },.200f,"Standing"),
-            //    new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("AimHead")},.200f,"Head"),
-            //    new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("JumpLeft")},.200f,"JumpLeft"),
-            //    new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("JumpRight")},.200f,"JumpRight"),
-            //    new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("WaitLeft")},.200f,"WaitLeft"),
-            //    new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("WaitRight")},.200f,"WaitRight"),
-            //};
+        public Dictionary<string, AnimationFramesCollection> GunAnimations()
+        {
 
-            //var animSet = new AnimationSet(allPhrases, .200f);
-
+            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, mFrameSetConverter>("Frames"); //, a => ("What", new Rectangle[])); ;
             return frames;
         }
 
@@ -62,6 +62,10 @@ namespace MovingManAnimation.Config
             return p1Controls;
         }
 
-
+        internal Dictionary<string, AnimationFramesCollection> BulletAnimations()
+        {
+            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, mFrameSetConverter>("BulletFrames"); //, a => ("What", new Rectangle[])); ;
+            return frames;
+        }
     }
 }

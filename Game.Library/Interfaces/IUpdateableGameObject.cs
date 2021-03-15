@@ -10,7 +10,7 @@ namespace GameLibrary.Interfaces
 {
     // unlike monogame object we only pass the detla times
     // not the full time.
-    public interface IGameObjectUpdate
+    public interface IUpdateableGameObject
     {
         void Update(float mlSinceupdate);
     }

@@ -1,12 +1,8 @@
 ﻿using GameData.CharacterActions;
 using GameLibrary.Extensions;
-using Library.Animation;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Drawing.Drawing2D;
-using System.Text;
 
 namespace InputTests.MovingMan
 {

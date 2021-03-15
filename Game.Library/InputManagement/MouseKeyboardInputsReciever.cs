@@ -1,7 +1,6 @@
 ﻿using GameLibrary.Character;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Diagnostics;
 
 namespace GameLibrary.InputManagement
 {

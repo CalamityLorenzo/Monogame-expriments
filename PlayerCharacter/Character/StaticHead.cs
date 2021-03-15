@@ -37,7 +37,7 @@ namespace PlayerCharacter.Character
 
         public void Update(GameTime gameTime, float deltaTime)
         {
-            this.mousePoint.Update(gameTime, deltaTime);
+            //this.mousePoint.Update(gameTime, deltaTime);
             var currentAngle = this.mousePoint.GetAngle();
             this._currentState = UpdateState(currentAngle);
             _previousState = _currentState;

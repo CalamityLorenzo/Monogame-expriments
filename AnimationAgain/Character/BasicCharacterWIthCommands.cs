@@ -14,7 +14,7 @@ namespace AnimationAgain.Character
     {
         private string _currentAnimationIndex;
         private readonly SpriteBatch spritebatch;
-        private readonly Dictionary<string, Rectangle[]> frameSets;
+        private readonly Dictionary<string, AnimationFramesCollection> frameSets;
         private readonly AnimationPlayer animPlayer;
         private readonly IVelocinator velos;
         private readonly Texture2D atlas;
@@ -28,7 +28,9 @@ namespace AnimationAgain.Character
         private float jumpSpeed = 60f;
         private float jumpCutOff = 0f; // When we start a jump, if we 'fall' back to this position the jump is complete.
 
-        public BasicCharacterWithCommands(SpriteBatch spritebatch, Dictionary<string, Rectangle[]> frameSets, AnimationPlayer animPlayer, IVelocinator velos, Texture2D atlas, Vector2 startPos, float speedX, float speedY)
+        public Vector2 CurrentPosition { get => this.currentPos; }
+
+        public BasicCharacterWithCommands(SpriteBatch spritebatch, Dictionary<string, AnimationFramesCollection> frameSets, AnimationPlayer animPlayer, IVelocinator velos, Texture2D atlas, Vector2 startPos, float speedX, float speedY)
         {
             this._currentAnimationIndex = "Standing";  // Standing
             this.spritebatch = spritebatch;
@@ -40,19 +42,24 @@ namespace AnimationAgain.Character
             this.speedX = speedX;
             this.speedY = speedY;
             // Where we draw the in relative position to the rest of the body.
-            animPlayer.SetFrames(frameSets.Single(a => a.Key == _currentAnimationIndex));
+            animPlayer.SetFrames(frameSets[_currentAnimationIndex]);
         }
 
 
         public void Update(float deltaTime)
         {
+            // This applies a value to the current position.
             this.currentPos = currentPos.AddX(velos.VelocityX * deltaTime)
                         .AddY(velos.VelocityY * deltaTime);
-            this.ManageJump();
+            //this.currentPos = Vector2.Multiply(currentPos, deltaTime);
+            this.ManageJump();  
             this.animPlayer.Update(deltaTime);
             this.UpdateAnimationState();
         }
 
+        /// <summary>
+        /// This basically resets the animation status for whennothing is happening.
+        /// </summary>
         private void UpdateAnimationState()
         {
 
@@ -72,7 +79,7 @@ namespace AnimationAgain.Character
         private void SetAnimation(string animationSet)
         {
             _currentAnimationIndex = animationSet;
-            this.animPlayer.SetFrames(this.frameSets.FirstOrDefault(a => a.Key == animationSet));
+            this.animPlayer.SetFrames(this.frameSets[animationSet]);
         }
 
         public void MoveLeft()

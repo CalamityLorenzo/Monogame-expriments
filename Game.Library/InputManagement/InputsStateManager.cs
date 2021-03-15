@@ -33,6 +33,7 @@ namespace GameLibrary.InputManagement
 
         public HashSet<MouseButton> ReleasedButtons { get; private set; }
 
+        public Point MousePosition { get; private set; }
         public void Update(GameTime time, KeyboardState kState, MouseState mState)
         {
 
@@ -41,6 +42,7 @@ namespace GameLibrary.InputManagement
             var pressedKeys = kState.GetPressedKeys();
 
             SetMouseState(delta, totalTime, mState);
+            this.MousePosition = mState.Position;
 
             // Compare last with current for upsies.
             // Reset the list so we only have the most current keys
