@@ -2,19 +2,31 @@
   "Bullet1": "Content/key.png",
   "Bullet2": "Content/pie.png",
   "Bullet3": "Content/Pretzel.png",
-  "BulletFrames": [
-    {
-      "Name": "Fire",
-      "isRepeating": true,
-      "startFrame": 0,
-      "frames": [
-        {
-          "X": 0,
-          "Y": 0,
-          "Width": 32,
-          "Height": 32
-        }
-      ]
+  "Bullets": {
+    "Frames": [
+      {
+        "Name": "Fire",
+        "isRepeating": true,
+        "startFrame": 0,
+        "frames": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Width": 32,
+            "Height": 32
+          }
+        ]
+      }
+    ]
+  },
+  "Smoking": {
+    "Gun": {
+      "Name": "Pickled",
+      "Age": 32
+    },
+    "Wrestler": [],
+    "Wendy": {
+      "Burger": 4
     }
-  ]
+  }
 }

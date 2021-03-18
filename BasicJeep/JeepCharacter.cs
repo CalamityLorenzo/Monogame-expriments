@@ -11,13 +11,13 @@ namespace BasicJeep
     {
         private readonly SpriteBatch spritebatch;
         private readonly Texture2D atlas;
-        private readonly IList<IAnimationHost> animation;
+        private readonly AnimationPlayer animation;
         private readonly Rotator rotator;
         private readonly IVelocinator velos;
         private Vector2 currentPos;
-        private Rectangle currentFrame;
+        private float currentAngle;
 
-        public JeepCharacter(SpriteBatch spritebatch, Texture2D atlas, IList<IAnimationHost> animation, Rotator rotator, IVelocinator velos, Vector2 startPos)
+        public JeepCharacter(SpriteBatch spritebatch, Texture2D atlas, AnimationPlayer animation, Rotator rotator, IVelocinator velos, Vector2 startPos)
         {
             this.spritebatch = spritebatch;
             this.atlas = atlas;
@@ -32,37 +32,42 @@ namespace BasicJeep
 
         public void Update(float deltaTime)
         {
-            this.currentFrame = GetCurrentFrame(rotator.CurrentAngle);
             this.currentPos = currentPos.AddX(velos.VelocityX * deltaTime)
                                     .AddY(velos.VelocityY * deltaTime);
+            animation.Update(deltaTime);
+            SetCurrentFrame(rotator.CurrentAngle);
         }
 
-        public Rectangle GetCurrentFrame(float currentAngle)
+        public void SetCurrentFrame(float currentAngle)
         {
-            return currentAngle switch
+            if (this.currentAngle == currentAngle) return;
+            var frameSet =  currentAngle switch
             {
-                var angle when angle > 345 && angle<= 360 || angle >= 0f && angle <= 15f => this.animation[0].CurrentFrame(),  
-                var angle when angle > 15f && angle < 45f => this.animation[1].CurrentFrame(),
-                var angle when angle >= 45f && angle < 75f => this.animation[2].CurrentFrame(),
+                var angle when angle > 345 && angle<= 360 || angle >= 0f && angle <= 15f => "Up",
+                
+                var angle when angle > 15f && angle < 45f => "UpUpRight",
+                var angle when angle >= 45f && angle < 75f => "UpRight",
+                var angle when angle >= 75f && angle <= 105f => "Right",
 
-                var angle when angle >= 75f && angle <= 105f => this.animation[3].CurrentFrame(),
-                var angle when angle > 105f && angle <= 135f => this.animation[4].CurrentFrame(),
-                var angle when angle > 135f && angle <= 165f => this.animation[5].CurrentFrame(),
+                var angle when angle > 105f && angle <= 135f => "DownRight",
+                var angle when angle > 135f && angle <= 165f => "DownDownRight",
+                var angle when angle > 165f && angle < 195f => "Down",
 
-                var angle when angle > 165f && angle < 195f => this.animation[6].CurrentFrame(),
-                var angle when angle >= 195f && angle < 225f => this.animation[7].CurrentFrame(),
-                var angle when angle >= 225f && angle <= 255f => this.animation[8].CurrentFrame(),
+                var angle when angle >= 195f && angle < 225f => "DownDownLeft",
+                var angle when angle >= 225f && angle <= 255f => "DownLeft",
+                var angle when angle > 255f && angle <= 285f => "Left",
 
-                var angle when angle > 255f && angle <= 285f => this.animation[9].CurrentFrame(),
-                var angle when angle > 285f && angle <= 315f => this.animation[10].CurrentFrame(),
-                var angle when angle > 315f && angle <= 345f => this.animation[11].CurrentFrame(),
-                _ => this.animation[0].CurrentFrame()
+                var angle when angle > 285f && angle <= 315f => "UpLeft",
+                var angle when angle > 315f && angle <= 345f => "UpUpLeft",
+                _ => this.animation.CurrentSetName(),
             };
+            this.currentAngle = currentAngle;
+            this.animation.SetFrames(frameSet);
         }
 
         public void Draw(GameTime gameTime)
         {
-            spritebatch.Draw(this.atlas, this.currentPos, this.currentFrame, Color.White);
+            spritebatch.Draw(this.atlas, this.currentPos, animation.CurrentFrame(), Color.White);
         }
     }
 }

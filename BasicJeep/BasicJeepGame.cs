@@ -3,6 +3,7 @@ using GameData.CharacterActions;
 using GameData.Commands;
 using GameData.UserInput;
 using GameLibrary;
+using GameLibrary.Animation;
 using GameLibrary.AppObjects;
 using GameLibrary.Config.App;
 using GameLibrary.InputManagement;
@@ -27,7 +28,7 @@ namespace BasicJeep
         private MapVelocityManager basicVelocity;
         private List<KeyCommand<IBasicMotion>> velocityCmds;
 
-        private AssetsLoader assets;
+        private BasicJeepAssetsLoader assets;
 
         internal JeepCharacter JeepChar { get; private set; }
 
@@ -45,7 +46,7 @@ namespace BasicJeep
         {
             base.LoadContent();
             arial = this.Content.Load<SpriteFont>("Arial");
-            this.assets = new AssetsLoader(this.configData, this.GraphicsDevice);
+            this.assets = new BasicJeepAssetsLoader(this.configData, this.GraphicsDevice);
         }
 
         protected override void Initialize()
@@ -62,8 +63,8 @@ namespace BasicJeep
             this.velocityCmds = CommandBuilder.GetBasicMapMotion(p1Controls);
             
             var jeepAtlas = this.assets.JeepAtlas();
-            var jeepFrames = this.assets.JeepAnimations();
-            this.JeepChar = new JeepCharacter(this.spriteBatch, jeepAtlas, jeepFrames.ToList(), rotator, basicVelocity, new Vector2(80, 80));
+            var jeepFrames = this.assets.ModernJeepAnimations();
+            this.JeepChar = new JeepCharacter(this.spriteBatch, jeepAtlas, new AnimationPlayer(.220f, jeepFrames), rotator, basicVelocity, new Vector2(80, 80));
         }
 
         protected override void Update(GameTime gameTime)

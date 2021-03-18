@@ -6,13 +6,13 @@ using System.Text.Json.Serialization;
 
 namespace GameLibrary.Animation.Utilities
 {
-    public class AnimationFramesCollectionConverter : JsonConverter<Dictionary<string, AnimationFramesCollection>>
+    public class AnimationFramesCollectionConverter : JsonConverter<IEnumerable<AnimationFramesCollection>>
     {
-        public override Dictionary<string, AnimationFramesCollection> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
+        public override IEnumerable<AnimationFramesCollection> Read(ref Utf8JsonReader reader, Type typeToConvert, JsonSerializerOptions options)
         {
             using (JsonDocument doc = JsonDocument.ParseValue(ref reader))
             {
-                Dictionary<string, AnimationFramesCollection> results = new Dictionary<string, AnimationFramesCollection>();
+                List<AnimationFramesCollection> results = new List<AnimationFramesCollection>();
                 foreach (var frameSet in doc.RootElement.EnumerateArray())
                 {
                     var name = frameSet.GetProperty("Name").GetString();
@@ -30,13 +30,13 @@ namespace GameLibrary.Animation.Utilities
                         frames.Add(new Rectangle(x, y, width, height));
                     }
 
-                    results.Add(name, new AnimationFramesCollection(name, isRepeating, startFrame, frames.ToArray()));
+                    results.Add(new AnimationFramesCollection(name, isRepeating, startFrame, frames.ToArray()));
                 }
                 return results;
             }
         }
 
-        public override void Write(Utf8JsonWriter writer, Dictionary<string, AnimationFramesCollection> value, JsonSerializerOptions options)
+        public override void Write(Utf8JsonWriter writer, IEnumerable<AnimationFramesCollection> value, JsonSerializerOptions options)
         {
             throw new NotImplementedException();
         }

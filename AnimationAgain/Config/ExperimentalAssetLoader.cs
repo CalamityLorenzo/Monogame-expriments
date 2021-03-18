@@ -1,10 +1,10 @@
 ﻿using GameData.UserInput;
 using GameLibrary.Animation;
-using GameLibrary.Animation.Utilities;
 using GameLibrary.Config.App;
 using GameLibrary.Extensions;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;
+using System.Linq;
 
 namespace MovingManAnimation.Config
 {
@@ -17,6 +17,8 @@ namespace MovingManAnimation.Config
         {
             this._config = Configuration;
             this._graphics = graphics;
+
+            var data = _config.ExperimentalGet("Smoking:Gun:Age");
         }
 
         public Texture2D PlayerAtlas() => this._graphics.FromFileName(_config.Get("PlayerAtlas"));
@@ -31,28 +33,15 @@ namespace MovingManAnimation.Config
 
         public Dictionary<string, AnimationFramesCollection> Animations()
         {
-
-            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, AnimationFramesCollectionConverter>("Frames"); //, a => ("What", new Rectangle[])); ;
+            var frames = _config.Get<IEnumerable<AnimationFramesCollection>>("Frames").ToDictionary(a => a.Name, a => a);
             return frames;
         }
 
         public Dictionary<string, AnimationFramesCollection> GunAnimations()
         {
-
-            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, AnimationFramesCollectionConverter>("Frames"); //, a => ("What", new Rectangle[])); ;
+            var frames = _config.Get<IEnumerable<AnimationFramesCollection>>("Frames").ToDictionary(a => a.Name, a => a);
             return frames;
         }
-
-        public IDictionary<string, AnimationPhrase> AnimationPhrases() => new Dictionary<string, AnimationPhrase>{
-            { "Left", new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("Left") },.200f, "Left") },
-            { "Right", new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("Right") },.200f, "Right") },
-            { "Standing", new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("Standing") },.200f, "Standing") },
-            { "AimHead", new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("AimHead") },.200f, "AimHead") },
-            { "JumpLeft", new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("JumpLeft") },.200f, "JumpLeft") },
-            { "JumpRight", new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("JumpRight") },.200f, "JumpRight") },
-            { "WaitLeft", new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("WaitLeft") },.200f, "WaitLeft") },
-            { "WaitLeft", new AnimationPhrase(new List<AnimationFrames>{ _config.Get<AnimationFrames>("WaitRight") },.200f, "WaitRight") }
-            };
 
         public PlayerKeyboardControls Player1KeyboardControls()
         {
@@ -63,7 +52,7 @@ namespace MovingManAnimation.Config
 
         internal Dictionary<string, AnimationFramesCollection> BulletAnimations()
         {
-            var frames = _config.Get<Dictionary<string, AnimationFramesCollection>, AnimationFramesCollectionConverter>("BulletFrames"); //, a => ("What", new Rectangle[])); ;
+            var frames = _config.Get<IEnumerable<AnimationFramesCollection>>("Bullets:Frames").ToDictionary(a => a.Name, a => a);
             return frames;
         }
     }
