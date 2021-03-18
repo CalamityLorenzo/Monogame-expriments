@@ -1,9 +1,7 @@
-﻿using MonoGame.Framework.Utilities.Deflate;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Net.WebSockets;
 using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
@@ -12,16 +10,13 @@ namespace GameLibrary.Config.App
 {
     public class ConfigurationData
     {
-        private List<JsonDocument> ConfigData;
         private JsonDocument JsonConfigs;
         public JsonSerializerOptions serializerOptions { get; }
 
 
         internal ConfigurationData(Dictionary<string, JsonDocument> configData, List<JsonConverter> converters)
         {
-            ConfigData = new List<JsonDocument>(configData.Select(a=>a.Value));
             JsonConfigs = CreateJsonConfig(configData);
-            //File.WriteAllText("Wilma.json",data.RootElement.GetRawText());
             this.serializerOptions = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
@@ -46,28 +41,36 @@ namespace GameLibrary.Config.App
                 utf8Memwriter.WriteEndObject();
                 utf8Memwriter.Flush();
 
-               var rawData =  Encoding.UTF8.GetString(stream.ToArray());
                 stream.Position = 0;
                 return JsonDocument.Parse(stream);
-                
+
             }
+        }
+
+        private string QueryJsonConfig(string propertyName)
+        {
+            foreach (var rootEle in this.JsonConfigs.RootElement.EnumerateObject())
+            {
+                var assigned = rootEle.Value.TryGetProperty(propertyName, out var jsonElement);
+                if (assigned) return jsonElement.ToString();
+
+            }
+
+            throw new NullReferenceException("Cannot not find path propert");
+
+            //            return default(JsonElement);
         }
 
         public string Get(string propertyName)
         {
             if (propertyName.Contains(":"))
-                return ExperimentalGet(propertyName).ToString();
+                return RichPathQueryJsonConfig(propertyName).ToString();
 
-            foreach (var root in this.ConfigData)
-            {
-                if (root.RootElement.TryGetProperty(propertyName, out var kim))
-                    return kim.ToString();
-            }
-            return "";
+            return QueryJsonConfig(propertyName);
 
         }
 
-        public JsonElement ExperimentalGet(string Path)
+        public JsonElement RichPathQueryJsonConfig(string Path)
         {
             var allPaths = Path.Split(":", StringSplitOptions.RemoveEmptyEntries);
 
@@ -81,7 +84,7 @@ namespace GameLibrary.Config.App
                 if (assigned)
                     break;
             }
-            if (!assigned) throw new NullReferenceException("Cannot not find path propert");
+            if (!assigned) throw new NullReferenceException("Cannot not find path property");
 
             // iterate the paths list
             foreach (var path in allPaths.Where((a, idx) => idx > 0))
@@ -91,45 +94,36 @@ namespace GameLibrary.Config.App
             return jsonElement;
         }
 
-        public T Get<T>(string propertyName, Func<string, T> mapFunc = null) where T : class
+        public T Get<T>(string propertyName, Func<string, T> mapFunc) where T : class
         {
+            var rawData = "";
+            var map = mapFunc ?? new Func<string, T>((rawStr) => JsonSerializer.Deserialize<T>(rawStr, serializerOptions));
+
             if (propertyName.Contains(":"))
             {
-                var map = mapFunc ?? new Func<string, T>((str) => JsonSerializer.Deserialize<T>(ExperimentalGet(propertyName).GetRawText(), serializerOptions));
-                return map(propertyName);
+                rawData = RichPathQueryJsonConfig(propertyName).GetRawText();
             }
+            else
+                rawData = QueryJsonConfig(propertyName);
+            if (String.IsNullOrEmpty(rawData)) throw new NullReferenceException("Could not match property");
+            return map(rawData);
 
-            foreach (var root in this.JsonConfigs.RootElement.EnumerateObject())
-            {
-                if (root.Value.TryGetProperty(propertyName, out var matchedObject))
-                {
-                    var map = mapFunc ?? new Func<string, T>((str) => JsonSerializer.Deserialize<T>(matchedObject.GetProperty(propertyName).GetRawText(), serializerOptions));
-                    return map(propertyName);
-                }
-            }
-            throw new NullReferenceException("Could not match property");
         }
 
         // Simple Case leaning on Json.net
         public T Get<T>(string propertyName) where T : class
         {
-            JsonElement property = new JsonElement();
+            string property = "";
             if (propertyName.Contains(":"))
             {
-                property = ExperimentalGet(propertyName);
+                property = RichPathQueryJsonConfig(propertyName).GetRawText() ?? null;
             }
             else
-                foreach (var root in this.JsonConfigs.RootElement.EnumerateObject())
-                {
-                    if (root.Value.TryGetProperty(propertyName, out property))
-                        break;
-                }
+                property = QueryJsonConfig(propertyName);
 
-            if (property.Equals(default(JsonElement)))
-                throw new NullReferenceException("Could not match property");
-            return JsonSerializer.Deserialize<T>(property.ToString(), serializerOptions);
-
-
+            if(string.IsNullOrEmpty(property))
+                throw new NullReferenceException("Could not match property"); ;
+            return JsonSerializer.Deserialize<T>(property, serializerOptions);
 
         }
 
@@ -138,23 +132,26 @@ namespace GameLibrary.Config.App
         public T Get<T, C>(string propertyName) where T : class
                                                 where C : JsonConverter<T>, new()
         {
-            JsonElement property = new JsonElement();
-            foreach (var root in this.JsonConfigs.RootElement.EnumerateObject())
+            string property = "";
+            if (propertyName.Contains(":"))
             {
-                if (root.Value.TryGetProperty(propertyName, out property))
-                    break;
+                property = RichPathQueryJsonConfig(propertyName).GetRawText() ?? null;
             }
+            else
+                property = QueryJsonConfig(propertyName);
 
             var opts = new JsonSerializerOptions
             {
                 PropertyNameCaseInsensitive = true,
                 Converters = { new C() }
             };
-            if (property.Equals(default(JsonElement)))
+            if (string.IsNullOrEmpty(property))
                 throw new NullReferenceException("Could not match property");
+
             return JsonSerializer.Deserialize<T>(property.ToString(), opts);
         }
     }
+
     public class ConfigurationBuilder
     {
         private static Lazy<ConfigurationBuilder> configInstance = new Lazy<ConfigurationBuilder>(() => new ConfigurationBuilder());
@@ -163,7 +160,6 @@ namespace GameLibrary.Config.App
         public static ConfigurationBuilder Manager => configInstance.Value;
         private List<JsonConverter> Converters = new List<JsonConverter>();
         private HashSet<string> fileNames = new HashSet<string>();
-        private List<JsonDocument> LoadedData = new List<JsonDocument>();
 
         public ConfigurationBuilder LoadJsonFile(string jsonfilePath)
         {
@@ -183,7 +179,7 @@ namespace GameLibrary.Config.App
             {
 
                 var jsonDict = new Dictionary<string, JsonDocument>();
-                foreach(var file in fileNames)
+                foreach (var file in fileNames)
                 {
                     var fileName = Path.GetFileNameWithoutExtension(file);
                     var doc = JsonDocument.Parse(File.ReadAllText(file));

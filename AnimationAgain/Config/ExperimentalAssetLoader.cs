@@ -18,7 +18,7 @@ namespace MovingManAnimation.Config
             this._config = Configuration;
             this._graphics = graphics;
 
-            var data = _config.ExperimentalGet("Smoking:Gun:Age");
+            var data = _config.RichPathQueryJsonConfig("Smoking:Gun:Age");
         }
 
         public Texture2D PlayerAtlas() => this._graphics.FromFileName(_config.Get("PlayerAtlas"));
