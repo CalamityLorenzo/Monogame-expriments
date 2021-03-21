@@ -54,7 +54,7 @@ namespace BasicJeep
             base.Initialize();
             spriteBatch = new SpriteBatch(GraphicsDevice);
             var p1ControlList = configData.Get<Dictionary<string, string>>("Player1Controls");
-            var p1Controls = MapConfigToControls.Map(p1ControlList);
+            var p1Controls = MapConfigToControls.MapKeyboard(p1ControlList);
            
             // jeep movement and direction are handleed by two classes.
             this.rotator = new Rotator(348, 202);

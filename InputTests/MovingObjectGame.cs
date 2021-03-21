@@ -101,7 +101,7 @@ namespace InputTests
             iManger.Update(gameTime, kState, mState);
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, iManger.PressedKeys(), Keys.Escape);
-            _mouseHairs.SetPosition(mState.Position.ToVector2());
+            _mouseHairs.SetCurrentPosition(mState.Position.ToVector2());
             DidAThing(this.iManger.GetInputState());
 
             var cmds = this.inputProcessor.MapKeyboardCommands(this.p1Commands);

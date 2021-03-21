@@ -6,7 +6,7 @@ namespace GameLibrary.InputManagement
     /// <summary>
     /// State of a pressed key
     /// </summary>
-    public class PressedKey
+    public struct PressedKey
     {
         public Keys Key { get; set; }
         public bool IsDoubleClick { get; set; }

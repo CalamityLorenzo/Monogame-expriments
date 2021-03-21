@@ -3,12 +3,15 @@ using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using GameLibrary.Interfaces;
 using Microsoft.Xna.Framework;
+using SharpDX.MediaFoundation;
 using System.Diagnostics;
 
 namespace Character.Container.Character
 {
-    internal class ManContainer : IDrawableGameObject, IWalkingMan
+    internal class ManContainer : IWalkingMan
     {
+        public World World { get; private set; }
+
         private Vector2 _currentPosition;
         private Rectangle _area;
         private readonly IVelocinator velocity;
@@ -18,10 +21,11 @@ namespace Character.Container.Character
         private Vector2 headOffset;
         private Sprite head;
         private FindVector findVector;
+        private readonly BaseGun gun;
         private float previousFacingAngle;
         private float currentFacingAngle;
 
-        public ManContainer(Point startPosition, IVelocinator velocity, Vector2 speed, FindVector findVector, Sprite body, Sprite head)
+        public ManContainer(Point startPosition, IVelocinator velocity, Vector2 speed, FindVector findVector, BaseGun gun, Sprite body, Sprite head)
         {
             this._currentPosition = startPosition.ToVector2();
             this.velocity = velocity;
@@ -38,9 +42,11 @@ namespace Character.Container.Character
 
             this.findVector = findVector;
             //Set the relative point for calculating angles
-            findVector.SetPosition(startPosition.ToVector2()
+            findVector.SetCurrentPosition(startPosition.ToVector2()
                                                 .Subtract(headOffset)
                                                 .AddX(this.head.Area.Width / 2));
+            this.gun = gun;
+            this.gun.SetCurrentPosition(findVector.GetPosition());
         }
 
         public void SetCurrentPosition(Point newPosition)
@@ -53,18 +59,21 @@ namespace Character.Container.Character
         }
         public Point CurrentPosition { get => _currentPosition.ToPoint(); }
 
-        public void Update(float deltaTime)
+        public void Update(float deltaTime, World theState)
         {
+            this.World = theState;
+
             this._currentPosition = _currentPosition
                     .Add(velocity.VelocityX * deltaTime, velocity.VelocityY * deltaTime);
 
             this.body.SetCurrentPosition(_currentPosition.ToPoint());
             this.head.SetCurrentPosition(_currentPosition.Subtract(headOffset).ToPoint());
             // Where we reference our point from 
-            findVector.SetPosition(this.head.CurrentPosition.ToVector2().AddX(this.head.Area.Width / 2));
+            findVector.SetCurrentPosition(this.head.CurrentPosition.ToVector2().AddX(this.head.Area.Width / 2));
+            this.gun.SetCurrentPosition(findVector.GetPosition());
             this.body.Update(deltaTime);
             this.head.Update(deltaTime);
-
+            this.gun.Update(deltaTime);
             findVector.Update(deltaTime);
             //this.body.SetCurrentPosition(_currentPosition.ToPoint());
             this.UpdateAnimation();
@@ -108,6 +117,7 @@ namespace Character.Container.Character
         {
             this.body.Draw(gameTime);
             this.head.Draw(gameTime);
+            this.gun.Draw(gameTime);
         }
 
         public void MoveLeft()
@@ -188,10 +198,9 @@ namespace Character.Container.Character
 
         public void Fire()
         {
-            this.findVector.GetVector();
-            var angle = this.findVector.GetAngle();
-            Debug.WriteLine("DAZZLE");
-            Debug.WriteLine(angle);
+            
+            this.gun.Fire(this.World.InputState.MousePosition.ToVector2());
+
         }
 
         public void FireSpecial()

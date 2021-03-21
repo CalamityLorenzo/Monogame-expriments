@@ -1,9 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Linq;
-using System.Linq.Expressions;
 
 namespace GameLibrary.InputManagement
 {
@@ -213,7 +210,7 @@ namespace GameLibrary.InputManagement
         public HashSet<Keys> KeysDown() => this._KeysDown;
         public Dictionary<Keys, PressedKey> PressedKeys() => this._CurrentPressedKeys;
 
-        public CurrentInputState GetInputState() => new CurrentInputState(_KeysUp, _KeysDown, _CurrentButtons, _CurrentClickedButtons, _CurrentPressedKeys, HistoryKeys, HistoryMouseButtons);
+        public CurrentInputState GetInputState() => new CurrentInputState(_KeysUp, _KeysDown, _CurrentButtons, _CurrentClickedButtons, _CurrentPressedKeys, HistoryKeys, HistoryMouseButtons, MousePosition);
 
     }
 }

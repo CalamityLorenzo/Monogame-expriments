@@ -2,12 +2,10 @@
 using GameLibrary.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Color = Microsoft.Xna.Framework.Color;
-using Point = Microsoft.Xna.Framework.Point;
 
-namespace AnimationAgain.Guns
+namespace Character.Container.Character
 {
-    internal class BulletObject : IDrawableGameObject
+    class BaseBullet : IDrawableGameObject
     {
         private Vector2 currentPosition;
         private Vector2 direction;
@@ -16,7 +14,7 @@ namespace AnimationAgain.Guns
         private readonly Texture2D atlas;
         private readonly AnimationPlayer player;
         public Vector2 CurrentPosition { get => this.currentPosition; }
-        public BulletObject(SpriteBatch spriteBatch, Texture2D atlas, AnimationPlayer player)
+        public BaseBullet(SpriteBatch spriteBatch, Texture2D atlas, AnimationPlayer player)
         {
             this.spriteBatch = spriteBatch;
             this.atlas = atlas;

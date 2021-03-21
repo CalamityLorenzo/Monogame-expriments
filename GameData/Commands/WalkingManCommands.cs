@@ -10,6 +10,11 @@ namespace GameData.Commands.WalkingMan
         {
             actor.MoveUp();
         }
+
+        public override string ToString()
+        {
+            return "Up";
+        }
     }
 
     class WalkDownCommand : IActorCommand<IWalkingMan>
@@ -17,6 +22,11 @@ namespace GameData.Commands.WalkingMan
         public void Execute(IWalkingMan actor)
         {
             actor.MoveDown();
+        }
+
+        public override string ToString()
+        {
+            return "Down";
         }
     }
 
@@ -26,6 +36,11 @@ namespace GameData.Commands.WalkingMan
         {
             actor.MoveLeft();
         }
+
+        public override string ToString()
+        {
+            return "Left";
+        }
     }
 
     class WalkRightCommand : IActorCommand<IWalkingMan>
@@ -33,6 +48,11 @@ namespace GameData.Commands.WalkingMan
         public void Execute(IWalkingMan actor)
         {
             actor.MoveRight();
+        }
+
+        public override string ToString()
+        {
+            return "Right";
         }
     }
 
@@ -42,6 +62,11 @@ namespace GameData.Commands.WalkingMan
         {
             actor.EndMoveUp();
         }
+
+        public override string ToString()
+        {
+            return "End Up";
+        }
     }
 
     public class WalkDownCommandRelease : IActorCommand<IWalkingMan>
@@ -49,6 +74,10 @@ namespace GameData.Commands.WalkingMan
         public void Execute(IWalkingMan actor)
         {
             actor.EndMoveDown();
+        }
+        public override string ToString()
+        {
+            return "End Down";
         }
     }
 
@@ -58,6 +87,11 @@ namespace GameData.Commands.WalkingMan
         {
             actor.EndMoveLeft();
         }
+
+        public override string ToString()
+        {
+            return "End Left";
+        }
     }
 
     public class WalkRightCommandRelease : IActorCommand<IWalkingMan>
@@ -66,6 +100,12 @@ namespace GameData.Commands.WalkingMan
         {
             actor.EndMoveRight();
         }
+
+        public override string ToString()
+        {
+            return "End Right";
+        }
+
     }
 
     public class FireCommand : IActorCommand<IWalkingMan>
@@ -73,6 +113,12 @@ namespace GameData.Commands.WalkingMan
         public void Execute(IWalkingMan actor)
         {
             actor.Fire();
+        }
+
+
+        public override string ToString()
+        {
+            return "Fire";
         }
     }
 
@@ -82,6 +128,12 @@ namespace GameData.Commands.WalkingMan
         {
             actor.Jump();
         }
+
+
+        public override string ToString()
+        {
+            return "Jump";
+        }
     }
 
     class FireSpecialCommand : IActorCommand<IWalkingMan>
@@ -89,6 +141,12 @@ namespace GameData.Commands.WalkingMan
         public void Execute(IWalkingMan actor)
         {
             actor.FireSpecial();
+        }
+
+
+        public override string ToString()
+        {
+            return "Specials";
         }
     }
 
@@ -102,6 +160,12 @@ namespace GameData.Commands.WalkingMan
         public void Execute(IWalkingMan actor)
         {
             //;
+        }
+
+
+        public override string ToString()
+        {
+            return "Null";
         }
     }
 }

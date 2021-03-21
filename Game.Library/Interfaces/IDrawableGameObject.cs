@@ -18,4 +18,5 @@ namespace GameLibrary.Interfaces
     {
         void Draw();
     }
+
 }

@@ -57,6 +57,11 @@ namespace GameLibrary.InputManagement
         public IEnumerable<KeyCommand<T>> SubKey { get; }
 
         public static KeyCommand<T> Empty => _privateCommand.Value;
+
+        public override string ToString()
+        {
+            return this.MouseButton == MouseButton.Unknown ? $"Key: ${this.Key} {this.Command} {this.PressType}" : $"Mouse: ${this.MouseButton} {this.Command} {this.PressType}";
+        }
     }
 
     public enum KeyCommandPress

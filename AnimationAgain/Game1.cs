@@ -39,7 +39,7 @@ namespace AnimationAgain
         private BasicGun gun;
         private BasicCharacterWithCommands basicChar;
 
-        private List<KeyCommand<IWalkingMan>> velocityCmds;
+        private List<KeyCommand<IBasicMotion>> velocityCmds;
         private FindVector gunDirection;
 
         private MouseKeyboardInputsReciever inputReceiver;
@@ -174,7 +174,7 @@ namespace AnimationAgain
             activeCommand.ForEach(a => a.Execute(headChar));
             this.headChar.Update(delta);
 
-            this.gun.SetPosition(new Vector2(headChar.CurrentRectangle.Width / 2 + headChar.CurrentPosition.X, headChar.CurrentPosition.Y));
+            this.gun.SetCurrentPosition(new Vector2(headChar.CurrentRectangle.Width / 2 + headChar.CurrentPosition.X, headChar.CurrentPosition.Y));
             gun.Update(delta);
             SetPlayingFrame(inputManager.KeysDown());
             base.Update(gameTime);

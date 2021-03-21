@@ -44,7 +44,7 @@ namespace AnimationAgain.Character
             this.framesets = framesets;
             this.animation = player;
             this.mouseInfo = mouseInfo;
-            this.mouseInfo.SetPosition(this.currentPosition);
+            this.mouseInfo.SetCurrentPosition(this.currentPosition);
             this.velos = velos;
             this.atlas = atlas;
             this.currentPosition = startPos;
@@ -53,7 +53,7 @@ namespace AnimationAgain.Character
             mouseActive = false;
         }
 
-        public void SetPosition(Vector2 newPosition)
+        public void SetCurrentPosition(Vector2 newPosition)
         {
             if (currentPosition != newPosition)
             {
@@ -67,7 +67,7 @@ namespace AnimationAgain.Character
             this.currentPosition = currentPosition.AddX(velos.VelocityX * deltaTime)
                                                   .AddY(velos.VelocityY * deltaTime);
 
-            this.mouseInfo.SetPosition(this.currentPosition);
+            this.mouseInfo.SetCurrentPosition(this.currentPosition);
 
             var angle = this.mouseInfo.GetAngle();
             UpdateMouseActive(deltaTime);

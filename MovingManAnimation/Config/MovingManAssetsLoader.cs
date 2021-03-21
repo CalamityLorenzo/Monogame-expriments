@@ -55,7 +55,7 @@ namespace MovingManAnimation.Config
         public PlayerKeyboardControls Player1KeyboardControls()
         {
             var p1ControlList = _config.Get<Dictionary<string, string>>("Player1Controls");
-            var p1Controls = MapConfigToControls.Map(p1ControlList);
+            var p1Controls = MapConfigToControls.MapKeyboard(p1ControlList);
             return p1Controls;
         }
 

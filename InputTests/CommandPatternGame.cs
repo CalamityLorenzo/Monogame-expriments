@@ -85,7 +85,7 @@ namespace InputTests
             this.keymouseState.Update(gameTime, kState, mState);
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, keymouseState.PressedKeys(), Keys.Escape);
-            _mouseHairs.SetPosition(mState.Position.ToVector2());
+            _mouseHairs.SetCurrentPosition(mState.Position.ToVector2());
             //time
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit

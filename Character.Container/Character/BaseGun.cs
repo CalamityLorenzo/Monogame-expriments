@@ -1,33 +1,32 @@
-﻿using GameLibrary.Interfaces;
-using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Graphics;
+﻿using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 
-namespace AnimationAgain.Guns
+namespace Character.Container.Character
 {
-    internal class BasicGun
+    internal class BaseGun
     {
         private Vector2 currentPosition;
         private int currentBulletType;
 
-        private IList<BulletObject> FiredBullets { get; set; }
+        private IList<BaseBullet> FiredBullets { get; set; }
         public BulletFactory Factory { get; }
         public Vector2 CurrentPosition { get => currentPosition; }
 
         private Random rnd = new Random();
 
-        public BasicGun(BulletFactory factory, Vector2 startPos)
+        public BaseGun(BulletFactory factory, Vector2 startPos)
         {
-            FiredBullets = new List<BulletObject>();
+            FiredBullets = new List<BaseBullet>();
             Factory = factory;
             this.currentPosition = startPos;
             this.currentBulletType = 0;
         }
 
-        public void Update(float deltaTime)
+        public virtual void Update(float deltaTime)
         {
-            var bulletRemover = new BulletObject[FiredBullets.Count];
+            var bulletRemover = new BaseBullet[FiredBullets.Count];
             var pos = 0;
             foreach (var bullet in FiredBullets)
             {
@@ -40,7 +39,7 @@ namespace AnimationAgain.Guns
                 }
             }
 
-            for(var x=0;x<FiredBullets.Count;++x)
+            for (var x = 0; x < FiredBullets.Count; ++x)
             {
                 if (bulletRemover[x] == null) break;
                 FiredBullets.Remove(bulletRemover[x]);
@@ -52,16 +51,18 @@ namespace AnimationAgain.Guns
             currentPosition = newPosition;
         }
 
-        public void Fire(Vector2 direction)
-        { 
-            var bullet = this.Factory.CreateBullet(rnd.Next(0,3));
+        public virtual void Fire(Vector2 direction)
+        {
+            var bullet = this.Factory.CreateBullet(rnd.Next(0, 3));
             var magnitude = direction.Length();
             bullet.SetCurrentPosition(this.currentPosition.ToPoint());
             // Calculate the unit vector between the gun, and the destination vector, to be used as a direction
-            var relativeVector = Vector2.Subtract(direction,this.currentPosition);
+            var relativeVector = Vector2.Subtract(direction, this.currentPosition);
             relativeVector.Normalize();
-                
+            Debug.WriteLine(relativeVector);
+            Debug.WriteLine(this.currentPosition.ToPoint());
             bullet.SetDirection(relativeVector);
+
             bullet.SetSpeed(rnd.Next(95, 130));
             this.FiredBullets.Add(bullet);
         }

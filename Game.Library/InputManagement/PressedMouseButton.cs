@@ -3,7 +3,7 @@ using System.Globalization;
 
 namespace GameLibrary.InputManagement
 {
-    public class PressedMouseButton
+    public struct PressedMouseButton
     {
         public MouseButton Button { get; set; }
         public bool IsDoubleClick { get; set; }

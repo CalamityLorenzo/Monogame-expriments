@@ -1,9 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace InputTests
 {
@@ -18,23 +14,20 @@ namespace InputTests
         {
             this.spriteBatch = spriteBatch;
             this.crossHairTexture = crossHairTexture;
-            SetCurrentPosition(Startpos);
+            SetCurrentPosition_Internal(Startpos);
             this.range = range;
         }
 
-        public void SetPosition(Vector2 mousePos)
+        public void SetCurrentPosition(Vector2 mousePos)
         {
-            var intX = Convert.ToInt32(mousePos.X);
-            var intY = Convert.ToInt32(mousePos.Y);
-
             // Don/t attempt to draw if the mouse pointer is outide the screen bounds.
             if (range.Contains(mousePos))
             {
-                SetCurrentPosition(mousePos);
+                SetCurrentPosition_Internal(mousePos);
             }
         }
 
-        private void SetCurrentPosition(Vector2 mousePos)
+        private void SetCurrentPosition_Internal(Vector2 mousePos)
         {
             // The mouseposition is the centre of the cross hairs. soooooooo we make an offset
             var currentPosOffset = Vector2.Subtract(mousePos, new Vector2((float)crossHairTexture.Width / 2, (float)crossHairTexture.Height / 2));

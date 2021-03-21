@@ -9,7 +9,7 @@
     "StartVector": [100,100]
   },
   "Player1Controls": {
-    "Up": "W",
+    "Up": "Right",
     "Down": "S",
     "Left": "A",
     "Right": "D",

@@ -68,7 +68,8 @@ namespace GameLibrary.InputManagement
             return pressType switch
             {
                 KeyCommandPress.Clicked => this._inputs.ClickedButton.Contains(mouseButton),
-                KeyCommandPress.Released => this._inputs.ClickedButton.Contains(mouseButton),
+                KeyCommandPress.Released => this._inputs.ReleasedButtons.Contains(mouseButton),
+                KeyCommandPress.Pressed => this._inputs.GetInputState().PressedMouseButtons.ContainsKey(mouseButton),
                 _ => false
             };
         }

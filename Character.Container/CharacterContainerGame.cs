@@ -26,6 +26,8 @@ namespace Character.Container
         private List<KeyCommand<IWalkingMan>> movementCmds;
 
         public BasicVelocityManager VelocityManager { get; private set; }
+
+        public World TheState { get; set; } = new World();
         internal ManContainer ManContainer { get; private set; }
 
         public CharacterContainerGame()
@@ -49,6 +51,8 @@ namespace Character.Container
 
             this.assetsLoader = new ContainerAssetsLoader(this.configData, this._graphics.GraphicsDevice);
 
+            this.TheState.ScreenResolution = _graphics.GraphicsDevice.Viewport.Bounds;
+
             // Controls
             var p1Controls = assetsLoader.Player1Controls();
             //Image
@@ -65,9 +69,16 @@ namespace Character.Container
             headAnimationsPlayer.SetFrames("BobLeft");
             // TODO: use this.Content to load your game content here
 
+
+            // bullet animations for factory
+            var bulletAnimation = new AnimationPlayer(.500f, this.assetsLoader.BulletAnimations());
+
+            var bulletFactory = new BulletFactory(this._spriteBatch, assetsLoader.BulletAtlases(), bulletAnimation);
+
             var Body = new Sprite(this._spriteBatch, bodyAtlas, bodyAnimationPlayer, new Vector2(100, 100));
             var Head = new Sprite(this._spriteBatch, bodyAtlas, headAnimationsPlayer, new Vector2(100, 100));
-            this.ManContainer = new ManContainer(new Point(40, 50), VelocityManager, new Vector2(87, 87), new FindVector(Mouse.GetState().Position, this.inputManager), Body, Head);
+            var baseGun = new BaseGun(bulletFactory, new Vector2(40, 50));
+            this.ManContainer = new ManContainer(new Point(40, 50), VelocityManager, new Vector2(87, 87), new FindVector(Mouse.GetState().Position, this.inputManager), baseGun, Body, Head);
             base.Initialize();
         }
 
@@ -85,9 +96,12 @@ namespace Character.Container
             var totalTime = (float)gameTime.TotalGameTime.TotalMilliseconds;
 
             this.inputManager.Update(gameTime, Keyboard.GetState(), Mouse.GetState());
+
+            this.TheState.InputState = inputManager.GetInputState();
+
             var activeCommand = this.inputReceiver.MapKeyboardCommands(this.movementCmds);
             activeCommand.ForEach(a => a.Execute(ManContainer));
-            this.ManContainer.Update(delta);
+            this.ManContainer.Update(delta, TheState);
             // TODO: Add your update logic here
             base.Update(gameTime);
         }

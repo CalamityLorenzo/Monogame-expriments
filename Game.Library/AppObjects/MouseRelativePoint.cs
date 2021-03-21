@@ -45,6 +45,8 @@ namespace GameLibrary.AppObjects
             }
 
         }
+
+        public Vector2 GetRaw() => this.inputs.MousePosition.ToVector2();
         /// <summary>
         /// Returns the set vector relative from the current position of the point.
         /// </summary>
@@ -54,7 +56,7 @@ namespace GameLibrary.AppObjects
         public float GetAngle() => _currentAngle + (_currentAngle <= -90 ? 360 + 90 : 90);
 
         // Where are we projecting from.
-        public void SetPosition(Vector2 newPosition)
+        public void SetCurrentPosition(Vector2 newPosition)
         {
             if (newPosition != _currentPosition)
             {
