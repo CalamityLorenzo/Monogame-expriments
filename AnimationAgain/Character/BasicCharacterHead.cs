@@ -16,7 +16,7 @@ namespace AnimationAgain.Character
         private readonly AnimationPlayer animation;
         private string _currentAnimationIndex { get; set; }
 
-        private readonly MouseRelativePoint mouseInfo;
+        private readonly FindVector mouseInfo;
         private readonly IVelocinator velos;
         private readonly Texture2D atlas;
         private Vector2 currentPosition;
@@ -38,7 +38,7 @@ namespace AnimationAgain.Character
         public Vector2 CurrentPosition { get => this.currentPosition; }
         public Rectangle CurrentRectangle { get => this.animation.CurrentFrame(); }
 
-        public BasicCharacterHead(SpriteBatch spriteBatch, Dictionary<string, AnimationFramesCollection> framesets, AnimationPlayer player, MouseRelativePoint mouseInfo, IVelocinator velos, Texture2D atlas, Vector2 startPos)
+        public BasicCharacterHead(SpriteBatch spriteBatch, Dictionary<string, AnimationFramesCollection> framesets, AnimationPlayer player, FindVector mouseInfo, IVelocinator velos, Texture2D atlas, Vector2 startPos)
         {
             this.spriteBatch = spriteBatch;
             this.framesets = framesets;

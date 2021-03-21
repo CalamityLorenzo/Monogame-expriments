@@ -133,5 +133,10 @@ namespace InputTests.MovingMan
             if(velocityY<0)
             this.velocityY = 0f;
         }
+
+        public void Jump()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

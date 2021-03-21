@@ -63,6 +63,8 @@ namespace GameLibrary.Animation
             return currentFrame;
         }
 
+        public int CurrentFrameIdx()=>this.currentFrameIdx;
+
         public string CurrentSetName()
         {
             return currentSet.Name;

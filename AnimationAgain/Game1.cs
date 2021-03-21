@@ -39,8 +39,8 @@ namespace AnimationAgain
         private BasicGun gun;
         private BasicCharacterWithCommands basicChar;
 
-        private List<KeyCommand<IBasicMotion>> velocityCmds;
-        private MouseRelativePoint gunDirection;
+        private List<KeyCommand<IWalkingMan>> velocityCmds;
+        private FindVector gunDirection;
 
         private MouseKeyboardInputsReciever inputReceiver;
 
@@ -107,14 +107,13 @@ namespace AnimationAgain
 
             this.bulletFactory = new BulletFactory(this._spriteBatch, assetsLoader.BulletAtlases(), bulletAnimation);
 
-
             this.gunPosOffSet = new Vector2(1, 37);
-            gunDirection = new MouseRelativePoint(new Point(100, 200));
+            gunDirection = new FindVector(new Point(100, 200), this.inputManager);
 
             basicChar = new BasicCharacterWithCommands(this._spriteBatch, playterAnimations, this.playerAnimationPlayer, velos, playerAtlas, new Vector2(100, 200), 57, 57);
             Vector2 headOffsetPosition = basicChar.CurrentPosition.Subtract(gunPosOffSet);
             this.headChar= new BasicCharacterHead(this._spriteBatch, playterAnimations, this.headAnimationPlayer, gunDirection, velos, playerAtlas, headOffsetPosition);
-            this.gun = new BasicGun(_spriteBatch, bulletFactory, new Vector2(headChar.CurrentRectangle.Width / 2 + headChar.CurrentPosition.X, headChar.CurrentPosition.Y));
+            this.gun = new BasicGun(bulletFactory, new Vector2(headChar.CurrentRectangle.Width / 2 + headChar.CurrentPosition.X, headChar.CurrentPosition.Y));
             base.Initialize();
         }
 
@@ -165,10 +164,10 @@ namespace AnimationAgain
 
             this.inputManager.Update(gameTime, Keyboard.GetState(), Mouse.GetState());
 
-            gunDirection.SetTerminal(inputManager.MousePosition.ToVector2());
-            gunDirection.Update(gameTime, delta);
+            //gunDirection.SetTerminal(inputManager.MousePosition.ToVector2());
+            gunDirection.Update(delta);
             
-            var activeCommand = this.inputReceiver.MapCommands(this.velocityCmds);
+            var activeCommand = this.inputReceiver.MapKeyboardCommands(this.velocityCmds);
             activeCommand.ForEach(a => a.Execute(basicChar));
             this.basicChar.Update(delta);
 

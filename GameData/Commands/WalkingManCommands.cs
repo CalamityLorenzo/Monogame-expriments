@@ -76,6 +76,14 @@ namespace GameData.Commands.WalkingMan
         }
     }
 
+    public class JumpCommand : IActorCommand<IWalkingMan>
+    {
+        public void Execute(IWalkingMan actor)
+        {
+            actor.Jump();
+        }
+    }
+
     class FireSpecialCommand : IActorCommand<IWalkingMan>
     {
         public void Execute(IWalkingMan actor)

@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
+using System.Linq.Expressions;
 
 namespace GameLibrary.InputManagement
 {
@@ -16,6 +17,7 @@ namespace GameLibrary.InputManagement
         private Dictionary<Keys, PressedKey> _CurrentPressedKeys = new Dictionary<Keys, PressedKey>();
 
         private Dictionary<MouseButton, PressedMouseButton> _CurrentButtons = new Dictionary<MouseButton, PressedMouseButton>();
+        private HashSet<MouseButton> _CurrentClickedButtons = new HashSet<MouseButton>();
         private Dictionary<MouseButton, PressedMouseButton> _PreviousButtons = new Dictionary<MouseButton, PressedMouseButton>();
 
 
@@ -42,7 +44,6 @@ namespace GameLibrary.InputManagement
             var pressedKeys = kState.GetPressedKeys();
 
             SetMouseState(delta, totalTime, mState);
-            this.MousePosition = mState.Position;
 
             // Compare last with current for upsies.
             // Reset the list so we only have the most current keys
@@ -91,13 +92,27 @@ namespace GameLibrary.InputManagement
 
         private void SetMouseState(float delta, float totalTime, MouseState mState)
         {
+            this.MousePosition = mState.Position;
+
             SetReleasedButtons(delta, totalTime, mState);
             SetPressedButtons(delta, totalTime, mState);
+        }
+
+        /// <summary>
+        /// A 'click' is abutton that is pressedNow was not pressed previously.
+        /// 
+        /// </summary>
+        /// <param name="delta"></param>
+        /// <param name="mState"></param>
+        private void SetClickedButtons(float delta, MouseState mState)
+        {
+            throw new System.NotImplementedException();
         }
 
         private void SetPressedButtons(float delta, float totalTime, MouseState mState)
         {
             _CurrentButtons = new Dictionary<MouseButton, PressedMouseButton>();
+            _CurrentClickedButtons = new HashSet<MouseButton>();
             ButtonPressed(MouseButton.Left, mState.LeftButton, this._PreviousButtons, _CurrentButtons, delta, totalTime);
             ButtonPressed(MouseButton.Right, mState.RightButton, this._PreviousButtons, _CurrentButtons, delta, totalTime);
             ButtonPressed(MouseButton.Middle, mState.MiddleButton, this._PreviousButtons, _CurrentButtons, delta, totalTime);
@@ -137,8 +152,9 @@ namespace GameLibrary.InputManagement
                     pressedButton.DurationPressed += current[btn].DurationPressed + delta;
                     pressedButton.IsDoubleClick = false;
                 }
-                else
+                else // Not currently clicked
                 {
+                    this._CurrentClickedButtons.Add(btn);
                     pressedButton.DurationPressed = 0f;
                     pressedButton.IsDoubleClick = DoubleClicked(btn, totalTime, this.doubleClickLength);
                     AddToHistory(btn, totalTime);
@@ -185,6 +201,7 @@ namespace GameLibrary.InputManagement
             return dbClicked;
         }
 
+        public HashSet<MouseButton> ClickedButton => this._CurrentClickedButtons;
         public Dictionary<MouseButton, PressedMouseButton> PressedMouseButtons() => this._CurrentButtons;
         public HashSet<MouseButton> ReleasedMouseButtons() => this.ReleasedButtons;
 
@@ -196,7 +213,7 @@ namespace GameLibrary.InputManagement
         public HashSet<Keys> KeysDown() => this._KeysDown;
         public Dictionary<Keys, PressedKey> PressedKeys() => this._CurrentPressedKeys;
 
-        public CurrentInputState GetInputState() => new CurrentInputState(_KeysUp, _KeysDown, _CurrentButtons, _CurrentPressedKeys, HistoryKeys, HistoryMouseButtons);
+        public CurrentInputState GetInputState() => new CurrentInputState(_KeysUp, _KeysDown, _CurrentButtons, _CurrentClickedButtons, _CurrentPressedKeys, HistoryKeys, HistoryMouseButtons);
 
     }
 }

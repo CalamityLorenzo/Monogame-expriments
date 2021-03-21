@@ -5,8 +5,6 @@ using GameLibrary.Extensions;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace InputTests.MovingMan
 {
@@ -104,6 +102,11 @@ namespace InputTests.MovingMan
         {
             if (this.velocites.VelocityY < 0)
                 this.velocites.SetVelocityY( 0f);
+        }
+
+        public void Jump()
+        {
+            throw new NotImplementedException();
         }
     }
 }

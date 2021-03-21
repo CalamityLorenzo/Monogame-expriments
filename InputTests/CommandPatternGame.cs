@@ -89,7 +89,7 @@ namespace InputTests
             //time
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
             //! Check all the keys and shit
-            var command = this.inputReciever.MapCommands(this.p1Commands);
+            var command = this.inputReciever.MapKeyboardCommands(this.p1Commands);
             
                 command.ForEach(cmd => cmd.Execute(_mo4));
 

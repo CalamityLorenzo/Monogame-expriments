@@ -1,8 +1,4 @@
 ﻿using GameData.CharacterActions;
-using Microsoft.Win32.SafeHandles;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GameData
 {

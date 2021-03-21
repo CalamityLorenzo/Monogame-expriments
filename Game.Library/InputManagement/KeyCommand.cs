@@ -17,6 +17,7 @@ namespace GameLibrary.InputManagement
 
         private KeyCommand()
         {
+            this.MouseButton = MouseButton.Unknown;
             this.Key = Keys.ImeConvert;
             this.Command = null;
             this.PressType = KeyCommandPress.Unknown;
@@ -25,16 +26,31 @@ namespace GameLibrary.InputManagement
 
         public KeyCommand(Keys key, KeyCommandPress pressType, IActorCommand<T> command, IEnumerable<KeyCommand<T>> subKey)
         {
+            this.MouseButton = MouseButton.Unknown;
             Key = key;
-            PressType = pressType == KeyCommandPress.Unknown? throw new Exception("Cannot be unknown keypress"): pressType;
+            PressType = pressType == KeyCommandPress.Unknown ? throw new Exception("Cannot be unknown keypress") : pressType;
             Command = command ?? throw new ArgumentNullException(nameof(command));
             SubKey = subKey ?? throw new ArgumentNullException(nameof(subKey));
         }
 
-        public KeyCommand(Keys key, KeyCommandPress pressType,  IActorCommand<T> command):this(key, pressType, command, Enumerable.Empty<KeyCommand<T>>())
+        public KeyCommand(MouseButton btn, KeyCommandPress pressType, IActorCommand<T> command, IEnumerable<KeyCommand<T>> subKey)
+        {
+            this.MouseButton = btn;
+            Key = Keys.ImeConvert;
+            PressType = pressType == KeyCommandPress.Unknown ? throw new Exception("Cannot be unknown action") : pressType;
+            Command = command ?? throw new ArgumentNullException(nameof(command));
+            SubKey = subKey ?? throw new ArgumentNullException(nameof(subKey));
+        }
+
+        public KeyCommand(Keys key, KeyCommandPress pressType, IActorCommand<T> command) : this(key, pressType, command, Enumerable.Empty<KeyCommand<T>>())
         {
         }
 
+        public KeyCommand(MouseButton btn, KeyCommandPress pressType, IActorCommand<T> command) : this(btn, pressType, command, Enumerable.Empty<KeyCommand<T>>())
+        {
+        }
+
+        public MouseButton MouseButton { get; }
         public Keys Key { get; }
         public KeyCommandPress PressType { get; }
         public IActorCommand<T> Command { get; }
@@ -48,6 +64,8 @@ namespace GameLibrary.InputManagement
         Unknown = 0,
         Up = 1, // Key has just been released
         Down = 2, // Key has just been pressed
-        Pressed = 3 // Key has is being held down.
+        Pressed = 3, // Key has is being held down.
+        Clicked = 4,
+        Released = 5, // click has complete
     }
 }

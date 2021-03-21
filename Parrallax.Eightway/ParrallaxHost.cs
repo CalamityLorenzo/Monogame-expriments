@@ -1,7 +1,6 @@
 ﻿using GameData.Commands;
 using GameData.UserInput;
 using GameLibrary;
-using GameLibrary.Animation;
 using GameLibrary.Animation.Utilities;
 using GameLibrary.AppObjects;
 using GameLibrary.Config.App;
@@ -9,11 +8,9 @@ using GameLibrary.Drawing.Backgrounds;
 using GameLibrary.Extensions;
 using GameLibrary.InputManagement;
 using GameLibrary.Models;
-using GameLibrary.PlayerThings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using SharpDX.MediaFoundation;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -110,7 +107,7 @@ namespace Parrallax.Eightway
             KeyboardFunctions.QuitOnKeys(this, this.iStateManager.GetInputState().PressedKeys, Keys.Escape);
 
             
-            var cmds= this._inputProcessor.MapCommands(this._p1Commands);
+            var cmds= this._inputProcessor.MapKeyboardCommands(this._p1Commands);
 
             cmds.ForEach(cmd => cmd.Execute(rotator));
 

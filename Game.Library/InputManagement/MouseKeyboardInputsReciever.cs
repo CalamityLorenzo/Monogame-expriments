@@ -1,5 +1,6 @@
 ﻿using GameLibrary.Character;
 using Microsoft.Xna.Framework.Input;
+using System;
 using System.Collections.Generic;
 
 namespace GameLibrary.InputManagement
@@ -19,7 +20,6 @@ namespace GameLibrary.InputManagement
 
         private bool TestKeyState(Keys key, KeyCommandPress pressType)
         {
-
             return pressType switch
             {
                 KeyCommandPress.Up => this._inputs.KeysUp().Contains(key),
@@ -27,7 +27,6 @@ namespace GameLibrary.InputManagement
                 KeyCommandPress.Pressed => this._inputs.PressedKeys().ContainsKey(key),
                 _ => false
             };
-
         }
 
         private IActorCommand<T> ValidateSubKeys<T>(IEnumerable<KeyCommand<T>> subkeys)
@@ -64,8 +63,44 @@ namespace GameLibrary.InputManagement
         //    }
         //    return null; //not cool.
         //}
+        private bool TestMouseState(MouseButton mouseButton, KeyCommandPress pressType)
+        {
+            return pressType switch
+            {
+                KeyCommandPress.Clicked => this._inputs.ClickedButton.Contains(mouseButton),
+                KeyCommandPress.Released => this._inputs.ClickedButton.Contains(mouseButton),
+                _ => false
+            };
+        }
 
-        public List<IActorCommand<T>> MapCommands<T>(List<KeyCommand<T>> keyCommands)
+        public List<IActorCommand<T>> MapKeyboardCommands<T>(List<KeyCommand<T>> keyCommands)
+        {
+            var results = new List<IActorCommand<T>>();
+            foreach (var keyCommand in keyCommands)
+            {
+                if (keyCommand.MouseButton != MouseButton.Unknown && TestMouseState(keyCommand.MouseButton, keyCommand.PressType))
+                {
+                    results.Add(keyCommand.Command);
+                }
+                else
+                {
+                    if (TestKeyState(keyCommand.Key, keyCommand.PressType))
+                    {
+                        var command = this.ValidateSubKeys(keyCommand.SubKey);
+                        if (command == null)
+                        {
+                            if (keyCommand.Command != null)
+                                results.Add(keyCommand.Command);
+                        }
+                        else
+                            results.Add(command);
+                    }
+                }
+            }
+            return results;
+        }
+
+        public List<IActorCommand<T>> MapMouseCommands<T>(List<KeyCommand<T>> keyCommands)
         {
             var results = new List<IActorCommand<T>>();
             foreach (var keyCommand in keyCommands)
@@ -84,5 +119,7 @@ namespace GameLibrary.InputManagement
             }
             return results;
         }
+
+
     }
 }

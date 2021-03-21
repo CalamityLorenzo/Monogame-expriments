@@ -14,6 +14,7 @@
     <Compile Remove="Animation\Cruft\OldBlockAnimationObject.cs" />
     <Compile Remove="Animation\IAnimationHost.cs" />
     <Compile Remove="AppObjects\AngulerFourWayDirection.cs" />
+    <Compile Remove="PlayerThings\ControlMapping.cs" />
     <Compile Remove="PlayerThings\EightWayMovement.cs" />
   </ItemGroup>
 

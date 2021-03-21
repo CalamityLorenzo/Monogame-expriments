@@ -89,8 +89,8 @@ namespace InputTests
             //time
             var delta = (float)gameTime.ElapsedGameTime.TotalSeconds;
 
-            var commands = this.inputsProcessor.MapCommands(this.player1Inputs);
-            var rTaterCommands = this.inputsProcessor.MapCommands(this.rTaterInputs);
+            var commands = this.inputsProcessor.MapKeyboardCommands(this.player1Inputs);
+            var rTaterCommands = this.inputsProcessor.MapKeyboardCommands(this.rTaterInputs);
 
             commands.ForEach(command => command.Execute(movingObject));
 

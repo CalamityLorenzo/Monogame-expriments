@@ -12,6 +12,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
+using System.Diagnostics;
 
 namespace InputTests
 {
@@ -84,6 +85,12 @@ namespace InputTests
             this.CurrentSelectedObject = 0;
         }
 
+        private void DidAThing(CurrentInputState input)
+        {
+            if (input.ClickedButtons.Contains(MouseButton.Left))
+                Debug.WriteLine("Boom");
+        }
+
 
         protected override void Update(GameTime gameTime)
         {
@@ -95,8 +102,9 @@ namespace InputTests
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, iManger.PressedKeys(), Keys.Escape);
             _mouseHairs.SetPosition(mState.Position.ToVector2());
+            DidAThing(this.iManger.GetInputState());
 
-            var cmds = this.inputProcessor.MapCommands(this.p1Commands);
+            var cmds = this.inputProcessor.MapKeyboardCommands(this.p1Commands);
 
 
             cmds.ForEach(cmd => cmd.Execute(this._mo4));

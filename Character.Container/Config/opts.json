@@ -1,0 +1,21 @@
+{
+  "ScreenOptions": {
+    "ScreenWidth": 1024,
+    "ScreenHeight": 768,
+    "FullScreen": true 
+  },
+  "GameOptions": {
+    "Velocity": 0.5,
+    "StartVector": [100,100]
+  },
+  "Player1Controls": {
+    "Up": "W",
+    "Down": "S",
+    "Left": "A",
+    "Right": "D",
+    "Fire": "Left",
+    "Jump":  "Space",
+    "Special":  "Space",
+    "Action": "LeftControl"
+  }
+}

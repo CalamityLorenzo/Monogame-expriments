@@ -8,8 +8,6 @@ namespace AnimationAgain.Guns
 {
     internal class BasicGun
     {
-        private readonly SpriteBatch spriteBatch;
-        private readonly IDrawableGameObject bullet;
         private Vector2 currentPosition;
         private int currentBulletType;
 
@@ -19,10 +17,9 @@ namespace AnimationAgain.Guns
 
         private Random rnd = new Random();
 
-        public BasicGun(SpriteBatch spriteBatch, BulletFactory factory, Vector2 startPos)
+        public BasicGun(BulletFactory factory, Vector2 startPos)
         {
             FiredBullets = new List<BulletObject>();
-            this.spriteBatch = spriteBatch;
             Factory = factory;
             this.currentPosition = startPos;
             this.currentBulletType = 0;
@@ -57,13 +54,9 @@ namespace AnimationAgain.Guns
 
         public void Fire(Vector2 direction)
         { 
-            
             var bullet = this.Factory.CreateBullet(rnd.Next(0,3));
             var magnitude = direction.Length();
-            //var untiVe = new Vector2(direction.X > 0 ? direction.X / magnitude : 0,
-            //                    direction.Y > 0 ? direction.Y / magnitude : 0);
             bullet.SetPosition(this.currentPosition.ToPoint());
-
             // Calculate the unit vector between the gun, and the destination vector, to be used as a direction
             var relativeVector = Vector2.Subtract(direction,this.currentPosition);
             relativeVector.Normalize();

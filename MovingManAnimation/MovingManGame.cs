@@ -76,7 +76,7 @@ namespace MovingManAnimation
             iManger.Update(gameTime, kState, mState);
             // Escape hatch
             KeyboardFunctions.QuitOnKeys(this, iManger.PressedKeys(), Keys.Escape);
-            var velocityCmds = this._inputReciever.MapCommands(this.velocityCmds);
+            var velocityCmds = this._inputReciever.MapKeyboardCommands(this.velocityCmds);
 
             velocityCmds.ForEach(velocityCmd => velocityCmd.Execute(this.manChar));
             

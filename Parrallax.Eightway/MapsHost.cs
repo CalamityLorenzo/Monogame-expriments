@@ -1,24 +1,20 @@
-﻿using System;
+﻿using GameData;
+using GameData.CharacterActions;
+using GameData.Commands;
+using GameData.UserInput;
 using GameLibrary;
-using GameLibrary.Animation;
+using GameLibrary.Animation.Utilities;
 using GameLibrary.AppObjects;
 using GameLibrary.Config.App;
 using GameLibrary.Drawing.Backgrounds;
 using GameLibrary.Extensions;
+using GameLibrary.InputManagement;
 using GameLibrary.Models;
-using GameLibrary.PlayerThings;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
-using System.Linq;
+using System;
 using System.Collections.Generic;
-using GameData;
-using GameLibrary.InputManagement;
-using GameData.UserInput;
-using System.Data;
-using GameData.Commands;
-using GameData.CharacterActions;
-using GameLibrary.Animation.Utilities;
 
 namespace Parrallax.Eightway
 {
@@ -108,8 +104,8 @@ namespace Parrallax.Eightway
 
             KeyboardFunctions.QuitOnKeys(this, this.inputState.PressedKeys(), Keys.Escape);
 
-            var rTateCmd = this.InputsReciever.MapCommands(rTateCmds);
-            var mapCmd = this.InputsReciever.MapCommands(mapCmds);
+            var rTateCmd = this.InputsReciever.MapKeyboardCommands(rTateCmds);
+            var mapCmd = this.InputsReciever.MapKeyboardCommands(mapCmds);
 
             rTateCmd.ForEach(rt => rt.Execute(this.rotator));
             mapCmd.ForEach(mp => mp.Execute(this.velocityManager));

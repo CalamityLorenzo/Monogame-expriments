@@ -1,8 +1,6 @@
-﻿using Microsoft.Xna.Framework;
-using Microsoft.Xna.Framework.Input;
+﻿using GameLibrary.InputManagement;
+using Microsoft.Xna.Framework;
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GameLibrary.AppObjects
 {
@@ -10,29 +8,31 @@ namespace GameLibrary.AppObjects
     /// Returns the vector from a one point relative to a fixed point
     /// Also can return the angle as a unitvecotor
     /// </summary>
-    public class MouseRelativePoint
+    public class FindVector
     {
         private Vector2 _currentPosition;
         private Vector2 _previousPosition;
 
         private Vector2 _currentRelativeVector;
-        private Vector2 _previousRelativeVector;
 
         private Vector2 _selectedTerminal;
         private Vector2 _previousSelectedTerminal;
 
         private float _currentAngle;
-
+        private readonly InputsStateManager inputs;
 
         public double ViewingAngle { get; private set; }
 
-        public MouseRelativePoint(Point mouseStartPosition)
+        public FindVector(Point mouseStartPosition, InputsStateManager inputs)
         {
             this._currentPosition = mouseStartPosition.ToVector2();
+            this.inputs = inputs;
         }
 
-        public void Update(GameTime gameTime, float delta)
+        public void Update(float delta)
         {
+            this._selectedTerminal = inputs.MousePosition.ToVector2();
+
             if (_selectedTerminal != _previousSelectedTerminal || _currentPosition != _previousPosition)
             {
                 _currentRelativeVector = Vector2.Subtract(_selectedTerminal, _currentPosition);
@@ -42,7 +42,6 @@ namespace GameLibrary.AppObjects
 
                 _previousPosition = _currentPosition;
                 _previousSelectedTerminal = _selectedTerminal;
-                _previousRelativeVector = _currentRelativeVector;
             }
 
         }
@@ -54,7 +53,7 @@ namespace GameLibrary.AppObjects
         // Why do I have to add a full turn?
         public float GetAngle() => _currentAngle + (_currentAngle <= -90 ? 360 + 90 : 90);
 
-        // Where are we projecting to.
+        // Where are we projecting from.
         public void SetPosition(Vector2 newPosition)
         {
             if (newPosition != _currentPosition)
@@ -63,15 +62,15 @@ namespace GameLibrary.AppObjects
                 _currentPosition = newPosition;
             }
         }
-        // Where on screen are projecting from
-        public void SetTerminal(Vector2 terminus)
-        {
-            if (_selectedTerminal != terminus)
-            {
-                _previousSelectedTerminal = _selectedTerminal;
-                _selectedTerminal = terminus;
-            }
-        }
+        //// Where on screen are projecting to
+        //public void SetTerminal(Vector2 terminus)
+        //{
+        //    if (_selectedTerminal != terminus)
+        //    {
+        //        _previousSelectedTerminal = _selectedTerminal;
+        //        _selectedTerminal = terminus;
+        //    }
+        //}
         // Where the Mouse is.
         public Vector2 GetTerminal() => this._selectedTerminal;
         /// <summary>

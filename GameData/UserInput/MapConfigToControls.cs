@@ -1,13 +1,14 @@
-﻿using Microsoft.Xna.Framework.Input;
+﻿using GameLibrary.InputManagement;
+using Microsoft.Xna.Framework.Input;
 using System;
 using System.Collections.Generic;
-using System.Text;
+using System.Linq;
 
 namespace GameData.UserInput
 {
     public static class MapConfigToControls
     {
-        public static PlayerKeyboardControls Map(IDictionary<string, string> config)
+        public static PlayerKeyboardControls MapKeyboard(IDictionary<string, string> config)
         {
             return new PlayerKeyboardControls
             {
@@ -20,5 +21,11 @@ namespace GameData.UserInput
                 Special = Enum.Parse<Keys>(config["Special"])
             };
         }
+
+        public static Dictionary<string, object> Map(Dictionary<string, string> config)
+        {
+            return config.ToList().ToDictionary(a => a.Key, a => Enum.TryParse<MouseButton>(a.Value, out var btn) ? (object)btn : (object)Enum.Parse<Keys>(a.Value));
+        }
+
     }
 }

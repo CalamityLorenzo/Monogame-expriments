@@ -46,11 +46,11 @@ namespace AnimationAgain.Character
 
         public void Update(float deltaTime)
         {
+
             // This applies a value to the current position.
-            this.currentPos = currentPos.AddX(velos.VelocityX * deltaTime)
-                        .AddY(velos.VelocityY * deltaTime);
+            this.currentPos = currentPos.Add(velos.VelocityX * deltaTime, velos.VelocityY * deltaTime);
             //this.currentPos = Vector2.Multiply(currentPos, deltaTime);
-            this.ManageJump();  
+            this.ManageJump();
             this.animPlayer.Update(deltaTime);
             this.UpdateAnimationState();
         }
