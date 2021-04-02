@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameLibrary.Animation;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
-namespace GameLibrary.Animation.Utilities
+namespace GameLibrary.Configuration
 {
     public class AnimationFramesCollectionConverter : JsonConverter<IEnumerable<AnimationFramesCollection>>
     {

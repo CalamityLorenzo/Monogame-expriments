@@ -24,7 +24,7 @@ namespace InputTests
         private InputsStateManager iManger = new InputsStateManager();
 
         private MovingHead headsIWin;
-        private List<KeyCommand<IWalkingMan>> p1Commands;
+        private List<KeyCommand<ICharacterActions>> p1Commands;
         private MouseKeyboardInputsReciever inputProcessor;
         private MovingObjectAnimation _mo4;
         private CrossHairs _mouseHairs;

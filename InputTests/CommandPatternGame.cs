@@ -22,7 +22,7 @@ namespace InputTests
         private MouseKeyboardInputsReciever inputReciever;
         
         private SpriteFont arialFont;
-        private List<KeyCommand<IWalkingMan>> p1Commands;
+        private List<KeyCommand<ICharacterActions>> p1Commands;
         private MovingHead headsIWin;
 
         private MovingObjectAnimation _mo4;

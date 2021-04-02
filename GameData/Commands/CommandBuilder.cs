@@ -18,38 +18,38 @@ namespace GameData.Commands
         private readonly static Lazy<CommandBuilder> _cmd = new Lazy<CommandBuilder>(() => new CommandBuilder());
         private CommandBuilder() { }
 
-        private List<KeyCommand<IWalkingMan>> WalkingCommands(PlayerKeyboardControls keys) => new List<KeyCommand<IWalkingMan>>
+        private List<KeyCommand<ICharacterActions>> WalkingCommands(PlayerKeyboardControls keys) => new List<KeyCommand<ICharacterActions>>
         {
-            new KeyCommand<IWalkingMan>(keys.Up, KeyCommandPress.Down, new WalkUpCommand()
+            new KeyCommand<ICharacterActions>(keys.Up, KeyCommandPress.Down, new WalkUpCommand()
                 ),
-            new KeyCommand<IWalkingMan>(keys.Down, KeyCommandPress.Down, new WalkDownCommand()
+            new KeyCommand<ICharacterActions>(keys.Down, KeyCommandPress.Down, new WalkDownCommand()
                 ),
-            new KeyCommand<IWalkingMan>(keys.Left, KeyCommandPress.Down, new WalkLeftCommand()),
-            new KeyCommand<IWalkingMan>(keys.Right, KeyCommandPress.Down, new WalkRightCommand()),
-            new KeyCommand<IWalkingMan>(keys.Fire, KeyCommandPress.Down, new FireCommand()),
+            new KeyCommand<ICharacterActions>(keys.Left, KeyCommandPress.Down, new WalkLeftCommand()),
+            new KeyCommand<ICharacterActions>(keys.Right, KeyCommandPress.Down, new WalkRightCommand()),
+            new KeyCommand<ICharacterActions>(keys.Fire, KeyCommandPress.Down, new FireCommand()),
 
-            new KeyCommand<IWalkingMan>(keys.Up, KeyCommandPress.Up, new WalkUpCommandRelease()
+            new KeyCommand<ICharacterActions>(keys.Up, KeyCommandPress.Up, new WalkUpCommandRelease()
                 ),
-            new KeyCommand<IWalkingMan>(keys.Down, KeyCommandPress.Up, new WalkDownCommandRelease()
+            new KeyCommand<ICharacterActions>(keys.Down, KeyCommandPress.Up, new WalkDownCommandRelease()
                 ),
-            new KeyCommand<IWalkingMan>(keys.Left, KeyCommandPress.Up, new WalkLeftCommandRelease()),
-            new KeyCommand<IWalkingMan>(keys.Right, KeyCommandPress.Up, new WalkRightCommandRelease()),
+            new KeyCommand<ICharacterActions>(keys.Left, KeyCommandPress.Up, new WalkLeftCommandRelease()),
+            new KeyCommand<ICharacterActions>(keys.Right, KeyCommandPress.Up, new WalkRightCommandRelease()),
         };
 
         private List<KeyCommand<T>> MapMouseCommand<T>(MouseButton btn, Dictionary<KeyCommandPress, IActorCommand<T>> cmds) => cmds.Select(cmd => new KeyCommand<T>(btn, cmd.Key, cmd.Value)).ToList();
 
         private List<KeyCommand<T>> MapKeyboardCommand<T>(Keys key, Dictionary<KeyCommandPress, IActorCommand<T>> cmds) => cmds.Select(cmd => new KeyCommand<T>(key, cmd.Key, cmd.Value)).ToList();
 
-        private List<KeyCommand<IWalkingMan>> WalkingManCommands(Dictionary<string, object> inputs)
+        private List<KeyCommand<ICharacterActions>> WalkingManCommands(Dictionary<string, object> inputs)
         {
             var Up = inputs["Up"] switch
             {
-                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Clicked] = new WalkUpCommand(),
                     [KeyCommandPress.Released] = new WalkUpCommandRelease()
                 }),
-                Keys key => MapKeyboardCommand<IWalkingMan>(key, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                Keys key => MapKeyboardCommand<ICharacterActions>(key, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Down] = new WalkUpCommand(),
                     [KeyCommandPress.Up] = new WalkUpCommandRelease()
@@ -59,12 +59,12 @@ namespace GameData.Commands
 
             var Down = inputs["Down"] switch
             {
-                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Clicked] = new WalkDownCommand(),
                     [KeyCommandPress.Released] = new WalkDownCommandRelease()
                 }),
-                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Down] = new WalkDownCommand(),
                     [KeyCommandPress.Up] = new WalkDownCommandRelease()
@@ -74,12 +74,12 @@ namespace GameData.Commands
 
             var Left = inputs["Left"] switch
             {
-                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Clicked] = new WalkLeftCommand(),
                     [KeyCommandPress.Released] = new WalkLeftCommandRelease()
                 }),
-                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Down] = new WalkLeftCommand(),
                     [KeyCommandPress.Up] = new WalkLeftCommandRelease()
@@ -89,12 +89,12 @@ namespace GameData.Commands
 
             var Right = inputs["Right"] switch
             {
-                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Clicked] = new WalkRightCommand(),
                     [KeyCommandPress.Released] = new WalkRightCommandRelease()
                 }),
-                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Down] = new WalkRightCommand(),
                     [KeyCommandPress.Up] = new WalkRightCommandRelease()
@@ -104,11 +104,11 @@ namespace GameData.Commands
 
             var Fire = inputs["Fire"] switch
             {
-                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Clicked] = new FireCommand()
                 }),
-                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Down] = new FireCommand()
                 }),
@@ -117,11 +117,11 @@ namespace GameData.Commands
 
             var FireSpecial = inputs["Special"] switch
             {
-                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Clicked] = new FireSpecialCommand()
                 }),
-                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Down] = new FireSpecialCommand()
                 }),
@@ -130,11 +130,11 @@ namespace GameData.Commands
 
             var Jump = inputs["Jump"] switch
             {
-                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Clicked] = new GameData.Commands.WalkingMan.JumpCommand()
                 }),
-                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<IWalkingMan>>
+                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
                     [KeyCommandPress.Down] = new GameData.Commands.WalkingMan.JumpCommand()
                 }),
@@ -229,12 +229,12 @@ namespace GameData.Commands
         };
 
 
-        public static List<KeyCommand<IWalkingMan>> GetWalkingCommands(Dictionary<string, object> desktopInput)
+        public static List<KeyCommand<ICharacterActions>> GetWalkingCommands(Dictionary<string, object> desktopInput)
         {
             return _cmd.Value.WalkingManCommands(desktopInput);
         }
 
-        public static List<KeyCommand<IWalkingMan>> GetWalkingCommands(PlayerKeyboardControls keys)
+        public static List<KeyCommand<ICharacterActions>> GetWalkingCommands(PlayerKeyboardControls keys)
         {
             return _cmd.Value.WalkingCommands(keys);
         }

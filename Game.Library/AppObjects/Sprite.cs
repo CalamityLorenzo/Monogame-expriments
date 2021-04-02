@@ -3,9 +3,9 @@ using GameLibrary.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 
-namespace Character.Container.Character
+namespace GameLibrary.AppObjects
 {
-    internal class Sprite : IDrawableGameObject, IInteractiveGameObject
+    public class Sprite : IDrawableGameObject, IInteractiveGameObject
     {
         private readonly Texture2D atlas;
         private readonly SpriteBatch spriteBatch;

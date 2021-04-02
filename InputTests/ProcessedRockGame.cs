@@ -27,7 +27,7 @@ namespace InputTests
         private InputsStateManager inputsManager;
         private MouseKeyboardInputsReciever inputsProcessor;
 
-        private List<KeyCommand<IWalkingMan>> player1Inputs;
+        private List<KeyCommand<ICharacterActions>> player1Inputs;
         private List<KeyCommand<Rotator>> rTaterInputs;
         private MovingObject movingObject;
 

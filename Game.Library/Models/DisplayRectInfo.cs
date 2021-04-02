@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -24,7 +25,10 @@ namespace GameLibrary.Models
         public Rectangle DestinationArea { get; }
         public Vector2 DestinationStart { get; }
 
-
+        public override string ToString()
+        {
+            return $"Start:{DestinationStart}";
+        }
     }
 
     public class BaseRectInfo

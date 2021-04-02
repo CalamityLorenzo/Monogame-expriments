@@ -73,14 +73,11 @@ namespace GameLibrary.Drawing.Backgrounds
 
         private DisplayRectInfo[] CreateDisplayRectangles(Vector2 inboundsPosition, Rectangle destination)
         {
-            var displayInfo = new List<DisplayRectInfo>();
-            // Fractions for accuracy are added back later
-            var offsetFraction = inboundsPosition.GetMantissa();
-
+            var displayInfo = new List<DisplayRectInfo>(); 
             // Ensure we are at the top left corner
             // These are subtracted out again 
             var moduloOffset = new Vector2((int)Math.Floor(inboundsPosition.X) % tileDimensions.Width, (int)Math.Floor(inboundsPosition.Y) % tileDimensions.Height);
-            var normalisedBackgroundPosition = Vector2.Subtract(Vector2.Subtract(inboundsPosition, moduloOffset), offsetFraction);
+            var normalisedBackgroundPosition = Vector2.Subtract(inboundsPosition, moduloOffset); // Vector2.Subtract(, offsetFraction);
 
             var displayRowLength = destination.Width / tileDimensions.Width;
             var displayColLength = destination.Height / tileDimensions.Height;

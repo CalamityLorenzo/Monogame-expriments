@@ -1,9 +1,6 @@
 using GameLibrary.Config.App;
+using GameLibrary.Configuration;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using System.Windows.Forms;
 
 namespace Parrallax.Eightway
 {
@@ -18,9 +15,11 @@ namespace Parrallax.Eightway
             var configData = ConfigurationBuilder.Manager
                              .LoadJsonFile("opts.json")
                              .LoadJsonFile("opts2.json")
+                             .AddJsonConverter(new Vector2Converter())
                              .Build();
 
-            using (var game = new MapsHost(configData))
+            //using (var game = new MapsHost(configData))
+            using (var game = new ParrallaxHost(configData))
                 game.Run();
         }
     }

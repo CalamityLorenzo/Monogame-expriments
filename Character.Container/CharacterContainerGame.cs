@@ -23,7 +23,7 @@ namespace Character.Container
         private ConfigurationData configData;
         private InputsStateManager inputManager;
         private MouseKeyboardInputsReciever inputReceiver;
-        private List<KeyCommand<IWalkingMan>> movementCmds;
+        private List<KeyCommand<ICharacterActions>> movementCmds;
 
         public BasicVelocityManager VelocityManager { get; private set; }
 
@@ -51,7 +51,11 @@ namespace Character.Container
 
             this.assetsLoader = new ContainerAssetsLoader(this.configData, this._graphics.GraphicsDevice);
 
-            this.TheState.ScreenResolution = _graphics.GraphicsDevice.Viewport.Bounds;
+            this.TheState = new World()
+            {
+                ViewPort = _graphics.GraphicsDevice.Viewport,
+                ScreenResolution = new Vector2(this.GraphicsDevice.Adapter.CurrentDisplayMode.Width, this.GraphicsDevice.Adapter.CurrentDisplayMode.Width)
+            };
 
             // Controls
             var p1Controls = assetsLoader.Player1Controls();
@@ -78,7 +82,7 @@ namespace Character.Container
             var Body = new Sprite(this._spriteBatch, bodyAtlas, bodyAnimationPlayer, new Vector2(100, 100));
             var Head = new Sprite(this._spriteBatch, bodyAtlas, headAnimationsPlayer, new Vector2(100, 100));
             var baseGun = new BaseGun(bulletFactory, new Vector2(40, 50));
-            this.ManContainer = new ManContainer(new Point(40, 50), VelocityManager, new Vector2(87, 87), new FindVector(Mouse.GetState().Position, this.inputManager), baseGun, Body, Head);
+            this.ManContainer = new ManContainer(new Point(40, 50), VelocityManager, new Vector2(87, 87), baseGun, Body, Head);
             base.Initialize();
         }
 
@@ -97,7 +101,13 @@ namespace Character.Container
 
             this.inputManager.Update(gameTime, Keyboard.GetState(), Mouse.GetState());
 
-            this.TheState.InputState = inputManager.GetInputState();
+            this.TheState = new World
+            {
+                InputState = inputManager.GetInputState(),
+                ScreenResolution = TheState.ScreenResolution,
+                ViewPort = TheState.ViewPort,
+                Map = TheState.Map
+            };
 
             var activeCommand = this.inputReceiver.MapKeyboardCommands(this.movementCmds);
             activeCommand.ForEach(a => a.Execute(ManContainer));

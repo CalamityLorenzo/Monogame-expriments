@@ -5,9 +5,6 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using GameVector = Microsoft.Xna.Framework.Vector2;
 namespace GameLibrary.Extensions
 {
     public static class GeneralExtensions

@@ -8,7 +8,7 @@ using System;
 
 namespace InputTests.MovingMan
 {
-    class MovingObject : IWalkingMan
+    class MovingObject : ICharacterActions
     {
         private readonly SpriteBatch spriteBatch;
         private readonly Dimensions blockSize;

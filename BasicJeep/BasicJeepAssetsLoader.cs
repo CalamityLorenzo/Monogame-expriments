@@ -1,6 +1,7 @@
 ﻿using GameLibrary.Animation;
 using GameLibrary.Animation.Utilities;
 using GameLibrary.Config.App;
+using GameLibrary.Configuration;
 using GameLibrary.Extensions;
 using Microsoft.Xna.Framework.Graphics;
 using System.Collections.Generic;

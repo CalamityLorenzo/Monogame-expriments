@@ -7,7 +7,7 @@ using System;
 
 namespace InputTests.MovingMan
 {
-    internal class MovingObjectAnimation : IWalkingMan
+    internal class MovingObjectAnimation : ICharacterActions
     {
         private readonly SpriteBatch spriteBatch;
         private readonly Texture2D walkLeft;

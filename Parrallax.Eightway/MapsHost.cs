@@ -31,7 +31,7 @@ namespace Parrallax.Eightway
         public MouseKeyboardInputsReciever InputsReciever { get; private set; }
 
         private List<KeyCommand<Rotator>> rTateCmds;
-        private List<KeyCommand<IWalkingMan>> p1Cmds;
+        private List<KeyCommand<ICharacterActions>> p1Cmds;
         private List<KeyCommand<IBasicMotion>> mapCmds;
         private BoundedBackground backgroundMap;
 
@@ -39,6 +39,7 @@ namespace Parrallax.Eightway
         {
             this.configData = configData;
             Content.RootDirectory = "Content";
+            this.IsMouseVisible = true;
             graphics = new GraphicsDeviceManager(this);
 
         }
@@ -80,7 +81,7 @@ namespace Parrallax.Eightway
             // It's also the entire map for the backfround.
             var atlasRects = FramesGenerator.GenerateFrames(new FrameInfo[] { new FrameInfo(32, 32) }, new Dimensions(96, 64));
             var map = GeneralExtensions.LoadCsvMapData("Maps/BorderMap.csv");
-            var topLeft = new Vector2(-123, -127);
+            var topLeft = configData.Get<Vector2>("MapStartPos");
             this.velocityManager = new MapVelocityManager(0f, 0f, 0.8f, 0.8f);
             this.rotator = new Rotator(27, 99);
             this.inputState = new InputsStateManager();

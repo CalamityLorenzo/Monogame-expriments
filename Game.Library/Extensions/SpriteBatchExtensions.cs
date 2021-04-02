@@ -1,4 +1,5 @@
-﻿using GameLibrary.Drawing;
+﻿using GameLibrary.AppObjects;
+using GameLibrary.Drawing;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -35,6 +36,14 @@ namespace GameLibrary.Extensions
         public static Texture2D CreateFilledRectTexture(this SpriteBatch @this, Rectangle dimensions, Color colour)
         {
             var filledColour = Enumerable.Range(0, dimensions.Width * dimensions.Height).Select(o=>colour);
+            var texture = new Texture2D(@this.GraphicsDevice, dimensions.Width, dimensions.Height);
+            texture.SetData<Color>(filledColour.ToArray());
+            return texture;
+        }
+
+        public static Texture2D CreateFilledRectTexture(this SpriteBatch @this, Dimensions dimensions, Color colour)
+        {
+            var filledColour = Enumerable.Range(0, dimensions.Width * dimensions.Height).Select(o => colour);
             var texture = new Texture2D(@this.GraphicsDevice, dimensions.Width, dimensions.Height);
             texture.SetData<Color>(filledColour.ToArray());
             return texture;

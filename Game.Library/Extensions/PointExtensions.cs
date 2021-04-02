@@ -1,11 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
-namespace GameLibrary
+namespace GameLibrary.Extensions
 {
     public static class PointExtensions
     {
@@ -18,5 +13,14 @@ namespace GameLibrary
         {
             return new Point(@this.X, @this.Y + y);
         }
+
+        public static Point Add(this Point @this, int x, int y) => new Point(@this.X + x, @this.Y + y);
+
+        public static Point Subtract(this Point @this, Point point)
+        {
+            return new Point(@this.X - point.X, @this.Y - point.Y);
+        }
+
+        public static Point Subtract(this Point @this, Vector2 toPoint) => PointExtensions.Subtract(@this, toPoint.ToPoint());
     }
 }

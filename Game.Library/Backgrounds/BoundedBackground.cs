@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Diagnostics;
-using GameLibrary;
-using GameLibrary.AppObjects;
+﻿using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using GameLibrary.Models;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using System.Collections.Generic;
 
 namespace GameLibrary.Drawing.Backgrounds
 {
@@ -49,8 +46,6 @@ namespace GameLibrary.Drawing.Backgrounds
             this.mapDimensions = new Dimensions(bounds.Width / tileDimensions.Width, bounds.Height / tileDimensions.Height);
         }
 
-
-
         public void Update(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
@@ -80,21 +75,25 @@ namespace GameLibrary.Drawing.Backgrounds
             // This can be negative (if the map is off screen, or offset for whatever reason)
             // so be careful
             // floatRoat
-            var mantissa = backgroundTopLeft.GetMantissa();
+            //var mantissa = backgroundTopLeft.GetMantissa();
             // no floating info
-            var integralPos = Vector2.Subtract(backgroundTopLeft, mantissa);
+
+            var integralPos = backgroundTopLeft;
+            // The Fractional difference, if integralPos is not a factor of TileWidth, TileHeighr
+            // Then these two bump the start position to the correct pixel.
+
             var moduloX = integralPos.X % tileDimensions.Width;
             var moduloY = integralPos.Y % tileDimensions.Height;
             // removed t
-            var normalised = Vector2.Subtract(integralPos, new Vector2(moduloX, moduloY)).ToPoint();
+            var screenOffset = Vector2.Subtract(integralPos, new Vector2(moduloX, moduloY)).ToPoint();
             for (var y = 0; y < viewport.Height; y += tileDimensions.Height)
             {
-                var bgNormRow = normalised.AddY(y);
+                var bgNormRow = screenOffset.AddY(y);
                 for (var x = 0; x < viewport.Width; x += tileDimensions.Width)
                 {
                     var bgNormCols = bgNormRow.AddX(x);
                     // 0 and above we are in the map!
-                    if (bgNormCols.X > -1)
+                    if (bgNormCols.X > -1) // Not off screen to the left. though I notice we don't tsop countin pass the righht hand side.
                     {
                         var mapIndexX = bgNormCols.X / tileDimensions.Width;
                         var mapIndexY = bgNormCols.Y / tileDimensions.Height;
@@ -112,7 +111,7 @@ namespace GameLibrary.Drawing.Backgrounds
                             {
                                 displayRects.Add(new DisplayRectInfo(sprite, Rectangle.Empty,
                                                 this.atlasRects[displayRectIndex]
-                                                , Vector2.Subtract(new Vector2(x - moduloX, y - moduloY), mantissa)));
+                                                , new Vector2(x - moduloX, y - moduloY)));
                             }
                         }
                     }

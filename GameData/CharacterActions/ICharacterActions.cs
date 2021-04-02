@@ -1,6 +1,6 @@
 ﻿namespace GameData.CharacterActions
 {
-    public interface IWalkingMan
+    public interface ICharacterActions
     {
         void MoveLeft();
         void MoveRight();

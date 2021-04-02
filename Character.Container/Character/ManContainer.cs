@@ -1,14 +1,14 @@
-﻿using GameData.CharacterActions;
+﻿ using GameData.CharacterActions;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using GameLibrary.Interfaces;
 using Microsoft.Xna.Framework;
-using SharpDX.MediaFoundation;
+using System;
 using System.Diagnostics;
 
 namespace Character.Container.Character
 {
-    internal class ManContainer : IWalkingMan
+    internal class ManContainer : ICharacterActions, IInteractiveGameObject
     {
         public World World { get; private set; }
 
@@ -20,12 +20,11 @@ namespace Character.Container.Character
         private bool isJumping;
         private Vector2 headOffset;
         private Sprite head;
-        private FindVector findVector;
         private readonly BaseGun gun;
         private float previousFacingAngle;
         private float currentFacingAngle;
 
-        public ManContainer(Point startPosition, IVelocinator velocity, Vector2 speed, FindVector findVector, BaseGun gun, Sprite body, Sprite head)
+        public ManContainer(Point startPosition, IVelocinator velocity, Vector2 speed, BaseGun gun, Sprite body, Sprite head)
         {
             this._currentPosition = startPosition.ToVector2();
             this.velocity = velocity;
@@ -40,13 +39,12 @@ namespace Character.Container.Character
             var headStart = startPosition.ToVector2().Subtract(headOffset).ToPoint();
             this.head.SetCurrentPosition(headStart);
 
-            this.findVector = findVector;
             //Set the relative point for calculating angles
-            findVector.SetCurrentPosition(startPosition.ToVector2()
+
+            this.gun = gun;
+            this.gun.SetCurrentPosition(startPosition
                                                 .Subtract(headOffset)
                                                 .AddX(this.head.Area.Width / 2));
-            this.gun = gun;
-            this.gun.SetCurrentPosition(findVector.GetPosition());
         }
 
         public void SetCurrentPosition(Point newPosition)
@@ -59,6 +57,8 @@ namespace Character.Container.Character
         }
         public Point CurrentPosition { get => _currentPosition.ToPoint(); }
 
+        public Rectangle Area { get => this._area; }
+
         public void Update(float deltaTime, World theState)
         {
             this.World = theState;
@@ -69,19 +69,22 @@ namespace Character.Container.Character
             this.body.SetCurrentPosition(_currentPosition.ToPoint());
             this.head.SetCurrentPosition(_currentPosition.Subtract(headOffset).ToPoint());
             // Where we reference our point from 
-            findVector.SetCurrentPosition(this.head.CurrentPosition.ToVector2().AddX(this.head.Area.Width / 2));
-            this.gun.SetCurrentPosition(findVector.GetPosition());
+            this.gun.SetCurrentPosition(this.head.CurrentPosition.AddX((int)this.head.Area.Width / 2));
             this.body.Update(deltaTime);
             this.head.Update(deltaTime);
             this.gun.Update(deltaTime);
-            findVector.Update(deltaTime);
             //this.body.SetCurrentPosition(_currentPosition.ToPoint());
-            this.UpdateAnimation();
+            this.UpdateAnimation(World.InputState.MousePosition.ToVector2());
         }
 
-        private void UpdateAnimation()
+        private void UpdateAnimation(Vector2 mousePosition)
         {
-            var headAngle = this.findVector.GetAngle();
+
+            var _vectorToDestination = Vector2.Subtract(mousePosition, _currentPosition);
+            var radians = Math.Atan2(_vectorToDestination.Y, _vectorToDestination.X);
+
+            var rawAngle = (float)(radians * (180 / 3.14159));
+            var headAngle = rawAngle + (rawAngle <= -90 ? 360 + 90 : 90);
             if (headAngle != currentFacingAngle)
             {
                 previousFacingAngle = currentFacingAngle;
@@ -120,6 +123,8 @@ namespace Character.Container.Character
             this.gun.Draw(gameTime);
         }
 
+
+        #region IWALKINGMAN
         public void MoveLeft()
         {
             this.velocity.SetVelocityX(-this._speed.X);
@@ -128,7 +133,6 @@ namespace Character.Container.Character
                 this.body.SetAnimation("Left");
             }
             this.head.SetAnimation("FaceLeft");
-
 
         }
 
@@ -198,7 +202,12 @@ namespace Character.Container.Character
 
         public void Fire()
         {
-            
+            var _vectorToDestination = Vector2.Subtract(this.World.InputState.MousePosition.ToVector2(), _currentPosition);
+            Debug.WriteLine($"Raw : {_vectorToDestination}");
+            _vectorToDestination.Normalize();
+            Debug.WriteLine($"Normalized: ${_vectorToDestination}");
+            var radians = Math.Atan2(_vectorToDestination.Y, _vectorToDestination.X);
+            Debug.WriteLine($"Radians: ${radians}");
             this.gun.Fire(this.World.InputState.MousePosition.ToVector2());
 
         }
@@ -210,7 +219,8 @@ namespace Character.Container.Character
 
         public void Standing()
         {
-           // throw new System.NotImplementedException();
+            // throw new System.NotImplementedException();
         }
+        #endregion
     }
 }

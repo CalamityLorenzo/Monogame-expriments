@@ -1,10 +1,4 @@
 ﻿using Microsoft.Xna.Framework;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Runtime.InteropServices;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace GameLibrary.AppObjects
 {
@@ -16,8 +10,8 @@ namespace GameLibrary.AppObjects
             Width = width;
             Height = height;
         }
-        public int Width { get; set; }
-        public int Height { get; set; }
+        public int Width { get;  }
+        public int Height { get;  }
 
         public static Dimensions Zero => new Dimensions(0, 0);
 
@@ -27,6 +21,7 @@ namespace GameLibrary.AppObjects
         }
 
         public Point ToPoint()=> new Point(Width, Height);
+        public Vector2 ToVector2() => new Vector2(Width, Height);
     }
 
 

@@ -1,18 +1,21 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameLibrary.Interfaces;
+using Microsoft.Xna.Framework;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 
 namespace Character.Container.Character
 {
-    internal class BaseGun
+    internal class BaseGun: IInteractiveGameObject, IDrawableGameObject
     {
         private Vector2 currentPosition;
         private int currentBulletType;
 
         private IList<BaseBullet> FiredBullets { get; set; }
         public BulletFactory Factory { get; }
-        public Vector2 CurrentPosition { get => currentPosition; }
+        public Point CurrentPosition { get => currentPosition.ToPoint(); }
+
+        public Rectangle Area => throw new NotImplementedException();
 
         private Random rnd = new Random();
 
@@ -46,25 +49,27 @@ namespace Character.Container.Character
             };
         }
 
-        public void SetCurrentPosition(Vector2 newPosition)
+        public void SetCurrentPosition(Point newPosition)
         {
-            currentPosition = newPosition;
+            currentPosition = newPosition.ToVector2();
         }
 
         public virtual void Fire(Vector2 direction)
         {
             var bullet = this.Factory.CreateBullet(rnd.Next(0, 3));
-            var magnitude = direction.Length();
+
             bullet.SetCurrentPosition(this.currentPosition.ToPoint());
             // Calculate the unit vector between the gun, and the destination vector, to be used as a direction
             var relativeVector = Vector2.Subtract(direction, this.currentPosition);
             relativeVector.Normalize();
-            Debug.WriteLine(relativeVector);
-            Debug.WriteLine(this.currentPosition.ToPoint());
-            bullet.SetDirection(relativeVector);
 
+            bullet.SetDirection(relativeVector);
             bullet.SetSpeed(rnd.Next(95, 130));
             this.FiredBullets.Add(bullet);
+            
+            Debug.WriteLine($"Fire: {relativeVector}");
+            Debug.WriteLine($"Fire: {relativeVector}");
+            Debug.WriteLine($"Fire Start : {this.currentPosition.ToPoint()}");
         }
 
         public void Draw(GameTime gameTime)
@@ -77,5 +82,7 @@ namespace Character.Container.Character
         {
             this.currentBulletType = currentBullet;
         }
+
+       
     }
 }

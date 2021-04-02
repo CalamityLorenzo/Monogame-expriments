@@ -1,12 +1,13 @@
 {
+  "PlayerAtlas": "Content/MovingManAtlas.png",
   "ScreenOptions": {
     "ScreenWidth": 1024,
     "ScreenHeight": 768,
-    "FullScreen": true 
+    "FullScreen": true
   },
   "GameOptions": {
     "Velocity": 0.5,
-    "StartVector": [100,100]
+    "StartVector": [ 100, 100 ]
   },
   "Player1Controls": {
     "Up": "W",
@@ -15,6 +16,6 @@
     "Right": "D",
     "Fire": "Enter",
     "Action": "LeftControl",
-    "Special":  "Space"
+    "Special": "Space"
   }
 }

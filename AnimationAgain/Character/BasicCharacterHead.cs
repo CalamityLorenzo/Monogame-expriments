@@ -26,7 +26,6 @@ namespace AnimationAgain.Character
         private float previousFacingAngle;
 
         private Vector2 currentMouseTerminal;
-        private Vector2 previousMouseTerminal;
         private float mouseActiveTimer = 0f;
 
         /// <summary>

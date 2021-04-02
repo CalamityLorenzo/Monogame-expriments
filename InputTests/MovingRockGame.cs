@@ -23,7 +23,7 @@ namespace InputTests
         private InputsStateManager inputsManager;
 
         private MovingObject movingObject;
-        private List<KeyCommand<IWalkingMan>> p1Commands;
+        private List<KeyCommand<ICharacterActions>> p1Commands;
         private MouseKeyboardInputsReciever inputProcessor;
 
         public BasicVelocityManager VelocityManager { get; private set; }

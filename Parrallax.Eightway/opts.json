@@ -2,11 +2,15 @@
   "ScreenOptions": {
     "ScreenWidth": 1024,
     "ScreenHeight": 768,
-    "FullScreen": true 
+    "FullScreen": true
   },
   "GameOptions": {
     "Velocity": 0.5,
-    "StartVector": [100,100]
+    "StartVector": [ 100, 100 ]
+  },
+  "MapStartPos": {
+    "X": -123,
+    "Y": -127
   },
   "Player1Controls": {
     "Up": "W",

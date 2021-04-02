@@ -4,9 +4,9 @@ using System;
 
 namespace GameData.Commands.WalkingMan
 {
-    class WalkUpCommand : IActorCommand<IWalkingMan>
+    class WalkUpCommand : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.MoveUp();
         }
@@ -17,9 +17,9 @@ namespace GameData.Commands.WalkingMan
         }
     }
 
-    class WalkDownCommand : IActorCommand<IWalkingMan>
+    class WalkDownCommand : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.MoveDown();
         }
@@ -30,9 +30,9 @@ namespace GameData.Commands.WalkingMan
         }
     }
 
-    class WalkLeftCommand : IActorCommand<IWalkingMan>
+    class WalkLeftCommand : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.MoveLeft();
         }
@@ -43,9 +43,9 @@ namespace GameData.Commands.WalkingMan
         }
     }
 
-    class WalkRightCommand : IActorCommand<IWalkingMan>
+    class WalkRightCommand : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.MoveRight();
         }
@@ -56,9 +56,9 @@ namespace GameData.Commands.WalkingMan
         }
     }
 
-    public class WalkUpCommandRelease : IActorCommand<IWalkingMan>
+    public class WalkUpCommandRelease : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.EndMoveUp();
         }
@@ -69,9 +69,9 @@ namespace GameData.Commands.WalkingMan
         }
     }
 
-    public class WalkDownCommandRelease : IActorCommand<IWalkingMan>
+    public class WalkDownCommandRelease : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.EndMoveDown();
         }
@@ -81,9 +81,9 @@ namespace GameData.Commands.WalkingMan
         }
     }
 
-    public class WalkLeftCommandRelease : IActorCommand<IWalkingMan>
+    public class WalkLeftCommandRelease : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.EndMoveLeft();
         }
@@ -94,9 +94,9 @@ namespace GameData.Commands.WalkingMan
         }
     }
 
-    public class WalkRightCommandRelease : IActorCommand<IWalkingMan>
+    public class WalkRightCommandRelease : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.EndMoveRight();
         }
@@ -108,9 +108,9 @@ namespace GameData.Commands.WalkingMan
 
     }
 
-    public class FireCommand : IActorCommand<IWalkingMan>
+    public class FireCommand : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.Fire();
         }
@@ -122,9 +122,9 @@ namespace GameData.Commands.WalkingMan
         }
     }
 
-    public class JumpCommand : IActorCommand<IWalkingMan>
+    public class JumpCommand : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.Jump();
         }
@@ -136,9 +136,9 @@ namespace GameData.Commands.WalkingMan
         }
     }
 
-    class FireSpecialCommand : IActorCommand<IWalkingMan>
+    class FireSpecialCommand : IActorCommand<ICharacterActions>
     {
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             actor.FireSpecial();
         }
@@ -148,16 +148,16 @@ namespace GameData.Commands.WalkingMan
         {
             return "Specials";
         }
-    }
+    } 
 
-    class NULLWalkingManCommand : IActorCommand<IWalkingMan>
+    class NULLWalkingManCommand : IActorCommand<ICharacterActions>
     {
         private NULLWalkingManCommand() { }
 
         private static readonly Lazy<NULLWalkingManCommand> _privateNull = new Lazy<NULLWalkingManCommand>(() => new NULLWalkingManCommand());
-        public static IActorCommand<IWalkingMan> GetCommand => _privateNull.Value;
+        public static IActorCommand<ICharacterActions> GetCommand => _privateNull.Value;
 
-        public void Execute(IWalkingMan actor)
+        public void Execute(ICharacterActions actor)
         {
             //;
         }

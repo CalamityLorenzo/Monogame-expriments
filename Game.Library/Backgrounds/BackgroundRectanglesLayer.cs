@@ -100,9 +100,9 @@ namespace GameLibrary.Drawing.Backgrounds
             var sourceWidth = tSwidth >= MaxWidth ? MaxWidth : tSwidth;
             var sourceHeight = tsHeight >= MaxHeight ? MaxHeight : tsHeight;
 
-            var vectorOffset = currentPosition.GetMantissa();//  new Vector2(currentPosition.X - (float)Math.Floor(currentPosition.X), currentPosition.Y - (float)Math.Floor(currentPosition.Y));
+            //var vectorOffset = currentPosition.GetMantissa();//  new Vector2(currentPosition.X - (float)Math.Floor(currentPosition.X), currentPosition.Y - (float)Math.Floor(currentPosition.Y));
 
-            var rootRectangle = new BaseRectInfo(new Rectangle(cameraBoundaries.X, cameraBoundaries.Y, sourceWidth, sourceHeight), vectorOffset);
+            var rootRectangle = new BaseRectInfo(new Rectangle(cameraBoundaries.X, cameraBoundaries.Y, sourceWidth, sourceHeight), Vector2.Zero);
             var currentRect = rootRectangle;
             var rects = new List<BaseRectInfo>();
             rects.Add(rootRectangle);
@@ -121,7 +121,7 @@ namespace GameLibrary.Drawing.Backgrounds
                     var currentMaxWidth = cameraBoundaries.Width - rowX;
                     var nextRect = new BaseRectInfo(
                             new Rectangle(rowX, currentRect.DestinationArea.Y, setWidth >= MaxWidth ? MaxWidth : setWidth > currentMaxWidth ? currentMaxWidth : setWidth, currentRect.DestinationArea.Height),
-                            new Vector2(rowX - vectorOffset.X, currentRect.DestinationArea.Y - vectorOffset.Y)
+                            new Vector2(rowX, currentRect.DestinationArea.Y)
                             ); ;
                     rects.Add(nextRect);
                     currentRect = nextRect;
@@ -142,7 +142,7 @@ namespace GameLibrary.Drawing.Backgrounds
                     var setY = currentRect.DestinationArea.Y + currentRect.DestinationArea.Height;
                     currentRect = new BaseRectInfo(
                             new Rectangle(cameraBoundaries.X, setY, sourceWidth, setHeight >= MaxHeight ? MaxHeight : setHeight > currentMaxHeight ? currentMaxHeight : setHeight),
-                            vectorOffset.AddY(setY));
+                            Vector2.Zero.AddY(setY));
                     rects.Add(currentRect);
                 }
             }

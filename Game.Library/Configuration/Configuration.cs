@@ -94,7 +94,7 @@ namespace GameLibrary.Config.App
             return jsonElement;
         }
 
-        public T Get<T>(string propertyName, Func<string, T> mapFunc) where T : class
+        public T Get<T>(string propertyName, Func<string, T> mapFunc) 
         {
             var rawData = "";
             var map = mapFunc ?? new Func<string, T>((rawStr) => JsonSerializer.Deserialize<T>(rawStr, serializerOptions));
@@ -111,7 +111,7 @@ namespace GameLibrary.Config.App
         }
 
         // Simple Case leaning on Json.net
-        public T Get<T>(string propertyName) where T : class
+        public T Get<T>(string propertyName)
         {
             string property = "";
             if (propertyName.Contains(":"))
