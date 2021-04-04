@@ -1,65 +1,58 @@
-﻿using GameData.CharacterActions;
+﻿using Collisions.Objects;
+using GameData.CharacterActions;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
-using GameLibrary.Interfaces;
+using GameLibrary.GameObjects;
 using Microsoft.Xna.Framework;
+using System.Collections.Generic;
 
 namespace CollisionsGame
 {
-    class BatContainer : IInteractiveGameObject, ICharacterActions
+    class BatContainer : GameAgentObject, ICharacterActions
     {
         private readonly Sprite batSprite;
+        private readonly BaseGun theGun;
         private readonly IVelocinator velocity;
         private readonly Vector2 velocitySpeed;
-        private Vector2 _currentPosition;
-        private Vector2 _previousPosition;
-
-        public Point CurrentPosition => _currentPosition.ToPoint();
-
-        public Rectangle Area => new Rectangle(this.CurrentPosition.Add(8,4), new Point( this.batSprite.Area.Width-22, batSprite.Area.Height-25));
-
+        
+        public override Rectangle Area => new Rectangle(this.CurrentPosition.Add(8,4), new Point( this.batSprite.Area.Width-22, batSprite.Area.Height-25));
+        public IList<BaseBullet> FiredBullets => this.theGun.FiredBullets;
         public bool Leftin { get; private set; }
         public bool Rightin { get; private set; }
         public bool Upsie { get; private set; }
         public bool Downsie { get; private set; }
 
-        public BatContainer(Sprite batSprite, Point startPos, IVelocinator velocity, Vector2 velocitySpeed)
+        public BatContainer(Sprite batSprite, Point startPos, BaseGun theGun, IVelocinator velocity, Vector2 velocitySpeed) : base(startPos)
         {
             this.batSprite = batSprite;
+            this.theGun = theGun;
             this.velocity = velocity;
             this.velocitySpeed = velocitySpeed;
             this.batSprite.SetCurrentPosition(startPos);
-            this._currentPosition = startPos.ToVector2();
         }
 
-        public void SetCurrentPosition(Point setPosition)
+        public override void Update(float deltaTime, World theState)
         {
-            this._currentPosition = setPosition.ToVector2();
-        }
-
-        public void Update(float deltaTime, World theState)
-        {
-            this._currentPosition = _currentPosition
-                    .Add(this.velocity.VelocityX * deltaTime, velocity.VelocityY * deltaTime);
+            var _previousPosition = CurrentPosition;
+            this.SetCurrentPosition(CurrentPosition.ToVector2()
+                    .Add(this.velocity.VelocityX * deltaTime, velocity.VelocityY * deltaTime).ToPoint());
 
             var elCollido = theState.MapCollision(this.Area);
 
             if (elCollido != null){
-                this._currentPosition = _previousPosition;
+                SetCurrentPosition( _previousPosition);
             }
 
-
-
-            batSprite.SetCurrentPosition(_currentPosition.ToPoint());
+            batSprite.SetCurrentPosition(CurrentPosition);
+            theGun.SetCurrentPosition(CurrentPosition);
+            this.theGun.Update(deltaTime, theState);
             this.batSprite.Update(deltaTime);
-            _previousPosition = _currentPosition;
         }
 
-
-
-        public void Draw(GameTime gametime)
+        public override void Draw(GameTime gametime)
         {
             this.batSprite.Draw(gametime);
+            this.theGun.Draw(gametime);
         }
 
         public void MoveLeft()
@@ -116,6 +109,7 @@ namespace CollisionsGame
 
         public void Fire()
         {
+            this.theGun.Fire(new Vector2(0, -1));
         }
 
         public void FireSpecial()

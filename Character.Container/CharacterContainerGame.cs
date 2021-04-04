@@ -79,8 +79,8 @@ namespace Character.Container
 
             var bulletFactory = new BulletFactory(this._spriteBatch, assetsLoader.BulletAtlases(), bulletAnimation);
 
-            var Body = new Sprite(this._spriteBatch, bodyAtlas, bodyAnimationPlayer, new Vector2(100, 100));
-            var Head = new Sprite(this._spriteBatch, bodyAtlas, headAnimationsPlayer, new Vector2(100, 100));
+            var Body = new Sprite(this._spriteBatch, bodyAtlas, bodyAnimationPlayer, new Point(100, 100));
+            var Head = new Sprite(this._spriteBatch, bodyAtlas, headAnimationsPlayer, new Point(100, 100));
             var baseGun = new BaseGun(bulletFactory, new Vector2(40, 50));
             this.ManContainer = new ManContainer(new Point(40, 50), VelocityManager, new Vector2(87, 87), baseGun, Body, Head);
             base.Initialize();

@@ -25,10 +25,16 @@
     <ProjectReference Include="..\GameData\GameData.csproj" />
   </ItemGroup>
   <ItemGroup>
+    <None Update="Config\opts2.json">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Update="Config\opts.json">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Content\bat.png">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Update="Content\LazerBolt.png">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Update="Maps\BorderMap.csv">

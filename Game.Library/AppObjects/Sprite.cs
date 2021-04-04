@@ -10,10 +10,10 @@ namespace GameLibrary.AppObjects
         private readonly Texture2D atlas;
         private readonly SpriteBatch spriteBatch;
         private readonly AnimationPlayer animPlayer;
-        private Vector2 _currentPosition;
+        private Point _currentPosition;
         private string _currentAnimationIndex;
 
-        public Sprite(SpriteBatch spritebatch, Texture2D atlas, AnimationPlayer animPlayer, Vector2 startPos)
+        public Sprite(SpriteBatch spritebatch, Texture2D atlas, AnimationPlayer animPlayer, Point startPos)
         {
             if (spritebatch is null)
             {
@@ -36,15 +36,14 @@ namespace GameLibrary.AppObjects
             this._currentPosition = startPos;
         }
 
-        public Point CurrentPosition { get => _currentPosition.ToPoint(); }
+        public Point CurrentPosition { get => _currentPosition; }
         public string CurrentFrameSet { get => this.animPlayer.CurrentSetName(); }
 
         public void SetCurrentPosition(Point newPosition)
         {
-            var newPositionVector = newPosition.ToVector2();
-            if (newPositionVector != this._currentPosition)
+            if (newPosition != this._currentPosition)
             {
-                this._currentPosition = newPositionVector;
+                this._currentPosition = newPosition;
             }
         }
 
@@ -65,7 +64,9 @@ namespace GameLibrary.AppObjects
 
         public void Draw(GameTime gameTime)
         {
-            spriteBatch.Draw(atlas, this._currentPosition, animPlayer.CurrentFrame(), Color.White);
+            var frame  = animPlayer.CurrentFrame();
+            var pos = new Rectangle(_currentPosition, new Point(frame.Width, frame.Height));
+            spriteBatch.Draw(atlas,pos , Color.White);
         }
 
     }

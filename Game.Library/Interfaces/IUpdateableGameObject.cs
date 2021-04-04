@@ -1,4 +1,5 @@
-﻿using Microsoft.Xna.Framework;
+﻿using GameLibrary.AppObjects;
+using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
 
 namespace GameLibrary.Interfaces
@@ -8,6 +9,11 @@ namespace GameLibrary.Interfaces
     public interface IUpdateableGameObject
     {
         void Update(float mlSinceupdate);
+    }
+
+    public interface IUpdateableGameAgent
+    {
+        void Update(float mlSinceupdate, World theState);
     }
 
     public interface IGameContainerUpdate

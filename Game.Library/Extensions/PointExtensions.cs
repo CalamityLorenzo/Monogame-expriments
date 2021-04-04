@@ -21,6 +21,11 @@ namespace GameLibrary.Extensions
             return new Point(@this.X - point.X, @this.Y - point.Y);
         }
 
+        public static Point Subtract(this Point @this, int x, int y)
+        {
+            return new Point(@this.X - x, @this.Y - y);
+        }
+
         public static Point Subtract(this Point @this, Vector2 toPoint) => PointExtensions.Subtract(@this, toPoint.ToPoint());
     }
 }

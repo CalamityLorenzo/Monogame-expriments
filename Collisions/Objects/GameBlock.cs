@@ -10,16 +10,17 @@ namespace CollisionsGame.Objects
         private readonly SpriteBatch spriteBatch;
         private readonly Texture2D block;
 
-        public string ReactionType { get; }
         public Point CurrentPosition { get; private set; }
         public Rectangle Area { get; private set; }
-        public GameBlock(SpriteBatch spriteBatch, Texture2D block, string reactionType, Point startPos, Dimensions dimensions)
+        public float Health { get; set; }
+
+        public GameBlock(SpriteBatch spriteBatch, Texture2D block, Point startPos, Dimensions dimensions, float startingHealth)
         {
             this.Area = new Rectangle(startPos, dimensions.ToPoint());
             this.spriteBatch = spriteBatch;
             this.block = block;
-            ReactionType = reactionType;
             this.CurrentPosition = startPos;
+            this.Health = startingHealth;
         }
 
         public void SetCurrentPosition(Point position)
@@ -39,6 +40,11 @@ namespace CollisionsGame.Objects
         public void Update(float mlSinceupdate)
         {
             // mmmm what happens if struck.
+        }
+
+        public virtual void Hit()
+        {
+            this.Health -= 10;
         }
     }
 }

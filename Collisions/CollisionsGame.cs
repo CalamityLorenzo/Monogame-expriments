@@ -1,4 +1,4 @@
-﻿using CollisionsGame.Objects;
+﻿using Collisions.Objects;
 using GameData;
 using GameData.CharacterActions;
 using GameData.Commands;
@@ -14,7 +14,6 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 
 namespace CollisionsGame
@@ -32,6 +31,8 @@ namespace CollisionsGame
 
         public ConfigurationData ConfigurationData { get; }
         public Texture2D RedSquare { get; private set; }
+        public BlockMap GameMapBlocks { get; private set; }
+
 
         private List<KeyCommand<ICharacterActions>> movementCmds;
 
@@ -66,16 +67,22 @@ namespace CollisionsGame
                 ScreenResolution = new Vector2(this.GraphicsDevice.Adapter.CurrentDisplayMode.Width, this.GraphicsDevice.Adapter.CurrentDisplayMode.Width),
             };
 
+            var bulletAnim = new AnimationPlayer(.200f, ConfigurationData.Get<IEnumerable<AnimationFramesCollection>>("Bullets:Frames").ToDictionary(a => a.Name, a => a));
+            var bulletAtlas = Texture2D.FromFile(this.GraphicsDevice, ConfigurationData.Get("BulletAtlas"));
+            var factory = new BulletFactory(_spriteBatch, new[] { bulletAtlas }, bulletAnim);
+
             var tileDimensions = ConfigurationData.Get<Dimensions>("TileDimensions");
             var mapRowsAndCols = ConfigurationData.Get<Dimensions>("MapDimensions");
             this.RedSquare = _spriteBatch.CreateFilledRectTexture(new Rectangle(0, 0, tileDimensions.Width, tileDimensions.Height), Color.DarkRed);
             this.collisionMap = new CollisionMap(map, tileDimensions, new Vector2(0, 0), TheState.ViewPort, mapRowsAndCols);
             var batAtlas = Texture2D.FromFile(this._graphics.GraphicsDevice, ConfigurationData.Get("BatAtlas"));
             var batAnimation = new AnimationPlayer(.200f, ConfigurationData.Get<IEnumerable<AnimationFramesCollection>>("BatFrames").ToDictionary(a => a.Name, a => a));
-            var bar = new Sprite(_spriteBatch, batAtlas, batAnimation, new Vector2(500, 500));
-            this.batContainer = new BatContainer(bar, new Vector2(100, 675).ToPoint(), new BasicVelocityManager(0f, 0f), new Vector2(230, 245)); ;
-
-            this.CreateGamesBlock(TheState.ViewPort);
+            var bar = new Sprite(_spriteBatch, batAtlas, batAnimation, new Point(500, 500));
+            //var bulletAnims = new AnimationPlayer(.200f)
+            var theGun = new LazerGun(factory, new Point(230, 245), batAnimation.CurrentFrame(), 500f);
+            this.batContainer = new BatContainer(bar, new Vector2(100, 675).ToPoint(), theGun, new BasicVelocityManager(0f, 0f), new Vector2(380, 380));
+            //this.CreateGamesBlock(TheState.ViewPort);
+            this.GameMapBlocks = new BlockMap(_spriteBatch, new Point(75, 120), new Dimensions(110, 47));
 
         }
 
@@ -102,11 +109,6 @@ namespace CollisionsGame
                 InputState = inputManager.GetInputState(),
                 Map = collisionMap.ViewPortCollisions.ToList()
             };
-            // ALl those lovely colourful blocks
-            foreach(var block in gamesBlocks)
-            {
-                block.Update(deltaTime);
-            }
 
             var previousBatPos = batContainer.CurrentPosition;
             var activeCommand = this.inputReceiver.MapKeyboardCommands(this.movementCmds);
@@ -114,15 +116,10 @@ namespace CollisionsGame
             this.batContainer.Update(deltaTime, TheState);
 
             // Has the player object struck an game objet (Not an environment object)
-            var objectsStruck = GameObjectCollisions(this.gamesBlocks, batContainer);
-            foreach (var struck in objectsStruck)
-            {
-                if (struck.ReactionType == "Remove")
-                    this.gamesBlocks.Remove(struck);
-                else
-                    this.batContainer.SetCurrentPosition(previousBatPos);
-
-            }
+            // var objectsStruck = GameObjectCollisions(this.gamesBlocks, batContainer);
+            this.GameMapBlocks.AgentCollisions(this.batContainer);
+            this.GameMapBlocks.ObjectCollisions(this.batContainer.FiredBullets);
+            this.GameMapBlocks.Update(deltaTime, TheState);
 
             base.Update(gameTime);
         }
@@ -134,10 +131,9 @@ namespace CollisionsGame
             GraphicsDevice.Clear(Color.CornflowerBlue);
             this._spriteBatch.Begin();
             // TODO: Add your drawing code here
-            this.DrawCollisionMap();
-            this.DrawGamesBlocks(gameTime);
             this.batContainer.Draw(gameTime);
-
+            this.GameMapBlocks.Draw(gameTime);
+            this.DrawCollisionMap();
             this._spriteBatch.End();
             base.Draw(gameTime);
         }
