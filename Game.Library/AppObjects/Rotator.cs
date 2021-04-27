@@ -69,6 +69,19 @@ namespace GameLibrary.AppObjects
             this.State = state;
         }
 
+        public void Right()
+        {
+            this.DestinationAngle = -1f;
+            this.State = RotatorState.Diesal;
+        }
+
+        public void Left()
+        {
+            this.DestinationAngle = -1f;
+            this.State = RotatorState.Widdershins;
+        }
+
+
         // Basically when you lift a finger it stops
         public void StopRotation()
         {
@@ -83,7 +96,7 @@ namespace GameLibrary.AppObjects
             if (this.State != RotatorState.Stopped && this.State != RotatorState.Unknown)
             {
                 UpdatePosition(delta);
-                if (IsAngleMatched(this.State, DestinationAngle, CurrentAngle, PreviousAngle))
+                if (DestinationAngle<0f==false && IsAngleMatched(this.State, DestinationAngle, CurrentAngle, PreviousAngle))
                 {
                     this.State = RotatorState.Stopped;
                     this.CurrentAngle = DestinationAngle;
@@ -125,10 +138,12 @@ namespace GameLibrary.AppObjects
             // we have widdershined/Clockwised around the clock. So we are calculating from the previous/next loop around.
             // or more numbersie we are using the strict numberline and not the modulo.
             // This is an odd way of managing state. We only know we've gone/goingthe clock if the one of the numbers are outside the range
-            if (lowerbound > upperbound)
+            if (lowerbound > upperbound && state==RotatorState.Widdershins)
             {
                 lowerbound = lowerbound - 360f;
             }
+
+        //    if (lowerbound < 0f) lowerbound += 360f;
             // Finally is our destination angle between the lower/upperbound
             return (lowerbound <= destinationAngle && upperbound >= destinationAngle);
             

@@ -138,5 +138,18 @@ namespace InputTests.MovingMan
         {
             throw new NotImplementedException();
         }
+        public void Action()
+        {
+
+        }
+        public void EndAction()
+        {
+
+        }
+
+        public void EndFireSpecial()
+        {
+
+        }
     }
 }

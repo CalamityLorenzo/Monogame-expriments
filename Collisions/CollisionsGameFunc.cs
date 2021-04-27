@@ -66,16 +66,12 @@ namespace CollisionsGame
             {
                 this._spriteBatch.Draw(this.RedSquare, item, Color.White);
             }
+
+            foreach (var item in this.boundaryMap.ViewPortCollisions)
+            {
+                this._spriteBatch.Draw(this.GreenSquare, item, Color.White);
+            }
         }
 
-
-        //private void DrawGamesBlocks(GameTime gameTime)
-        //{
-        //    // The rectangle is the point of 'boop' for the aabb thingy.
-        //    foreach (var item in this.gamesBlocks)
-        //    {
-        //        item.Draw(gameTime);
-        //    }
-        //}
     }
 }

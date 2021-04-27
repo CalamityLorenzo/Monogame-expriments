@@ -123,5 +123,18 @@ namespace CollisionsGame
         public void Standing()
         {
         }
+        public void Action()
+        {
+
+        }
+        public void EndAction()
+        {
+
+        }
+
+        public void EndFireSpecial()
+        {
+        }
+
     }
 }

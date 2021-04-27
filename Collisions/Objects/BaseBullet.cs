@@ -5,7 +5,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace Collisions.Objects
 {
-    class BaseBullet : IDrawableGameObject
+    class BaseBullet : IDrawableGameObject, IInteractiveGameObject
     {
         private Vector2 currentPosition;
         private Vector2 direction;
@@ -15,7 +15,7 @@ namespace Collisions.Objects
         private readonly SpriteBatch spriteBatch;
         private readonly Texture2D atlas;
         private readonly AnimationPlayer player;
-        public Vector2 CurrentPosition { get => this.currentPosition; }
+        public Point CurrentPosition { get => this.currentPosition.ToPoint(); }
 
         public BaseBullet(SpriteBatch spriteBatch, Texture2D atlas, AnimationPlayer player)
         {
@@ -29,7 +29,7 @@ namespace Collisions.Objects
             spriteBatch.Draw(this.atlas, this.currentPosition, this.player.CurrentFrame(), Color.White);
         }
 
-        public Rectangle Area => new Rectangle(this.CurrentPosition.ToPoint(), new Point(this.player.CurrentFrame().Width, this.player.CurrentFrame().Height));
+        public Rectangle Area => new Rectangle(this.CurrentPosition, new Point(this.player.CurrentFrame().Width, this.player.CurrentFrame().Height));
 
         public virtual void Update(float delta)
         {  // ZOOOOM!

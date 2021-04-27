@@ -2,6 +2,7 @@
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
 using GameLibrary.GameObjects;
+using GameLibrary.Interfaces;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
@@ -40,10 +41,10 @@ namespace Collisions.Objects
                 this.gamesBlocks = new List<GameBlock>();
                 var topPos = 180;
 
-                for (var x = 0; x < 4; ++x)
+                for (var x = 0; x < 6; ++x)
                 {
                     var leftPos = 75;
-                    for (var y = 0; y < 7; ++y)
+                    for (var y = 0; y < 15; ++y)
                     {
                         var blkIdx = rnd.Next(0, blocksArray.Length);
                         this.gamesBlocks.Add(new GameBlock(this._spriteBatch, blocksArray[blkIdx], new Point(leftPos, topPos), BlockSize, 10f));
@@ -67,7 +68,7 @@ namespace Collisions.Objects
             }
         }
 
-        public void AgentCollisions(GameAgentObject agent)
+        public void AgentCollisions(IInteractiveGameObject agent)
         {
             var results = new List<GameBlock>();
             foreach (var block in this.gamesBlocks)
@@ -76,7 +77,7 @@ namespace Collisions.Objects
 
             foreach (var item in results)
             {
-                item.Hit();
+                item.Hit(5);
             }
         }
 
@@ -96,6 +97,22 @@ namespace Collisions.Objects
             }
         }
 
+        internal List<(GameBlock game, T interactive)> InteractiveObjectCollisions<T>(IList<T> interactingObjects) where T : IInteractiveGameObject
+        {
+
+            List<(GameBlock game, T interactive)> results = new List<(GameBlock game, T interactive)>();
+            foreach (var block in this.gamesBlocks)
+                foreach (var bullet in interactingObjects)
+                    if (GameLibrary.AppObjects.Collisions.AABBStruck(block.Area, bullet.Area))
+                    {
+                        results.Add((block, bullet));
+                        //bullet.Struck();
+                        //block.Hit();
+                        break;
+                    }
+            return results;
+        }
+
         internal void ObjectCollisions(IList<BaseBullet> firedBullets)
         {
             foreach (var block in this.gamesBlocks)
@@ -103,7 +120,7 @@ namespace Collisions.Objects
                     if (GameLibrary.AppObjects.Collisions.AABBStruck(block.Area, bullet.Area))
                     {
                         bullet.Struck();
-                        block.Hit();
+                        block.Hit(2);
                         break;
                     }
         }

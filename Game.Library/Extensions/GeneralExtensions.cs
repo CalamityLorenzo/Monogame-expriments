@@ -46,7 +46,7 @@ namespace GameLibrary.Extensions
         // This kinda answers the questions... I think..
         // https://www.physicsclassroom.com/mmedia/vectors/vd.cfm
         // -1 to mean means 270degrees angle, we starting widdershins
-        public static Vector2 UnitAngleVector(float angleInDegrees) => UnitAngleVector(angleInDegrees, 1);
+        public static Vector2 UnitVectorFromDegrees(float angleInDegrees) => UnitAngleVector(angleInDegrees, 1);
         
 
     }

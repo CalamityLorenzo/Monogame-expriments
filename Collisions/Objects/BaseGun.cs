@@ -1,7 +1,6 @@
 ﻿using GameLibrary.AppObjects;
 using GameLibrary.GameObjects;
 using Microsoft.Xna.Framework;
-using System;
 using System.Collections.Generic;
 
 namespace Collisions.Objects
@@ -10,10 +9,6 @@ namespace Collisions.Objects
     {
         public IList<BaseBullet> FiredBullets { get; set; }
         public BulletFactory Factory { get; }
-
-
-        //private Random rnd = new Random();
-
         public BaseGun(BulletFactory factory, Point startPos) : base(startPos)
         {
             FiredBullets = new List<BaseBullet>();

@@ -35,9 +35,10 @@ namespace GameLibrary.AppObjects
 
             if (_selectedTerminal != _previousSelectedTerminal || _currentPosition != _previousPosition)
             {
+
+                // Create angle for making life easier on the developer.
                 _currentRelativeVector = Vector2.Subtract(_selectedTerminal, _currentPosition);
                 var radians = Math.Atan2(_currentRelativeVector.Y, _currentRelativeVector.X);
-
                 this._currentAngle = (float)(radians * (180 / 3.14159));
 
                 _previousPosition = _currentPosition;
@@ -53,7 +54,7 @@ namespace GameLibrary.AppObjects
         /// <returns></returns>
         public Vector2 GetVector() => _currentRelativeVector;
         // Why do I have to add a full turn?
-        public float GetAngle() => _currentAngle + (_currentAngle <= -90 ? 360 + 90 : 90);
+        public float GetAngle() => _currentAngle + (_currentAngle <= -90.05f ? 360 + 90 : 90);
 
         // Where are we projecting from.
         public void SetCurrentPosition(Vector2 newPosition)

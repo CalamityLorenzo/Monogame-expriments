@@ -41,7 +41,8 @@
     "Left": "A",
     "Right": "D",
     "Fire": "Space",
-    "Action": "Enter",
-    "Special": "RightControl"
+    "Action": "Q",
+    "Special": "E",
+    "Jump":  "RightControl"
   }
 }

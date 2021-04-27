@@ -119,16 +119,35 @@ namespace GameData.Commands
             {
                 MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
-                    [KeyCommandPress.Clicked] = new FireSpecialCommand()
+                    [KeyCommandPress.Clicked] = new FireSpecialCommand(),
+                    [KeyCommandPress.Released] = new FireSpecialCommandRelease(),
                 }),
                 Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
-                    [KeyCommandPress.Down] = new FireSpecialCommand()
+                    [KeyCommandPress.Down] = new FireSpecialCommand(),
+                    [KeyCommandPress.Up] = new FireSpecialCommandRelease(),
+
                 }),
                 _ => throw new ArgumentException("Not recognised input type key/mouse")
             };
 
-            var Jump = inputs["Jump"] switch
+            var Action = inputs.ContainsKey("Action") ? inputs["Action"] switch
+            {
+                MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
+                {
+                    [KeyCommandPress.Clicked] = new ActionCommand(),
+                    [KeyCommandPress.Released] = new ActionCommandRelease()
+                }),
+                Keys key => MapKeyboardCommand(key, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
+                {
+                    [KeyCommandPress.Down] = new ActionCommand(),
+                    [KeyCommandPress.Up] = new ActionCommandRelease(),
+                }),
+                _ => throw new ArgumentException("Not recognised input type key/mouse")
+            } : Enumerable.Empty<KeyCommand<ICharacterActions>>();
+
+
+            var Jump = inputs.ContainsKey("Jump") ? inputs["Jump"] switch
             {
                 MouseButton btn => MapMouseCommand(btn, new Dictionary<KeyCommandPress, IActorCommand<ICharacterActions>>
                 {
@@ -139,9 +158,9 @@ namespace GameData.Commands
                     [KeyCommandPress.Down] = new GameData.Commands.WalkingMan.JumpCommand()
                 }),
                 _ => throw new ArgumentException("Not recognised input type key/mouse")
-            };
+            } : Enumerable.Empty<KeyCommand<ICharacterActions>>();
 
-            return Up.Concat(Down).Concat(Left).Concat(Right).Concat(Fire).Concat(FireSpecial).Concat(Jump).ToList();
+            return Up.Concat(Down).Concat(Left).Concat(Right).Concat(Fire).Concat(FireSpecial).Concat(Jump).Concat(Action).ToList();
 
         }
 

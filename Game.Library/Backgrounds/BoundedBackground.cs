@@ -49,7 +49,7 @@ namespace GameLibrary.Drawing.Backgrounds
         public void Update(GameTime gameTime)
         {
             var delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            var currentDirection = GeneralExtensions.UnitAngleVector(rotator.CurrentAngle);
+            var currentDirection = GeneralExtensions.UnitVectorFromDegrees(rotator.CurrentAngle);
             var currentVelocity = velocityManager.VelocityX;
 
             this._currentPosition =_currentPosition.AddX(currentVelocity * delta)

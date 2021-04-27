@@ -17,7 +17,20 @@ namespace GameLibrary.Extensions
             // math dot floor rounds...THat may be a problem
             var oX = @this.X - (float)Math.Floor(@this.X);
             var oY = @this.Y - (float)Math.Floor(@this.Y);
-            return new Vector2(oX, oY);
+            return new Vector2(0f, 0f);
+        }
+
+        /// <summary>
+        /// From a unit Vector get the angle (degrees). So life is easier for a developer.
+        /// I feel very stupid.
+        /// </summary>
+        /// <param name="this"></param>
+        /// <returns></returns>
+        public static float GetAngleDegreesFromUnit(this Vector2 @this)
+        {
+            var radians = Math.Atan2(@this.Y, @this.X);
+            var angle  = (float)(radians * (180 / 3.14159));
+            return angle + (angle <= -90.05f ? 360 + 90 : 90);
         }
     }
 }

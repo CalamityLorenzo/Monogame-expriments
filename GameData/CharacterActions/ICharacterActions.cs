@@ -12,6 +12,9 @@
         void EndMoveUp();
         void Fire();
         void FireSpecial();
+        void EndFireSpecial();
+        void Action();
+        void EndAction();
         void Jump();
         void Standing();
     }

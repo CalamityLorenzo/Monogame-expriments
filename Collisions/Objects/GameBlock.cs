@@ -42,9 +42,9 @@ namespace CollisionsGame.Objects
             // mmmm what happens if struck.
         }
 
-        public virtual void Hit()
+        public virtual void Hit(int points)
         {
-            this.Health -= 10;
+            this.Health -= points;
         }
     }
 }

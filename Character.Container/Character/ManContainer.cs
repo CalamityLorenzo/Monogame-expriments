@@ -221,6 +221,20 @@ namespace Character.Container.Character
         {
             // throw new System.NotImplementedException();
         }
+
+        public void Action()
+        {
+
+        }
+        public void EndAction()
+        {
+
+        }
+
+        public void EndFireSpecial()
+        {
+
+        }
         #endregion
     }
 }

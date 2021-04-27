@@ -59,7 +59,7 @@ namespace GameLibrary.Drawing.Backgrounds
         {
             // elasped since last update.
             var delta = (float)gameTime.ElapsedGameTime.TotalMilliseconds;
-            var directionVector = GeneralExtensions.UnitAngleVector(this.currentRotation.CurrentAngle);
+            var directionVector = GeneralExtensions.UnitVectorFromDegrees(this.currentRotation.CurrentAngle);
             // This is where the window top left points in relation to our background.
             this._currentPosition += directionVector * _velocity * delta;
 

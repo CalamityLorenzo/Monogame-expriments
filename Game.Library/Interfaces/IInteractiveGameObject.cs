@@ -6,7 +6,7 @@ namespace GameLibrary.Interfaces
     public interface IInteractiveGameObject
     {
         /// <summary>
-        /// These are usually converted to vectors
+        /// Where on the screen.
         /// </summary>
         /// <param name="position"></param>
         public void SetCurrentPosition(Point position);

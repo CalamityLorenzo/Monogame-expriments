@@ -12,6 +12,7 @@ namespace GameLibrary.AppObjects
         private readonly AnimationPlayer animPlayer;
         private Point _currentPosition;
         private string _currentAnimationIndex;
+        private Rectangle currentFrameArea;
 
         public Sprite(SpriteBatch spritebatch, Texture2D atlas, AnimationPlayer animPlayer, Point startPos)
         {
@@ -55,11 +56,12 @@ namespace GameLibrary.AppObjects
 
         public int GetCurrentFrameId() => this.animPlayer.CurrentFrameIdx();
 
-        public Rectangle Area { get => this.animPlayer.CurrentFrame(); }
+        public Rectangle Area { get => new Rectangle(this.CurrentPosition, new Point( this.currentFrameArea.Width, this.currentFrameArea.Height)); }
 
-        public void Update(float mlSinceupdate)
+        public  virtual void Update(float mlSinceupdate)
         {
             this.animPlayer.Update(mlSinceupdate);
+            this.currentFrameArea = this.animPlayer.CurrentFrame();
         }
 
         public void Draw(GameTime gameTime)

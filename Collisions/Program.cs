@@ -12,6 +12,7 @@ namespace CollisionsGame
             var configData = ConfigurationBuilder.Manager
                    .LoadJsonFile("Config/opts.json")
                    .LoadJsonFile("Config/opts2.json")
+                   .LoadJsonFile("Config/ball.json")
                    .AddJsonConverter(new DimensionsConverter())
                    .AddJsonConverter(new AnimationFramesCollectionConverter())
                    .Build();

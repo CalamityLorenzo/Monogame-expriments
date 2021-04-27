@@ -148,7 +148,49 @@ namespace GameData.Commands.WalkingMan
         {
             return "Specials";
         }
-    } 
+    }
+
+    class FireSpecialCommandRelease : IActorCommand<ICharacterActions>
+    {
+        public void Execute(ICharacterActions actor)
+        {
+            actor.EndFireSpecial();
+        }
+
+
+        public override string ToString()
+        {
+            return "End Specials";
+        }
+    }
+
+    class ActionCommand : IActorCommand<ICharacterActions>
+    {
+        public void Execute(ICharacterActions actor)
+        {
+            actor.Action();
+        }
+
+
+        public override string ToString()
+        {
+            return "Action";
+        }
+    }
+
+    class ActionCommandRelease : IActorCommand<ICharacterActions>
+    {
+        public void Execute(ICharacterActions actor)
+        {
+            actor.EndAction();
+        }
+
+
+        public override string ToString()
+        {
+            return "Action Release";
+        }
+    }
 
     class NULLWalkingManCommand : IActorCommand<ICharacterActions>
     {

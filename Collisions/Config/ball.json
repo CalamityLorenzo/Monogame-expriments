@@ -1,0 +1,20 @@
+{
+  "BallAtlas": "Content/Ball2.png",
+  "Ball": {
+    "Frames": [
+      {
+        "Name": "Ball",
+        "isRepeating": true,
+        "startFrame": 0,
+        "frames": [
+          {
+            "X": 0,
+            "Y": 0,
+            "Width": 16,
+            "Height": 16
+          }
+        ]
+      }
+    ]
+  }
+}
