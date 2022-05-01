@@ -2,7 +2,6 @@
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 
@@ -56,9 +55,8 @@ namespace GameLibrary.Config.App
 
             }
 
-            throw new NullReferenceException("Cannot not find path propert");
+            throw new NullReferenceException("Cannot not find property");
 
-            //            return default(JsonElement);
         }
 
         public string Get(string propertyName)

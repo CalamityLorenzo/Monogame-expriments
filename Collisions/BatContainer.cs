@@ -1,4 +1,5 @@
 ﻿using Collisions.Objects;
+using Collisions.Objects.Paddle;
 using GameData.CharacterActions;
 using GameLibrary.AppObjects;
 using GameLibrary.Extensions;
@@ -8,27 +9,32 @@ using System.Collections.Generic;
 
 namespace CollisionsGame
 {
-    class BatContainer : GameAgentObject, ICharacterActions
+    class BatContainer : GameAgentObject, ICharacterActions, IPaddle
     {
-        private readonly Sprite batSprite;
+        private readonly BasePaddle batPaddle;
         private readonly BaseGun theGun;
         private readonly IVelocinator velocity;
         private readonly Vector2 velocitySpeed;
         
-        public override Rectangle Area => new Rectangle(this.CurrentPosition.Add(8,4), new Point( this.batSprite.Area.Width-22, batSprite.Area.Height-25));
+        public override Rectangle Area => new Rectangle(this.CurrentPosition.Add(8,4), new Point( this.batPaddle.Area.Width-22, batPaddle.Area.Height-25));
         public IList<BaseBullet> FiredBullets => this.theGun.FiredBullets;
         public bool Leftin { get; private set; }
         public bool Rightin { get; private set; }
         public bool Upsie { get; private set; }
         public bool Downsie { get; private set; }
 
-        public BatContainer(Sprite batSprite, Point startPos, BaseGun theGun, IVelocinator velocity, Vector2 velocitySpeed) : base(startPos)
+        public BatContainer(BasePaddle batSprite, Point startPos, BaseGun theGun, IVelocinator velocity, Vector2 velocitySpeed) : base(startPos)
         {
-            this.batSprite = batSprite;
+            this.batPaddle = batSprite;
             this.theGun = theGun;
             this.velocity = velocity;
             this.velocitySpeed = velocitySpeed;
-            this.batSprite.SetCurrentPosition(startPos);
+            this.batPaddle.SetCurrentPosition(startPos);
+        }
+
+        public PaddleArea PaddleHit(Rectangle intersect)
+        {
+            return this.batPaddle.PaddleHit(intersect);
         }
 
         public override void Update(float deltaTime, World theState)
@@ -43,15 +49,15 @@ namespace CollisionsGame
                 SetCurrentPosition( _previousPosition);
             }
 
-            batSprite.SetCurrentPosition(CurrentPosition);
+            batPaddle.SetCurrentPosition(CurrentPosition);
             theGun.SetCurrentPosition(CurrentPosition);
             this.theGun.Update(deltaTime, theState);
-            this.batSprite.Update(deltaTime);
+            this.batPaddle.Update(deltaTime);
         }
 
         public override void Draw(GameTime gametime)
         {
-            this.batSprite.Draw(gametime);
+            this.batPaddle.Draw(gametime);
             this.theGun.Draw(gametime);
         }
 
@@ -123,10 +129,12 @@ namespace CollisionsGame
         public void Standing()
         {
         }
+
         public void Action()
         {
 
         }
+
         public void EndAction()
         {
 
@@ -135,6 +143,7 @@ namespace CollisionsGame
         public void EndFireSpecial()
         {
         }
+
 
     }
 }

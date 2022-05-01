@@ -104,7 +104,9 @@ namespace Collisions.Objects.Guns
 
         public void Jump()
         {
-            var pos = new Point(this.CurrentPosition.X + (this.hostObject.Area.Width / 2), this.CurrentPosition.Y - 16);
+            var currentY = this.rotator.CurrentAngle > 90 && this.rotator.CurrentAngle < 271 ?
+                                this.CurrentPosition.Y + this.hostObject.Area.Height : this.hostObject.Area.Y - 17;
+            var pos = new Point(this.CurrentPosition.X + (this.hostObject.Area.Width / 2), currentY);
             this.balls.CreateBasicBall(GeneralExtensions.UnitVectorFromDegrees(this.rotator.CurrentAngle), 330f, pos);
         }
 

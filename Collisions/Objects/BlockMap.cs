@@ -15,12 +15,14 @@ namespace Collisions.Objects
         private bool configureComplete = false;
         private List<GameBlock> gamesBlocks = new List<GameBlock>();
         private SpriteBatch _spriteBatch;
+        private readonly BlockFactory blockFactory;
 
         public Dimensions BlockSize { get; }
 
-        public BlockMap(SpriteBatch spriteBatch, Point StartPoint, Dimensions blockSize) : base(StartPoint)
+        public BlockMap(SpriteBatch spriteBatch, BlockFactory blockFactory, Point StartPoint, Dimensions blockSize) : base(StartPoint)
         {
             this._spriteBatch = spriteBatch;
+            this.blockFactory = blockFactory;
             BlockSize = blockSize;
         }
 
@@ -30,28 +32,52 @@ namespace Collisions.Objects
             {
                 var blocksArray = new[]
                 {
-                this._spriteBatch.CreateFilledRectTexture(BlockSize, Color.DarkRed),
-                this._spriteBatch.CreateFilledRectTexture(BlockSize, Color.Green),
-                this._spriteBatch.CreateFilledRectTexture(BlockSize, Color.DarkGoldenrod),
-                this._spriteBatch.CreateFilledRectTexture(BlockSize, Color.Purple),
-                this._spriteBatch.CreateFilledRectTexture(BlockSize, Color.Pink),
-                this._spriteBatch.CreateFilledRectTexture(BlockSize, Color.BurlyWood),
-                };
+                this.blockFactory.GetBlock(BlockType.Basic, Color.DarkRed),
+                this.blockFactory.GetBlock(BlockType.Basic, Color.Green),
+                this.blockFactory.GetBlock(BlockType.Basic, Color.DarkGoldenrod),
+                this.blockFactory.GetBlock(BlockType.Basic, Color.Purple),
+                this.blockFactory.GetBlock(BlockType.Basic, Color.Pink),
+                this.blockFactory.GetBlock(BlockType.Basic, Color.BurlyWood),
+
+                this.blockFactory.GetBlock(BlockType.Bump, Color.DarkRed),
+                this.blockFactory.GetBlock(BlockType.Bump, Color.Green),
+                this.blockFactory.GetBlock(BlockType.Bump, Color.DarkGoldenrod),
+                this.blockFactory.GetBlock(BlockType.Bump, Color.Purple),
+                this.blockFactory.GetBlock(BlockType.Bump, Color.Pink),
+                this.blockFactory.GetBlock(BlockType.Bump, Color.BurlyWood)
+            };
+
+                //this.blockFactory.GetBlock(BlockType.Basic, Color.DarkRed);
+                //this.blockFactory.GetBlock(BlockType.Basic, Color.Green);
+                //this.blockFactory.GetBlock(BlockType.Basic, Color.DarkGoldenrod);
+                //this.blockFactory.GetBlock(BlockType.Basic, Color.Purple);
+                //this.blockFactory.GetBlock(BlockType.Basic, Color.Pink);
+                //this.blockFactory.GetBlock(BlockType.Basic, Color.BurlyWood);
+
+                //this.blockFactory.GetBlock(BlockType.Bump, Color.DarkRed);
+                //this.blockFactory.GetBlock(BlockType.Bump, Color.Green);
+                //this.blockFactory.GetBlock(BlockType.Bump, Color.DarkGoldenrod);
+                //this.blockFactory.GetBlock(BlockType.Bump, Color.Purple);
+                //this.blockFactory.GetBlock(BlockType.Bump, Color.Pink);
+                //this.blockFactory.GetBlock(BlockType.Bump, Color.BurlyWood);
+
+
                 Random rnd = new Random();
                 this.gamesBlocks = new List<GameBlock>();
-                var topPos = 180;
+                var topPos = 80;
 
-                for (var x = 0; x < 6; ++x)
+                for (var x = 0; x < 9; ++x)
                 {
-                    var leftPos = 75;
-                    for (var y = 0; y < 15; ++y)
+                    var leftPos = 42;
+                    for (var y = 0; y < 13; ++y)
                     {
                         var blkIdx = rnd.Next(0, blocksArray.Length);
-                        this.gamesBlocks.Add(new GameBlock(this._spriteBatch, blocksArray[blkIdx], new Point(leftPos, topPos), BlockSize, 10f));
-                        leftPos += BlockSize.Width + 5;
+                        this.gamesBlocks.Add(new GameBlock(this._spriteBatch, blocksArray[blkIdx], new Point(leftPos, topPos), BlockSize, blkIdx>5?25f:10f));
+                        
+                        leftPos += BlockSize.Width;
                     }
 
-                    topPos += BlockSize.Height + 5;
+                    topPos += BlockSize.Height;
                 }
 
 
@@ -113,16 +139,6 @@ namespace Collisions.Objects
             return results;
         }
 
-        internal void ObjectCollisions(IList<BaseBullet> firedBullets)
-        {
-            foreach (var block in this.gamesBlocks)
-                foreach (var bullet in firedBullets)
-                    if (GameLibrary.AppObjects.Collisions.AABBStruck(block.Area, bullet.Area))
-                    {
-                        bullet.Struck();
-                        block.Hit(2);
-                        break;
-                    }
-        }
+        
     }
 }

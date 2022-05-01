@@ -45,13 +45,13 @@ namespace GameLibrary.Backgrounds
             }
         }
         // always left to right
-        private Rectangle[] horizontalScan(Point screenOffset, int startYPos)
+        private Rectangle[] horizontalScan(Point screenOffset, int startXPos, int startYPos)
         {
             // Top Row
             // Scan along the top row.
             int currentWidth = 0;
             int currentRectStartX = 0;
-            Point screenIterator = new Point(screenOffset.X, startYPos);
+            Point screenIterator = new Point(screenOffset.X+startXPos, screenOffset.Y+ startYPos);
             var resultRects = new List<Rectangle>();
             for (var x = 0; x < viewPort.Width + tileDimensions.Width; x += tileDimensions.Width)
             {
@@ -94,16 +94,16 @@ namespace GameLibrary.Backgrounds
             return resultRects.ToArray();
         }
 
-        private Rectangle[] verticalScan(Point screenOffset, int setXPos)
+        private Rectangle[] verticalScan(Point screenOffset, int setXPos, int startYPos)
         {
             // Top Row
             // Scan along the top row.
             int currentHeight = 0;
             int currentRectStartY = 0;
-            Point screenIterator = new Point(setXPos, screenOffset.Y);
+            Point screenIterator = new Point(screenOffset.X +setXPos, screenOffset.Y + startYPos);
             var resultRects = new List<Rectangle>();
             /// The actual drawing space we consider is 1 tile more than the width/height of screen (so blocks don't suddenly flash away)
-            for (var y = 0; y < viewPort.Height + tileDimensions.Height; y += tileDimensions.Height)
+            for (var y = startYPos; y < viewPort.Height + tileDimensions.Height; y += tileDimensions.Height)
             {
                 // REset the start point of the current rectangle
                 if (currentHeight == 0) currentRectStartY = y;
@@ -163,10 +163,13 @@ namespace GameLibrary.Backgrounds
             var screenOffset = Vector2.Subtract(integralPos, new Vector2(moduloX, moduloY)).ToPoint();
 
             /// The actual drawing space we consider is 1 tile more than the width/height of screen (so blocks don't suddenly flash away)
-            var topRects = horizontalScan(screenOffset, tileDimensions.Height + screenOffset.Y);
-            var bottomRects = horizontalScan(screenOffset, tileDimensions.Height * this.mapDimensions.Height + screenOffset.Y);
-            var left = verticalScan(screenOffset, 0 + screenOffset.Y);
-            var right = verticalScan(screenOffset, (tileDimensions.Width * mapDimensions.Width) - mapDimensions.Width + screenOffset.X);
+            /// WE don't want these block intersecting across each other, so horizontal is ALL the across (Top and bottom)
+            /// Vertical is Ignore first row, ignore lastrow everything else.
+            var topRects = horizontalScan(screenOffset, 0,  tileDimensions.Height);
+            var bottomRects = horizontalScan(screenOffset, 0, tileDimensions.Height * this.mapDimensions.Height);
+
+            var left = verticalScan(screenOffset, 0, tileDimensions.Height * 2);
+            var right = verticalScan(screenOffset, (tileDimensions.Width * mapDimensions.Width) - mapDimensions.Width , tileDimensions.Height*2);
 
             return topRects.Concat(bottomRects).Concat(left).Concat(right).ToArray();
         }

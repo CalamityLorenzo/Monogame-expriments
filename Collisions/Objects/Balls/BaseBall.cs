@@ -14,11 +14,16 @@ namespace Collisions.Objects.Balls
         private Point previousPosition;
         private Random random;
         public float Speed => speed;
+        public Vector2 Direction => unitDirection;
+        public Vector2 Velocity { get; private set; }
+        private Vector2 _currentPosition;
+
         public BaseBall(SpriteBatch spriteBatch, Texture2D atlas, AnimationPlayer player, Point startPos, Vector2 unitDirection, float initialSpeed):base(spriteBatch, atlas, player, startPos)
         {
             this.unitDirection = unitDirection;
             this.speed = initialSpeed;
             random = new Random();
+            _currentPosition = this.CurrentPosition.ToVector2();
         }
 
         
@@ -42,7 +47,9 @@ namespace Collisions.Objects.Balls
             if (speed > 0f)
             {
                 var currentVector = CurrentPosition.ToVector2();
-                currentVector += unitDirection * (speed * delta);
+                Velocity = unitDirection * (speed * delta);
+                currentVector += Velocity;
+                _currentPosition += Velocity;
                 this.SetCurrentPosition(currentVector.ToPoint());
             }
         }
@@ -77,33 +84,23 @@ namespace Collisions.Objects.Balls
                 int ang when ang > 45 && ang < 136 => 90 + angleDecider,
                 int ang when ang > 135 && ang < 226 => 180 + angleDecider,
                 int ang when ang > 225 && ang < 315 => 270 + angleDecider,
-                _ => throw new Exception("")
+                _ => throw new Exception("Bounce failed!")
             };
 
             //var angle =currentDegrees+=angleDecider;
             this.SetDirection(GeneralExtensions.UnitVectorFromDegrees(angle));
         }
 
-        private void WhereHit(Rectangle hit, Rectangle ballArea)
-        {
-            // how we hit depends on the direction we are going tbh.
-            // If i am travelling -x then I care about left side only
-            // and If I am travelling +Y then I care about bottom
-            // If left side x=0>y=height struck that's one set of angle.s
-            // if bottom struck y=height>x fullwidth; that's anothre set of angles.
-
-            // How much of 
-
-        }
         // To Bounce from something.
         // Need to know
         // Where we hit this rect (Top bottom right left etc)
-        internal void Bounce(Rectangle? intersectRect = null)
+        internal void Bounce()
         {
             // move back to where we came from
             this.SetCurrentPosition(previousPosition);
             // get current the current angle in degrees
-         //   var degrees = (int)this.unitDirection.GetAngleDegreesFromUnit();
+            //   var degrees = (int)this.unitDirection.GetAngleDegreesFromUnit();
+            unitDirection.Normalize();
             this.unitDirection = -unitDirection;
 
             //var directionX = "";
@@ -125,7 +122,7 @@ namespace Collisions.Objects.Balls
             //degrees = degrees + 180;
             //if (degrees > 360) degrees -= 360;
             //// lets have a semi random bounce.
-            RandomBouncetDirection((int)this.unitDirection.GetAngleDegreesFromUnit());
+           // RandomBouncetDirection((int)this.unitDirection.GetAngleDegreesFromUnit());
             
         }
     }

@@ -1,4 +1,5 @@
-﻿using GameLibrary.Config.App;
+﻿using Collisions;
+using GameLibrary.Config.App;
 using GameLibrary.Configuration;
 using System;
 
@@ -18,6 +19,7 @@ namespace CollisionsGame
                    .Build();
 
             using (var game = new CollisionsGame(configData))
+                //using (var game = new RectHitGame(configData))
                 game.Run();
         }
     }

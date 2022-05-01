@@ -35,6 +35,7 @@ namespace GameLibrary.AppObjects
             this.spriteBatch = spritebatch;
             this.animPlayer = animPlayer;
             this._currentPosition = startPos;
+            this.currentFrameArea = new Rectangle(_currentPosition, new Point(animPlayer.CurrentFrame().Width, animPlayer.CurrentFrame().Height));
         }
 
         public Point CurrentPosition { get => _currentPosition; }
@@ -58,7 +59,7 @@ namespace GameLibrary.AppObjects
 
         public Rectangle Area { get => new Rectangle(this.CurrentPosition, new Point( this.currentFrameArea.Width, this.currentFrameArea.Height)); }
 
-        public  virtual void Update(float mlSinceupdate)
+        public virtual void Update(float mlSinceupdate)
         {
             this.animPlayer.Update(mlSinceupdate);
             this.currentFrameArea = this.animPlayer.CurrentFrame();

@@ -15,6 +15,8 @@
       ]
     }
   ],
+  "BasicBlock": "Content/basicTile.png",
+  "BumpBlock": "Content/SingleBumpTile.png",
   "ScreenOptions": {
     "ScreenWidth": 1024,
     "ScreenHeight": 768,
@@ -34,7 +36,7 @@
       "X": 0,
       "Y": 0
     }
-    },
+  },
   "Player1Controls": {
     "Up": "W",
     "Down": "S",
@@ -43,6 +45,6 @@
     "Fire": "Space",
     "Action": "Q",
     "Special": "E",
-    "Jump":  "RightControl"
+    "Jump": "RightControl"
   }
 }

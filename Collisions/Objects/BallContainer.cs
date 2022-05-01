@@ -3,7 +3,6 @@ using GameLibrary.AppObjects;
 using GameLibrary.GameObjects;
 using Microsoft.Xna.Framework;
 using System.Collections.Generic;
-using System.Windows.Forms.Design;
 
 namespace Collisions.Objects
 {
@@ -41,17 +40,11 @@ namespace Collisions.Objects
             var removeBalls = new List<BaseBall>();
             foreach (var ball in balls)
             {
-                var hitRect = theState.MapCollision(ball.Area);
-
                 // Are we off the screen horizontal
                 if (ball.CurrentPosition.X < 0f || ball.CurrentPosition.X > theState.ViewPort.Width)
                     removeBalls.Add(ball);
                 else if (ball.CurrentPosition.Y < 0f || ball.CurrentPosition.Y > theState.ViewPort.Height)
                     removeBalls.Add(ball);
-                else if (hitRect.HasValue)
-                {
-                    ball.Bounce();
-                }
             }
 
             foreach (var ball in removeBalls) 
@@ -63,17 +56,14 @@ namespace Collisions.Objects
             }
         }
 
-        internal void AgentCollisions(GameAgentObject agent)
+        internal List<BaseBall> AgentCollisions(GameAgentObject agent)
         {
             var results = new List<BaseBall>();
-            foreach (var block in this.balls)
-                if (GameLibrary.AppObjects.Collisions.AABBStruck(block.Area, agent.Area))
-                    results.Add(block);
+            foreach (var ball in this.balls)
+                if (GameLibrary.AppObjects.Collisions.AABBStruck(ball.Area, agent.Area))
+                    results.Add(ball);
 
-            foreach (var item in results)
-            {
-                item.Bounce();
-            }
+            return results;
         }
     }
 }
