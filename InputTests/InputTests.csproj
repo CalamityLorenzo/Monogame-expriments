@@ -11,7 +11,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <PackageReference Include="Monogame.framework.WindowsDx" Version="3.8.0.1641" />
+    <PackageReference Include="Monogame.framework.WindowsDx" Version="3.8.1.2155-develop" />
   </ItemGroup>
 
   <ItemGroup>
